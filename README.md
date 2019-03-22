@@ -47,4 +47,5 @@ You can also style this widget the same way you would do for a Filter Bar in the
 ### Donate
 
 If you find this plugin useful consider offering this cat a cup of milk, so it can keep on hacking!
+
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=27Q6J6NGK6JJ2&source=url)
