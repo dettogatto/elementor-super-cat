@@ -31,6 +31,7 @@ E.g `class="elementor-post elementor-grid-item post-329 post type-post status-pu
 
 You can also style this widget the same way you would do for a Filter Bar in the Portfolio widget.
 
+---
 
 ### Plugin folder structure
 
