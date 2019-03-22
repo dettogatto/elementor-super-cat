@@ -35,9 +35,6 @@ You can also style this widget the same way you would do for a Filter Bar in the
 
 ### Plugin folder structure
 
-* `assets` directory - holds plugin JavaScript and CSS assets
-  * `/js` directory - Holds plugin Javascript Files
-  * `/css` directory - Holds plugin CSS Files
 * `widgets` directory - Holds Plugin widgets
   * `/form-poster.php` - Form Poster Widget class
   * `/post-filter.php` - Post Filter Bar Widget class
