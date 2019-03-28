@@ -11,6 +11,22 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+/* UPDATE CHECKER */
+
+require 'plugin-update-checker/plugin-update-checker.php';
+$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+	'https://github.com/NicolaCavallazzi/elementor-super-cat/',
+	__FILE__,
+	'unique-plugin-or-theme-slug'
+);
+
+//Optional: If you're using a private repository, specify the access token like this:
+//$myUpdateChecker->setAuthentication('your-token-here');
+
+//Optional: Set the branch that contains the stable release.
+$myUpdateChecker->setBranch('master');
+
+
 /**
 * Main Elementor Super Cat Class
 *
