@@ -165,13 +165,14 @@ class Form_Poster extends Widget_Base {
             var formID = "#<?php echo $settings['formid']; ?>";
             /* The URL to which you want to send the data */
             var actionURL = "<?php echo $settings['url']; ?>";
+            var superGattoID = "#form-super-gatto-for-<?php echo $settings['formid']; ?>";
 
             var $jq = jQuery.noConflict();
-            $jq("#form-super-gatto").html($jq(formID).html());
-            $jq("#form-super-gatto").attr("class", $jq(formID).attr("class"));
+            $jq(superGattoID).html($jq(formID).html());
+            $jq(superGattoID).attr("class", $jq(formID).attr("class"));
             $jq(formID).hide();
-            $jq("#form-super-gatto form").attr("action", actionURL);
-            $jq("#form-super-gatto form").find('input, textarea, select').each(function(){
+            $jq(superGattoID + " form").attr("action", actionURL);
+            $jq(superGattoID + " form").find('input, textarea, select').each(function(){
                 var matches = $jq(this).attr("name").match(/form_fields\[(.*?)\]/);
                 if (matches) {
                     var submatch = matches[1];
@@ -185,7 +186,7 @@ class Form_Poster extends Widget_Base {
                 });
             });
             </script>
-            <div id="form-super-gatto"></div>
+            <div id="form-super-gatto-for-<?php echo $settings['formid']; ?>"></div>
             <?php
 
         }
