@@ -260,6 +260,7 @@ class Post_Filter extends Widget_Base {
                 $jq(postId).find('article').fadeIn(400);
                 $jq(theFiltererId).find('li').removeClass("elementor-active");
                 $jq(this).addClass("elementor-active");
+                history.replaceState(null, null, ' ');
             });
             $jq(theFiltererId).append(newli);
 
@@ -279,8 +280,14 @@ class Post_Filter extends Widget_Base {
                     });
                     $jq(theFiltererId).find('li').removeClass("elementor-active");
                     $jq(this).addClass("elementor-active");
+                    window.location.hash = "#"+$jq(this).attr("data-filter");
                 });
                 $jq(theFiltererId).append(newli);
+            }
+
+            if(window.location.hash){
+                let hhh = window.location.hash.replace("#", "");
+                $jq( 'li.elementor-portfolio__filter[data-filter='+hhh+']' ).trigger("click");
             }
 
         });
