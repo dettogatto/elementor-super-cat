@@ -273,7 +273,7 @@ class Post_Filter extends Widget_Base {
                     var theFilter = $jq(this).attr("data-filter");
                     $jq(postId).find('article').each(function(){
                         var classes = $jq(this).attr("class");
-                        if(classes.includes(theFilter)){
+                        if(classes.split(" ").includes(theFilter)){
                             $jq(this).fadeIn(400);
                         }
                     });
