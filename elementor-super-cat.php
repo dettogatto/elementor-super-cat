@@ -3,7 +3,7 @@
 * Plugin Name: Elementor SuperCat
 * Description: Elementor add-ons
 * Plugin URI:  https://github.com/NicolaCavallazzi/elementor-super-cat
-* Version:     0.2.6
+* Version:     0.3
 * Author:      Nicola Cavallazzi
 * Author URI:  https://cosmo.cat/
 * Text Domain: elementor-super-cat
@@ -43,7 +43,6 @@ final class Elementor_Super_Cat {
     /**
     * Plugin Version
     *
-    * @since 0.1
     * @var string The plugin version.
     */
     const VERSION = '1.2.0';
@@ -51,7 +50,6 @@ final class Elementor_Super_Cat {
     /**
     * Minimum Elementor Version
     *
-    * @since 0.1
     * @var string Minimum Elementor version required to run the plugin.
     */
     const MINIMUM_ELEMENTOR_VERSION = '2.0.0';
@@ -59,7 +57,6 @@ final class Elementor_Super_Cat {
     /**
     * Minimum PHP Version
     *
-    * @since 0.1
     * @var string Minimum PHP version required to run the plugin.
     */
     const MINIMUM_PHP_VERSION = '7.0';
@@ -67,7 +64,6 @@ final class Elementor_Super_Cat {
     /**
     * Constructor
     *
-    * @since 1.0.0
     * @access public
     */
     public function __construct() {
@@ -88,7 +84,6 @@ final class Elementor_Super_Cat {
     * Creates the custom widget category.
     * Fired by `elementor/elements/categories_registered` action hook.
     *
-    * @since 0.1
     * @access public
     */
     public function create_category($elements_manager) {
@@ -107,7 +102,6 @@ final class Elementor_Super_Cat {
     * Load plugin localization files.
     * Fired by `init` action hook.
     *
-    * @since 0.1
     * @access public
     */
     public function i18n() {
@@ -123,7 +117,6 @@ final class Elementor_Super_Cat {
     *
     * Fired by `plugins_loaded` action hook.
     *
-    * @since 0.1
     * @access public
     */
     public function init() {
@@ -155,7 +148,6 @@ final class Elementor_Super_Cat {
     *
     * Warning when the site doesn't have Elementor installed or activated.
     *
-    * @since 1.0.0
     * @access public
     */
     public function admin_notice_missing_main_plugin() {
@@ -178,7 +170,6 @@ final class Elementor_Super_Cat {
     *
     * Warning when the site doesn't have a minimum required Elementor version.
     *
-    * @since 1.0.0
     * @access public
     */
     public function admin_notice_minimum_elementor_version() {
@@ -202,7 +193,6 @@ final class Elementor_Super_Cat {
     *
     * Warning when the site doesn't have a minimum required PHP version.
     *
-    * @since 1.0.0
     * @access public
     */
     public function admin_notice_minimum_php_version() {

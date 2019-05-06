@@ -5,14 +5,12 @@ namespace ElementorSuperCat;
  * Class Plugin
  *
  * Main Plugin class
- * @since 0.1
  */
 class Plugin {
 
 	/**
 	 * Instance
 	 *
-	 * @since 0.1
 	 * @access private
 	 * @static
 	 *
@@ -25,7 +23,6 @@ class Plugin {
 	 *
 	 * Ensures only one instance of the class is loaded or can be loaded.
 	 *
-	 * @since 0.1
 	 * @access public
 	 *
 	 * @return Plugin An instance of the class.
@@ -42,7 +39,6 @@ class Plugin {
 	 *
 	 * Load required plugin core files.
 	 *
-	 * @since 0.1
 	 * @access public
 	 */
 	public function widget_scripts() {
@@ -54,12 +50,12 @@ class Plugin {
 	 *
 	 * Load widgets files
 	 *
-	 * @since 0.1
 	 * @access private
 	 */
 	private function include_widgets_files() {
         require_once( __DIR__ . '/widgets/form-poster.php' );
         require_once( __DIR__ . '/widgets/post-filter.php' );
+        require_once( __DIR__ . '/widgets/param-button.php' );
 	}
 
 	/**
@@ -67,7 +63,6 @@ class Plugin {
 	 *
 	 * Register new Elementor widgets.
 	 *
-	 * @since 0.1
 	 * @access public
 	 */
 	public function register_widgets() {
@@ -77,6 +72,7 @@ class Plugin {
 		// Register Widgets
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Form_Poster() );
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Post_Filter() );
+        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Param_Button() );
 	}
 
 	/**
@@ -84,7 +80,6 @@ class Plugin {
 	 *
 	 * Register plugin action hooks and filters
 	 *
-	 * @since 0.1
 	 * @access public
 	 */
 	public function __construct() {
