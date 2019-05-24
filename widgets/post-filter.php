@@ -134,85 +134,85 @@ class Post_Filter extends Widget_Base {
         $this->end_controls_section();
 
         $this->start_controls_section(
-			'section_style',
-			[
-				'label' => __( 'Style', 'elementor-super-cat' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->add_control(
-			'color_filter',
-			[
-				'label' => __( 'Color', 'elementor-super-cat' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .elementor-portfolio__filter' => 'color: {{VALUE}}',
-				],
-			]
-		);
+            'section_style',
+            [
+                'label' => __( 'Style', 'elementor-super-cat' ),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
 
         $this->add_control(
-			'color_filter_active',
-			[
-				'label' => __( 'Active Color', 'elementor-super-cat' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .elementor-portfolio__filter.elementor-active' => 'color: {{VALUE}};',
-				],
-			]
-		);
+            'color_filter',
+            [
+                'label' => __( 'Color', 'elementor-super-cat' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .elementor-portfolio__filter' => 'color: {{VALUE}}',
+                ],
+            ]
+        );
 
-		$this->add_group_control(
-			'typography',
-			[
-				'name' => 'typography_filter',
-				'selector' => '{{WRAPPER}} .elementor-portfolio__filter',
-			]
-		);
+        $this->add_control(
+            'color_filter_active',
+            [
+                'label' => __( 'Active Color', 'elementor-super-cat' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .elementor-portfolio__filter.elementor-active' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
 
-		$this->add_control(
-			'filter_item_spacing',
-			[
-				'label' => __( 'Space Between', 'elementor-super-cat' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => 10,
-				],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .elementor-portfolio__filter:not(:last-child)' => 'margin-right: calc({{SIZE}}{{UNIT}}/2)',
-					'{{WRAPPER}} .elementor-portfolio__filter:not(:first-child)' => 'margin-left: calc({{SIZE}}{{UNIT}}/2)',
-				],
-			]
-		);
+        $this->add_group_control(
+            'typography',
+            [
+                'name' => 'typography_filter',
+                'selector' => '{{WRAPPER}} .elementor-portfolio__filter',
+            ]
+        );
 
-		$this->add_control(
-			'filter_spacing',
-			[
-				'label' => __( 'Spacing', 'elementor-super-cat' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => 10,
-				],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .elementor-portfolio__filters' => 'margin-bottom: {{SIZE}}{{UNIT}}',
-				],
-			]
-		);
+        $this->add_control(
+            'filter_item_spacing',
+            [
+                'label' => __( 'Space Between', 'elementor-super-cat' ),
+                'type' => Controls_Manager::SLIDER,
+                'default' => [
+                    'size' => 10,
+                ],
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 100,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .elementor-portfolio__filter:not(:last-child)' => 'margin-right: calc({{SIZE}}{{UNIT}}/2)',
+                    '{{WRAPPER}} .elementor-portfolio__filter:not(:first-child)' => 'margin-left: calc({{SIZE}}{{UNIT}}/2)',
+                ],
+            ]
+        );
 
-		$this->end_controls_section();
+        $this->add_control(
+            'filter_spacing',
+            [
+                'label' => __( 'Spacing', 'elementor-super-cat' ),
+                'type' => Controls_Manager::SLIDER,
+                'default' => [
+                    'size' => 10,
+                ],
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 100,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .elementor-portfolio__filters' => 'margin-bottom: {{SIZE}}{{UNIT}}',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
 
 
     }
@@ -228,6 +228,13 @@ class Post_Filter extends Widget_Base {
     */
     protected function render() {
         $settings = $this->get_settings_for_display();
+        $characters = 'abcdefghijklmnopqrstuvwxyz';
+        $charactersLength = strlen($characters);
+        $randomString = 'filter-' . $settings['taxonomy_name'] . "-";
+        for ($i = 0; $i < 10; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
 
 
         ?>
@@ -239,7 +246,7 @@ class Post_Filter extends Widget_Base {
             var tax = "<?php echo $settings['taxonomy_name']; ?>";
             var allTxt = "<?php echo $settings['all_text']; ?>";
             var postId = "#<?php echo $settings['post_id']; ?>";
-            var theFiltererId = "#the-filterer";
+            var theFiltererId = "#<?php echo $randomString; ?>";
 
             var found = [];
             $jq(postId).find('article').each(function(){
@@ -293,7 +300,7 @@ class Post_Filter extends Widget_Base {
         });
         </script>
         <div>
-            <ul class="elementor-portfolio__filters" id="the-filterer">
+            <ul class="elementor-portfolio__filters" id="<?php echo $randomString; ?>">
             </ul>
         </div>
 
