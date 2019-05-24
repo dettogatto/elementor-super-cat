@@ -24,9 +24,8 @@ To set names of fields, default values, style, etc., act on the original form.
 This widget, used in combination with the Elementor Post widget, gives you the same live filtering bar that the Portfolio widget has.
 
 The widget has 3 options:
-* `CSS ID` needs to be set with the ID of the Post widget you want to give the filter bar to
-* `taxonomy` is the name of the taxonomy you want to use as a filter. Since the widget runs with Javascript the value you want to give to this field can be found inspecting the Post widget with a web inspector. Inspect the class names of a single <article> tag to find out your options. The last classes should contain the taxonomy names.
-E.g `class="elementor-post elementor-grid-item post-329 post type-post status-publish format-standard has-post-thumbnail hentry category-news"` -> `category` is the name of the taxonomy you need to use.
+* `CSS ID` needs to be set with the ID of the Posts widget you want to give the filter bar to
+* `taxonomy` is the taxonomy you want to use as a filter. Make sure the taxonomy is used by the posts shown in the Posts widget.
 * `Show all text` just in case you need something different from "All"
 
 You can also style this widget the same way you would do for a Filter Bar in the Portfolio widget.

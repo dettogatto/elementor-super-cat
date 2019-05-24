@@ -1,9 +1,6 @@
 <?php
 namespace ElementorSuperCat\Widgets;
 
-use Elementor\Widget_Base;
-use Elementor\Controls_Manager;
-
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
@@ -13,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 *
 * @since 0.2
 */
-class Post_Filter extends Widget_Base {
+class Post_Filter extends \Elementor\Widget_Base {
 
     /**
     * Retrieve the widget name.
@@ -106,19 +103,21 @@ class Post_Filter extends Widget_Base {
         );
 
         $this->add_control(
-            'post_id',
+            'taxonomy',
             [
-                'label' => __( 'CSS ID of the post widget', 'elementor-super-cat' ),
-                'type' => Controls_Manager::TEXT,
+                'label' => __( 'Name of taxonomy to filter', 'elementor-super-cat' ),
+                'type' => \Elementor\Controls_Manager::SELECT2,
+                'label_block' => true,
+                'options' => $this->get_taxonomies(),
+                'default' => $this->get_taxonomies()[0]
             ]
         );
 
         $this->add_control(
-            'taxonomy_name',
+            'post_id',
             [
-                'label' => __( 'Name of taxonomy to filter', 'elementor-super-cat' ),
-                'type' => Controls_Manager::TEXT,
-                'default' => "category"
+                'label' => __( 'CSS ID of the post widget', 'elementor-super-cat' ),
+                'type' => \Elementor\Controls_Manager::TEXT,
             ]
         );
 
@@ -126,10 +125,11 @@ class Post_Filter extends Widget_Base {
             'all_text',
             [
                 'label' => __( 'Text to show for <b>Show All</b>', 'elementor-super-cat' ),
-                'type' => Controls_Manager::TEXT,
+                'type' => \Elementor\Controls_Manager::TEXT,
                 'default' => "all"
             ]
         );
+
 
         $this->end_controls_section();
 
@@ -137,7 +137,7 @@ class Post_Filter extends Widget_Base {
             'section_style',
             [
                 'label' => __( 'Style', 'elementor-super-cat' ),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
             ]
         );
 
@@ -145,7 +145,7 @@ class Post_Filter extends Widget_Base {
             'color_filter',
             [
                 'label' => __( 'Color', 'elementor-super-cat' ),
-                'type' => Controls_Manager::COLOR,
+                'type' => \Elementor\Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .elementor-portfolio__filter' => 'color: {{VALUE}}',
                 ],
@@ -156,7 +156,7 @@ class Post_Filter extends Widget_Base {
             'color_filter_active',
             [
                 'label' => __( 'Active Color', 'elementor-super-cat' ),
-                'type' => Controls_Manager::COLOR,
+                'type' => \Elementor\Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .elementor-portfolio__filter.elementor-active' => 'color: {{VALUE}};',
                 ],
@@ -175,7 +175,7 @@ class Post_Filter extends Widget_Base {
             'filter_item_spacing',
             [
                 'label' => __( 'Space Between', 'elementor-super-cat' ),
-                'type' => Controls_Manager::SLIDER,
+                'type' => \Elementor\Controls_Manager::SLIDER,
                 'default' => [
                     'size' => 10,
                 ],
@@ -196,7 +196,7 @@ class Post_Filter extends Widget_Base {
             'filter_spacing',
             [
                 'label' => __( 'Spacing', 'elementor-super-cat' ),
-                'type' => Controls_Manager::SLIDER,
+                'type' => \Elementor\Controls_Manager::SLIDER,
                 'default' => [
                     'size' => 10,
                 ],
@@ -217,6 +217,20 @@ class Post_Filter extends Widget_Base {
 
     }
 
+
+    protected function get_taxonomies() {
+        $taxonomies = get_taxonomies( [ 'show_in_nav_menus' => true ], 'objects' );
+
+        $options = [ '' => '' ];
+
+        foreach ( $taxonomies as $taxonomy ) {
+            $options[ $taxonomy->name ] = $taxonomy->label;
+        }
+
+        return $options;
+    }
+
+
     /**
     * Render the widget output on the frontend.
     *
@@ -235,7 +249,17 @@ class Post_Filter extends Widget_Base {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
 
+        $phpTax = $settings['taxonomy'];
+        $jsTax = $settings['taxonomy'];
+        if($jsTax == "post_tag"){
+            $jsTax = "tag";
+        }
 
+
+        $terms = [];
+        foreach(get_terms( $phpTax, array( 'hide_empty' => true ) ) as $k => $v){
+            $terms[] = [$v->slug, $v->name];
+        }
 
         ?>
 
@@ -243,21 +267,13 @@ class Post_Filter extends Widget_Base {
         document.addEventListener("DOMContentLoaded", function(event){
             var $jq = jQuery.noConflict();
 
-            var tax = "<?php echo $settings['taxonomy_name']; ?>";
+            var tax = "<?php echo $jsTax; ?>";
             var allTxt = "<?php echo $settings['all_text']; ?>";
             var postId = "#<?php echo $settings['post_id']; ?>";
             var theFiltererId = "#<?php echo $randomString; ?>";
 
-            var found = [];
-            $jq(postId).find('article').each(function(){
-                var classes = $jq(this).attr("class").split(" ");
-                for(var i = 0; i < classes.length; i++){
-                    if(classes[i].startsWith(tax) && !found.includes(classes[i])){
-                        found.push(classes[i]);
-                    }
-                }
-            });
-            found.sort();
+            var found = <?php echo(json_encode($terms)); ?>;
+            alert
 
             newli = $jq("<li></li>");
             newli.text(allTxt);
@@ -275,9 +291,9 @@ class Post_Filter extends Widget_Base {
 
             for(var i = 0; i < found.length; i++){
                 var newli = $jq("<li></li>");
-                newli.text(found[i].replace(tax+"-", "").replace(/\-/g, " "));
+                newli.text(found[i][1]);
                 newli.attr("class", "elementor-portfolio__filter");
-                newli.attr("data-filter", found[i]);
+                newli.attr("data-filter", tax + "-" + found[i][0]);
                 newli.click(function(){
                     $jq(postId).find('article').hide();
                     var theFilter = $jq(this).attr("data-filter");
@@ -322,10 +338,14 @@ class Post_Filter extends Widget_Base {
     protected function _content_template() {
         ?>
         <div>
-            <ul class="elementor-portfolio__filters" id="the-filterer">
-                <li class="elementor-portfolio__filter elementor-active">{{{settings.all_text}}}</li>
-                <li class="elementor-portfolio__filter">category 1</li>
-                <li class="elementor-portfolio__filter">category 2</li>
+            <ul class="elementor-portfolio__filters cat-filter-for-<?php echo $settings['post_id']; ?>" id="<?php echo $randomString; ?>">
+                <#
+                var allTxt = settings.all_text;
+                var tax = settings.taxonomy;
+                print('<li class="elementor-portfolio__filter elementor-active">'+allTxt+'</li>');
+                print('<li class="elementor-portfolio__filter">'+tax+' 1</li>');
+                print('<li class="elementor-portfolio__filter">'+tax+' 2</li>');
+                #>
             </ul>
         </div>
         <?php
