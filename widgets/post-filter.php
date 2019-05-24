@@ -265,8 +265,10 @@ class Post_Filter extends Widget_Base {
             newli.click(function(){
                 $jq(postId).find('article').hide();
                 $jq(postId).find('article').fadeIn(400);
-                $jq(theFiltererId).find('li').removeClass("elementor-active");
-                $jq(this).addClass("elementor-active");
+                $jq(".cat-filter-for-<?php echo $settings['post_id']; ?>").each(function(){
+                    $jq(this).find('li').removeClass("elementor-active");
+                    $jq(this).find('li').first().addClass("elementor-active");
+                });
                 history.replaceState(null, null, ' ');
             });
             $jq(theFiltererId).append(newli);
@@ -285,7 +287,7 @@ class Post_Filter extends Widget_Base {
                             $jq(this).fadeIn(400);
                         }
                     });
-                    $jq(theFiltererId).find('li').removeClass("elementor-active");
+                    $jq(".cat-filter-for-<?php echo $settings['post_id']; ?>").find('li').removeClass("elementor-active");
                     $jq(this).addClass("elementor-active");
                     window.location.hash = "#"+$jq(this).attr("data-filter");
                 });
@@ -300,7 +302,7 @@ class Post_Filter extends Widget_Base {
         });
         </script>
         <div>
-            <ul class="elementor-portfolio__filters" id="<?php echo $randomString; ?>">
+            <ul class="elementor-portfolio__filters cat-filter-for-<?php echo $settings['post_id']; ?>" id="<?php echo $randomString; ?>">
             </ul>
         </div>
 
