@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 *
 * @since 0.2
 */
-class Post_Filter extends \Elementor\Widget_Base {
+class Checkbox_Filter extends \Elementor\Widget_Base {
 
     /**
     * Retrieve the widget name.
@@ -22,7 +22,7 @@ class Post_Filter extends \Elementor\Widget_Base {
     * @return string Widget name.
     */
     public function get_name() {
-        return 'post-filter';
+        return 'checkbox-filter';
     }
 
     /**
@@ -35,7 +35,7 @@ class Post_Filter extends \Elementor\Widget_Base {
     * @return string Widget title.
     */
     public function get_title() {
-        return __( 'Post Filter Bar', 'elementor-super-cat' );
+        return __( 'Post Checkbox Filter', 'elementor-super-cat' );
     }
 
     /**
@@ -48,7 +48,7 @@ class Post_Filter extends \Elementor\Widget_Base {
     * @return string Widget icon.
     */
     public function get_icon() {
-        return 'fa fa-filter';
+        return 'eicon-checkbox';
     }
 
     /**
@@ -122,11 +122,15 @@ class Post_Filter extends \Elementor\Widget_Base {
         );
 
         $this->add_control(
-            'all_text',
+            'order_by',
             [
-                'label' => __( 'Text to show for <b>Show All</b>', 'elementor-super-cat' ),
-                'type' => \Elementor\Controls_Manager::TEXT,
-                'default' => "all"
+                'label' => __( 'Order By', 'elementor-super-cat' ),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => 'name',
+                'options' => [
+                    'name'  => __( 'Name', 'elementor-super-cat' ),
+                    'slug' => __( 'Slug', 'elementor-super-cat' ),
+                ],
             ]
         );
 
@@ -147,7 +151,7 @@ class Post_Filter extends \Elementor\Widget_Base {
                 'label' => __( 'Color', 'elementor-super-cat' ),
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .elementor-portfolio__filter' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .cat-checkbox-filter' => 'color: {{VALUE}}',
                 ],
             ]
         );
@@ -158,7 +162,7 @@ class Post_Filter extends \Elementor\Widget_Base {
                 'label' => __( 'Active Color', 'elementor-super-cat' ),
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .elementor-portfolio__filter.elementor-active' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .cat-checkbox-filter.elementor-active' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -167,7 +171,7 @@ class Post_Filter extends \Elementor\Widget_Base {
             'typography',
             [
                 'name' => 'typography_filter',
-                'selector' => '{{WRAPPER}} .elementor-portfolio__filter',
+                'selector' => '{{WRAPPER}} .cat-checkbox-filter',
             ]
         );
 
@@ -186,28 +190,80 @@ class Post_Filter extends \Elementor\Widget_Base {
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .elementor-portfolio__filter:not(:last-child)' => 'margin-right: calc({{SIZE}}{{UNIT}}/2)',
-                    '{{WRAPPER}} .elementor-portfolio__filter:not(:first-child)' => 'margin-left: calc({{SIZE}}{{UNIT}}/2)',
+                    '{{WRAPPER}} .cat-checkbox-filter:not(:last-child)' => 'margin-bottom: calc({{SIZE}}{{UNIT}}/2)',
+                ],
+            ]
+        );
+
+
+        $this->end_controls_section();
+
+
+
+        $this->start_controls_section(
+            'section_style_icon',
+            [
+                'label' => __( 'Icon', 'elementor-super-cat' ),
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'icon_off',
+            [
+                'label' => __( 'Icon OFF', 'elementor' ),
+                'type' => \Elementor\Controls_Manager::ICON,
+                'default' => 'fa fa-square-o',
+            ]
+        );
+
+        $this->add_control(
+            'icon_on',
+            [
+                'label' => __( 'Icon ON', 'elementor' ),
+                'type' => \Elementor\Controls_Manager::ICON,
+                'default' => 'fa fa-check-square-o',
+            ]
+        );
+
+        $this->add_control(
+            'color_icon_off',
+            [
+                'label' => __( 'Color icon OFF', 'elementor-super-cat' ),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .cat-checkbox-filter .cat-checkbox-icon-container' => 'color: {{VALUE}}',
                 ],
             ]
         );
 
         $this->add_control(
-            'filter_spacing',
+            'color_icon_on',
+            [
+                'label' => __( 'Color icon ON', 'elementor-super-cat' ),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .cat-checkbox-filter.elementor-active .cat-checkbox-icon-container' => 'color: {{VALUE}}',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'filter_icon_spacing',
             [
                 'label' => __( 'Spacing', 'elementor-super-cat' ),
                 'type' => \Elementor\Controls_Manager::SLIDER,
                 'default' => [
-                    'size' => 10,
+                    'size' => 20,
                 ],
                 'range' => [
                     'px' => [
                         'min' => 0,
-                        'max' => 100,
+                        'max' => 200,
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .elementor-portfolio__filters' => 'margin-bottom: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} .cat-checkbox-icon-container' => 'width: {{SIZE}}{{UNIT}}',
                 ],
             ]
         );
@@ -241,6 +297,9 @@ class Post_Filter extends \Elementor\Widget_Base {
     * @access protected
     */
     protected function render() {
+        wp_enqueue_style('checkbox-filter-css');
+        wp_enqueue_script('checkbox-filter-js');
+
         $settings = $this->get_settings_for_display();
         $characters = 'abcdefghijklmnopqrstuvwxyz';
         $charactersLength = strlen($characters);
@@ -255,70 +314,41 @@ class Post_Filter extends \Elementor\Widget_Base {
             $jsTax = "tag";
         }
 
+        $li = [];
+        $icon = '';
 
-        $terms = [];
-        foreach(get_terms( $phpTax, array( 'hide_empty' => true ) ) as $k => $v){
-            $terms[] = [$v->slug, $v->name];
+        if ( ! empty( $settings['icon_on'] ) ) {
+            $icon = '<i class="' . $settings['icon_on'] . ' cat-icon-on" aria-hidden="true"></i>';
+            $icon .= '<i class="' . $settings['icon_off'] . ' cat-icon-off" aria-hidden="true"></i>';
+        }
+
+
+
+        $terms = get_terms( $phpTax, array( 'hide_empty' => true ) );
+
+        if($settings['order_by'] == "slug"){
+            usort($terms, function($a, $b){
+                return $a->slug <=> $b->slug;
+            });
+        }
+
+        foreach ($terms as $k => $v) {
+            $li[] = '<li
+            class="cat-checkbox-filter"
+            data-term="'.$jsTax."-".$v->slug.'"
+            data-container="'.$randomString.'"
+            data-posts="'.$settings['post_id'].'">
+            <span class="cat-checkbox-icon-container">'.$icon.'</span>
+            '.$v->name.'
+            </li>';
         }
 
         ?>
 
-        <script type='text/javascript'>
-        document.addEventListener("DOMContentLoaded", function(event){
-            var $jq = jQuery.noConflict();
 
-            var tax = "<?php echo $jsTax; ?>";
-            var allTxt = "<?php echo $settings['all_text']; ?>";
-            var postId = "#<?php echo $settings['post_id']; ?>";
-            var theFiltererId = "#<?php echo $randomString; ?>";
-
-            var found = <?php echo(json_encode($terms)); ?>;
-            alert
-
-            newli = $jq("<li></li>");
-            newli.text(allTxt);
-            newli.attr("class", "elementor-portfolio__filter elementor-active");
-            newli.click(function(){
-                $jq(postId).find('article').hide();
-                $jq(postId).find('article').fadeIn(400);
-                $jq(".cat-filter-for-<?php echo $settings['post_id']; ?>").each(function(){
-                    $jq(this).find('li').removeClass("elementor-active");
-                    $jq(this).find('li').first().addClass("elementor-active");
-                });
-                history.replaceState(null, null, ' ');
-            });
-            $jq(theFiltererId).append(newli);
-
-            for(var i = 0; i < found.length; i++){
-                var newli = $jq("<li></li>");
-                newli.text(found[i][1]);
-                newli.attr("class", "elementor-portfolio__filter");
-                newli.attr("data-filter", tax + "-" + found[i][0]);
-                newli.click(function(){
-                    $jq(postId).find('article').hide();
-                    var theFilter = $jq(this).attr("data-filter");
-                    $jq(postId).find('article').each(function(){
-                        var classes = $jq(this).attr("class");
-                        if(classes.split(" ").includes(theFilter)){
-                            $jq(this).fadeIn(400);
-                        }
-                    });
-                    $jq(".cat-filter-for-<?php echo $settings['post_id']; ?>").find('li').removeClass("elementor-active");
-                    $jq(this).addClass("elementor-active");
-                    window.location.hash = "#"+$jq(this).attr("data-filter");
-                });
-                $jq(theFiltererId).append(newli);
-            }
-
-            if(window.location.hash){
-                let hhh = window.location.hash.replace("#", "");
-                $jq( 'li.elementor-portfolio__filter[data-filter='+hhh+']' ).trigger("click");
-            }
-
-        });
-        </script>
         <div>
-            <ul class="elementor-portfolio__filters cat-filter-for-<?php echo $settings['post_id']; ?>" id="<?php echo $randomString; ?>">
+            <ul class="cat-checkbox-list cat-filter-for-<?php echo $settings['post_id']; ?>" id="<?php echo $randomString; ?>">
+                <?php echo(implode($li)); ?>
             </ul>
         </div>
 
@@ -338,13 +368,20 @@ class Post_Filter extends \Elementor\Widget_Base {
     protected function _content_template() {
         ?>
         <div>
-            <ul class="elementor-portfolio__filters cat-filter-for-<?php echo $settings['post_id']; ?>" id="<?php echo $randomString; ?>">
+            <ul class="cat-checkbox-list cat-filter-for-<?php echo $settings['post_id']; ?>" id="<?php echo $randomString; ?>">
                 <#
                 var allTxt = settings.all_text;
                 var tax = settings.taxonomy;
-                print('<li class="elementor-portfolio__filter elementor-active">'+allTxt+'</li>');
-                print('<li class="elementor-portfolio__filter">'+tax+' 1</li>');
-                print('<li class="elementor-portfolio__filter">'+tax+' 2</li>');
+                var icon = '<span class="cat-checkbox-icon-container">';
+                if(settings.icon_on && settings.icon_on != ""){
+                    icon += '<i class="' + settings.icon_on + ' cat-icon-on" aria-hidden="true"></i>';
+                    icon += '<i class="' + settings.icon_off + ' cat-icon-off" aria-hidden="true"></i>';
+                }
+                icon += '</span>';
+
+                print('<li class="cat-checkbox-filter elementor-active">'+icon+tax+' 1</li>');
+                print('<li class="cat-checkbox-filter">'+icon+tax+' 2</li>');
+                print('<li class="cat-checkbox-filter">'+icon+tax+' 3</li>');
                 #>
             </ul>
         </div>

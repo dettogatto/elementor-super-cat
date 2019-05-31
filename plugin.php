@@ -42,7 +42,21 @@ class Plugin {
 	 * @access public
 	 */
 	public function widget_scripts() {
-		//wp_register_script( 'elementor-super-cat', plugins_url( '/assets/js/form-poster.js', __FILE__ ), [ 'jquery' ], false, true );
+		wp_register_script( 'checkbox-filter-js', plugins_url( '/assets/js/checkbox-filter.js', __FILE__ ), [ 'jquery' ], false, true );
+	}
+
+    /**
+	 * widget_styles
+	 *
+	 * Load required plugin core files.
+	 *
+	 * @access public
+	 */
+    public function widget_styles() {
+        wp_register_style( 'checkbox-filter-css', plugins_url( '/assets/css/checkbox-filter.css', __FILE__ ));
+        if(\Elementor\Plugin::$instance->preview->is_preview_mode() || \Elementor\Plugin::$instance->editor->is_edit_mode()){
+            wp_enqueue_style('checkbox-filter-css');
+        }
 	}
 
 	/**
@@ -56,6 +70,7 @@ class Plugin {
         require_once( __DIR__ . '/widgets/form-poster.php' );
         require_once( __DIR__ . '/widgets/post-filter.php' );
         require_once( __DIR__ . '/widgets/param-button.php' );
+        require_once( __DIR__ . '/widgets/checkbox-filter.php' );
 	}
 
 	/**
@@ -73,6 +88,7 @@ class Plugin {
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Form_Poster() );
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Post_Filter() );
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Param_Button() );
+        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Checkbox_Filter() );
 	}
 
 	/**
@@ -86,6 +102,9 @@ class Plugin {
 
 		// Register widget scripts
 		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'widget_scripts' ] );
+
+        // Register widget styles
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'widget_styles' ] );
 
 		// Register widgets
 		add_action( 'elementor/widgets/widgets_registered', [ $this, 'register_widgets' ] );

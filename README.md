@@ -21,7 +21,7 @@ To set names of fields, default values, style, etc., act on the original form.
 
 ## Post Filter Bar
 
-This widget, used in combination with the Elementor Post widget, gives you the same live filtering bar that the Portfolio widget has.
+This widget, used in combination with the Elementor Post widget, gives you the same live filtering bar the Portfolio widget has.
 
 The widget has 3 options:
 * `CSS ID` needs to be set with the ID of the Posts widget you want to give the filter bar to
@@ -30,12 +30,29 @@ The widget has 3 options:
 
 You can also style this widget the same way you would do for a Filter Bar in the Portfolio widget.
 
+## Post Checkbox Filter
+
+This widget, used in combination with the Elementor Post widget, gives you live filtering with checkbox. Useful with multiple custom taxonomies to filter elements like in e-shops.
+
+The widget has 3 options:
+* `CSS ID` needs to be set with the ID of the Posts widget you want to give the filter bar to
+* `taxonomy` is the taxonomy you want to use as a filter. Make sure the taxonomy is used by the posts shown in the Posts widget.
+* `Order by` you can choose if the filters should be sorted by name or slug
+
+## Param Button
+
+This widget is identical to a normal Elementor Button except you can place received GET and POST parameters in the link field
+
 ---
 
 ### Plugin folder structure
 
+* `assets` directory - Holds the assets (js & css) for the widgets
+* `plugin-update-checker` directory - Holds the updater
 * `widgets` directory - Holds Plugin widgets
+  * `/checkbox-filter.php` - Post Checkbox Filter Widget class
   * `/form-poster.php` - Form Poster Widget class
+  * `/param-button.php` - Param Button Widget class
   * `/post-filter.php` - Post Filter Bar Widget class
 * `index.php`	- Prevent direct access to directories
 * `elementor-super-cat.php`	- Main plugin file, used as a loader if plugin minimum requirements are met.

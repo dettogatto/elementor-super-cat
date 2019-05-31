@@ -1,0 +1,26 @@
+li.cat-checkbox-filter .cat-icon-on{
+    display: none;
+}
+
+li.cat-checkbox-filter.elementor-active .cat-icon-off{
+    display: none;
+}
+
+li.cat-checkbox-filter.elementor-active .cat-icon-on{
+    display: inline;
+}
+
+.cat-checkbox-list{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cat-checkbox-filter{
+    cursor: pointer;
+}
+
+.cat-checkbox-icon-container{
+    display: inline-block;
+    text-align: left;
+}
