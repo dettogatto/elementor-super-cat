@@ -54,8 +54,10 @@ class Plugin {
 	 */
     public function widget_styles() {
         wp_register_style( 'checkbox-filter-css', plugins_url( '/assets/css/checkbox-filter.css', __FILE__ ));
+        wp_register_style( 'autostop-video-css', plugins_url( '/assets/css/autostop-video.css', __FILE__ ));
         if(\Elementor\Plugin::$instance->preview->is_preview_mode() || \Elementor\Plugin::$instance->editor->is_edit_mode()){
             wp_enqueue_style('checkbox-filter-css');
+            wp_enqueue_style('autostop-video-css');
         }
 	}
 
@@ -71,6 +73,7 @@ class Plugin {
         require_once( __DIR__ . '/widgets/post-filter.php' );
         require_once( __DIR__ . '/widgets/param-button.php' );
         require_once( __DIR__ . '/widgets/checkbox-filter.php' );
+        require_once( __DIR__ . '/widgets/autostop-video.php' );
 	}
 
 	/**
@@ -89,6 +92,7 @@ class Plugin {
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Post_Filter() );
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Param_Button() );
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Checkbox_Filter() );
+        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Autostop_Video() );
 	}
 
 	/**
