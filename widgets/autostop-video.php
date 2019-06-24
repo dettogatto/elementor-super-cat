@@ -42,7 +42,7 @@ class Autostop_Video extends \Elementor\Widget_Base {
     * @return string Widget title.
     */
     public function get_title() {
-        return __( 'Video Stop CTA', 'elementor-super-cat' );
+        return __( 'Video CTA', 'elementor-super-cat' );
     }
 
     /**
@@ -72,11 +72,11 @@ class Autostop_Video extends \Elementor\Widget_Base {
     */
     public static function get_button_sizes() {
         return [
-            'xs' => __( 'Extra Small', 'elementor-super-cat' ),
-            'sm' => __( 'Small', 'elementor-super-cat' ),
-            'md' => __( 'Medium', 'elementor-super-cat' ),
-            'lg' => __( 'Large', 'elementor-super-cat' ),
-            'xl' => __( 'Extra Large', 'elementor-super-cat' ),
+            'xs' => __( 'Extra Small', 'elementor' ),
+            'sm' => __( 'Small', 'elementor' ),
+            'md' => __( 'Medium', 'elementor' ),
+            'lg' => __( 'Large', 'elementor' ),
+            'xl' => __( 'Extra Large', 'elementor' ),
         ];
     }
 
@@ -122,7 +122,7 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->start_controls_section(
             'section_video',
             [
-                'label' => __( 'Video', 'elementor-super-cat' ),
+                'label' => __( 'Video', 'elementor' ),
             ]
         );
 
@@ -130,7 +130,7 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'insert_url',
             [
-                'label' => __( 'External URL', 'elementor-super-cat' ),
+                'label' => __( 'External URL', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::SWITCHER,
             ]
         );
@@ -138,7 +138,7 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'hosted_url',
             [
-                'label' => __( 'Choose File', 'elementor-super-cat' ),
+                'label' => __( 'Choose File', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::MEDIA,
                 'dynamic' => [
                     'active' => true,
@@ -156,7 +156,7 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'external_url',
             [
-                'label' => __( 'URL', 'elementor-super-cat' ),
+                'label' => __( 'URL', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::URL,
                 'autocomplete' => false,
                 'show_external' => false,
@@ -170,7 +170,7 @@ class Autostop_Video extends \Elementor\Widget_Base {
                     ],
                 ],
                 'media_type' => 'video',
-                'placeholder' => __( 'Enter your URL', 'elementor-super-cat' ),
+                'placeholder' => __( 'Enter your URL', 'elementor' ),
                 'condition' => [
                     'video_type' => 'hosted',
                     'insert_url' => 'yes',
@@ -181,9 +181,9 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'start',
             [
-                'label' => __( 'Start Time', 'elementor-super-cat' ),
+                'label' => __( 'Start Time', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::NUMBER,
-                'description' => __( 'Specify a start time (in seconds)', 'elementor-super-cat' ),
+                'description' => __( 'Specify a start time (in seconds)', 'elementor' ),
                 'condition' => [
                     'loop' => '',
                 ],
@@ -193,9 +193,9 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'end',
             [
-                'label' => __( 'End Time', 'elementor-super-cat' ),
+                'label' => __( 'End Time', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::NUMBER,
-                'description' => __( 'Specify an end time (in seconds)', 'elementor-super-cat' ),
+                'description' => __( 'Specify an end time (in seconds)', 'elementor' ),
                 'condition' => [
                     'loop' => '',
                 ],
@@ -203,9 +203,45 @@ class Autostop_Video extends \Elementor\Widget_Base {
         );
 
         $this->add_control(
+            'overlay_block',
+            [
+                'label' => __( 'Overlay', 'elementor' ),
+                'type' => \Elementor\Controls_Manager::SWITCHER,
+                'description' => __( 'If ON the video will be blocked by an overlay with a Text and a Button at end time.', 'elementor' ),
+            ]
+        );
+
+        $this->add_control(
+            'auto_open',
+            [
+                'label' => __( 'Auto-open link', 'elementor' ),
+                'type' => \Elementor\Controls_Manager::SWITCHER,
+                'description' => __( 'Set if a link should be opened after video stops. It can be an Elementor Popup.', 'elementor' ),
+            ]
+        );
+
+        $this->add_control(
+            'auto_link',
+            [
+                'label' => __( 'Link', 'elementor' ),
+                'type' => \Elementor\Controls_Manager::URL,
+                'dynamic' => [
+                    'active' => true,
+                ],
+                'placeholder' => __( 'https://your-link.com', 'elementor' ),
+                'default' => [
+                    'url' => '#',
+                ],
+                'condition' => [
+                    'auto_open' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_control(
             'video_options',
             [
-                'label' => __( 'Video Options', 'elementor-super-cat' ),
+                'label' => __( 'Video Options', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::HEADING,
                 'separator' => 'before',
             ]
@@ -214,7 +250,7 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'autoplay',
             [
-                'label' => __( 'Autoplay', 'elementor-super-cat' ),
+                'label' => __( 'Autoplay', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::SWITCHER,
             ]
         );
@@ -222,7 +258,7 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'mute',
             [
-                'label' => __( 'Mute', 'elementor-super-cat' ),
+                'label' => __( 'Mute', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::SWITCHER,
             ]
         );
@@ -230,7 +266,7 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'loop',
             [
-                'label' => __( 'Loop', 'elementor-super-cat' ),
+                'label' => __( 'Loop', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::SWITCHER,
             ]
         );
@@ -238,10 +274,10 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'controls',
             [
-                'label' => __( 'Player Controls', 'elementor-super-cat' ),
+                'label' => __( 'Player Controls', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::SWITCHER,
-                'label_off' => __( 'Hide', 'elementor-super-cat' ),
-                'label_on' => __( 'Show', 'elementor-super-cat' ),
+                'label_off' => __( 'Hide', 'elementor' ),
+                'label_on' => __( 'Show', 'elementor' ),
                 'default' => 'yes',
             ]
         );
@@ -249,10 +285,10 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'showinfo',
             [
-                'label' => __( 'Video Info', 'elementor-super-cat' ),
+                'label' => __( 'Video Info', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::SWITCHER,
-                'label_off' => __( 'Hide', 'elementor-super-cat' ),
-                'label_on' => __( 'Show', 'elementor-super-cat' ),
+                'label_off' => __( 'Hide', 'elementor' ),
+                'label_on' => __( 'Show', 'elementor' ),
                 'default' => 'yes',
             ]
         );
@@ -262,17 +298,17 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'download_button',
             [
-                'label' => __( 'Download Button', 'elementor-super-cat' ),
+                'label' => __( 'Download Button', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::SWITCHER,
-                'label_off' => __( 'Hide', 'elementor-super-cat' ),
-                'label_on' => __( 'Show', 'elementor-super-cat' ),
+                'label_off' => __( 'Hide', 'elementor' ),
+                'label_on' => __( 'Show', 'elementor' ),
             ]
         );
 
         $this->add_control(
             'poster',
             [
-                'label' => __( 'Poster', 'elementor-super-cat' ),
+                'label' => __( 'Poster', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::MEDIA,
             ]
         );
@@ -280,7 +316,7 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'view',
             [
-                'label' => __( 'View', 'elementor-super-cat' ),
+                'label' => __( 'View', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::HIDDEN,
                 'default' => 'hosted',
             ]
@@ -293,7 +329,10 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->start_controls_section(
             'section_heading',
             [
-                'label' => __( 'Title', 'elementor-super-cat' ),
+                'label' => __( 'Title', 'elementor' ),
+                'condition' => [
+                    'overlay_block' => 'yes',
+                ],
             ]
         );
 
@@ -318,22 +357,25 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->start_controls_section(
             'section_button',
             [
-                'label' => __( 'Button', 'elementor-super-cat' ),
+                'label' => __( 'Button', 'elementor' ),
+                'condition' => [
+                    'overlay_block' => 'yes',
+                ],
             ]
         );
 
         $this->add_control(
             'button_type',
             [
-                'label' => __( 'Type', 'elementor-super-cat' ),
+                'label' => __( 'Type', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::SELECT,
                 'default' => '',
                 'options' => [
-                    '' => __( 'Default', 'elementor-super-cat' ),
-                    'info' => __( 'Info', 'elementor-super-cat' ),
-                    'success' => __( 'Success', 'elementor-super-cat' ),
-                    'warning' => __( 'Warning', 'elementor-super-cat' ),
-                    'danger' => __( 'Danger', 'elementor-super-cat' ),
+                    '' => __( 'Default', 'elementor' ),
+                    'info' => __( 'Info', 'elementor' ),
+                    'success' => __( 'Success', 'elementor' ),
+                    'warning' => __( 'Warning', 'elementor' ),
+                    'danger' => __( 'Danger', 'elementor' ),
                 ],
                 'prefix_class' => 'elementor-button-',
             ]
@@ -342,27 +384,41 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'text',
             [
-                'label' => __( 'Text', 'elementor-super-cat' ),
+                'label' => __( 'Text', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::TEXT,
                 'dynamic' => [
                     'active' => true,
                 ],
-                'default' => __( 'Click here', 'elementor-super-cat' ),
-                'placeholder' => __( 'Click here', 'elementor-super-cat' ),
+                'default' => __( 'Click here', 'elementor' ),
+                'placeholder' => __( 'Click here', 'elementor' ),
             ]
         );
 
+        // $this->add_control(
+        //     'link',
+        //     [
+        //         'label' => __( 'Link', 'elementor' ),
+        //         'type' => \Elementor\Controls_Manager::TEXT,
+        //         'dynamic' => [
+        //             'active' => true,
+        //         ],
+        //         'placeholder' => __( 'https://your-link.com', 'elementor' ),
+        //         'default' => __( '#', 'elementor' ),
+        //
+        //     ]
+        // );
         $this->add_control(
             'link',
             [
-                'label' => __( 'Link', 'elementor-super-cat' ),
-                'type' => \Elementor\Controls_Manager::TEXT,
+                'label' => __( 'Link', 'elementor' ),
+                'type' => \Elementor\Controls_Manager::URL,
                 'dynamic' => [
                     'active' => true,
                 ],
-                'placeholder' => __( 'https://your-link.com', 'elementor-super-cat' ),
-                'default' => __( '#', 'elementor-super-cat' ),
-
+                'placeholder' => __( 'https://your-link.com', 'elementor' ),
+                'default' => [
+                    'url' => '#',
+                ],
             ]
         );
 
@@ -381,23 +437,23 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_responsive_control(
             'align',
             [
-                'label' => __( 'Alignment', 'elementor-super-cat' ),
+                'label' => __( 'Alignment', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::CHOOSE,
                 'options' => [
                     'left'    => [
-                        'title' => __( 'Left', 'elementor-super-cat' ),
+                        'title' => __( 'Left', 'elementor' ),
                         'icon' => 'fa fa-align-left',
                     ],
                     'center' => [
-                        'title' => __( 'Center', 'elementor-super-cat' ),
+                        'title' => __( 'Center', 'elementor' ),
                         'icon' => 'fa fa-align-center',
                     ],
                     'right' => [
-                        'title' => __( 'Right', 'elementor-super-cat' ),
+                        'title' => __( 'Right', 'elementor' ),
                         'icon' => 'fa fa-align-right',
                     ],
                     'justify' => [
-                        'title' => __( 'Justified', 'elementor-super-cat' ),
+                        'title' => __( 'Justified', 'elementor' ),
                         'icon' => 'fa fa-align-justify',
                     ],
                 ],
@@ -409,7 +465,7 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'size',
             [
-                'label' => __( 'Size', 'elementor-super-cat' ),
+                'label' => __( 'Size', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::SELECT,
                 'default' => 'sm',
                 'options' => self::get_button_sizes(),
@@ -420,7 +476,7 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'icon',
             [
-                'label' => __( 'Icon', 'elementor-super-cat' ),
+                'label' => __( 'Icon', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::ICON,
                 'label_block' => true,
                 'default' => '',
@@ -430,12 +486,12 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'icon_align',
             [
-                'label' => __( 'Icon Position', 'elementor-super-cat' ),
+                'label' => __( 'Icon Position', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::SELECT,
                 'default' => 'left',
                 'options' => [
-                    'left' => __( 'Before', 'elementor-super-cat' ),
-                    'right' => __( 'After', 'elementor-super-cat' ),
+                    'left' => __( 'Before', 'elementor' ),
+                    'right' => __( 'After', 'elementor' ),
                 ],
                 'condition' => [
                     'icon!' => '',
@@ -446,7 +502,7 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'icon_indent',
             [
-                'label' => __( 'Icon Spacing', 'elementor-super-cat' ),
+                'label' => __( 'Icon Spacing', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -466,7 +522,7 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'view',
             [
-                'label' => __( 'View', 'elementor-super-cat' ),
+                'label' => __( 'View', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::HIDDEN,
                 'default' => 'traditional',
             ]
@@ -475,7 +531,7 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_control(
             'button_css_id',
             [
-                'label' => __( 'Button ID', 'elementor-super-cat' ),
+                'label' => __( 'Button ID', 'elementor' ),
                 'type' => \Elementor\Controls_Manager::TEXT,
                 'dynamic' => [
                     'active' => true,
@@ -680,6 +736,9 @@ class Autostop_Video extends \Elementor\Widget_Base {
             [
                 'label' => __( 'Overlay', 'elementor' ),
                 'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'overlay_block' => 'yes',
+                ],
             ]
         );
 
@@ -710,6 +769,9 @@ class Autostop_Video extends \Elementor\Widget_Base {
             [
                 'label' => __( 'Title', 'elementor' ),
                 'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'overlay_block' => 'yes',
+                ],
             ]
         );
 
@@ -897,6 +959,9 @@ class Autostop_Video extends \Elementor\Widget_Base {
             [
                 'label' => __( 'Button', 'elementor-super-cat' ),
                 'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'overlay_block' => 'yes',
+                ],
             ]
         );
 
@@ -1101,9 +1166,8 @@ class Autostop_Video extends \Elementor\Widget_Base {
         $this->add_render_attribute( 'video-wrapper', 'class', 'elementor-open-' . ( $settings['lightbox'] ? 'lightbox' : 'inline' ) );
 
 
-
-        if ( ! empty( $settings['link'] ) ) {
-            $this->add_render_attribute( 'button', 'href', $settings['link'] );
+        if ( ! empty( $settings['link']['url'] ) ) {
+            $this->add_render_attribute( 'button', 'href', $settings['link']['url'] );
             $this->add_render_attribute( 'button', 'class', 'elementor-button-link' );
 
             if ( $settings['new_tab'] == "yes" ) {
@@ -1125,300 +1189,322 @@ class Autostop_Video extends \Elementor\Widget_Base {
         ?>
         <div <?php echo $this->get_render_attribute_string( 'video-wrapper' ); ?>>
 
-            <div class="super-video-stopper" id="video-stopper-<?php echo($this->get_id()); ?>"
-                <?php if(!(\Elementor\Plugin::$instance->preview->is_preview_mode() || \Elementor\Plugin::$instance->editor->is_edit_mode())){echo ('style="display:none;"');} ?> >
-                <div>
-                    <center>
-                        <div class="elementor-heading-title">
-                            <?php echo($settings['title_text']); ?>
-                        </div>
-                        <div class="elementor-widget-container">
-                            <div class="elementor-button-wrapper">
-                                <a <?php echo $this->get_render_attribute_string( 'button' ); ?>>
-                                    <?php $this->render_text(); ?>
-                                </a>
-                            </div>
-                        </div>
-                    </center>
-                </div>
-            </div>
+            <?php  if($settings['overlay_block'] == "yes"): ?>
 
-
-            <?php
-            if ( ! $settings['lightbox'] ) {
-                echo $video_html; // XSS ok.
-            }
-
-            if ( $this->has_image_overlay() ) {
-                $this->add_render_attribute( 'image-overlay', 'class', 'elementor-custom-embed-image-overlay' );
-
-                if ( $settings['lightbox'] ) {
-                    $lightbox_url = $video_url;
-
-                    $lightbox_options = [
-                        'type' => 'video',
-                        'videoType' => 'hosted',
-                        'url' => $lightbox_url,
-                        'modalOptions' => [
-                            'id' => 'elementor-lightbox-' . $this->get_id(),
-                            'entranceAnimation' => $settings['lightbox_content_animation'],
-                            'entranceAnimation_tablet' => $settings['lightbox_content_animation_tablet'],
-                            'entranceAnimation_mobile' => $settings['lightbox_content_animation_mobile'],
-                            'videoAspectRatio' => $settings['aspect_ratio'],
-                        ],
-                    ];
-
-                    $lightbox_options['videoParams'] = $this->get_hosted_params();
-
-                    $this->add_render_attribute( 'image-overlay', [
-                        'data-elementor-open-lightbox' => 'yes',
-                        'data-elementor-lightbox' => wp_json_encode( $lightbox_options ),
-                        ] );
-
-                        if ( Plugin::$instance->editor->is_edit_mode() ) {
-                            $this->add_render_attribute( 'image-overlay', [
-                                'class' => 'elementor-clickable',
-                                ] );
-                            }
-                        } else {
-                            $this->add_render_attribute( 'image-overlay', 'style', 'background-image: url(' . \Elementor\Group_Control_Image_Size::get_attachment_image_src( $settings['image_overlay']['id'], 'image_overlay', $settings ) . ');' );
-                        }
-                        ?>
-                        <div <?php echo $this->get_render_attribute_string( 'image-overlay' ); ?>>
-                            <?php if ( $settings['lightbox'] ) : ?>
-                                <?php echo \Elementor\Group_Control_Image_Size::get_attachment_image_html( $settings, 'image_overlay' ); ?>
-                            <?php endif; ?>
-
-
-
-                            <?php if ( 'yes' === $settings['show_play_icon'] ) : ?>
-                                <div class="elementor-custom-embed-play" role="button">
-                                    <i class="eicon-play" aria-hidden="true"></i>
-                                    <span class="elementor-screen-only"><?php echo __( 'Play Video', 'elementor-super-cat' ); ?></span>
+                <div class="super-video-stopper" id="video-stopper-<?php echo($this->get_id()); ?>"
+                    <?php if(!(\Elementor\Plugin::$instance->preview->is_preview_mode() || \Elementor\Plugin::$instance->editor->is_edit_mode())){echo ('style="display:none;"');} ?> >
+                        <div>
+                            <center>
+                                <div class="elementor-heading-title">
+                                    <?php echo($settings['title_text']); ?>
                                 </div>
-                            <?php endif; ?>
+                                <div class="elementor-widget-container">
+                                    <div class="elementor-button-wrapper">
+                                        <a <?php echo $this->get_render_attribute_string( 'button' ); ?>>
+                                            <?php $this->render_text(); ?>
+                                        </a>
+                                    </div>
+                                </div>
+                            </center>
                         </div>
-                    <?php } ?>
-                </div>
-                <script>
-                var $jq = jQuery.noConflict();
-                var video = $jq("#video-<?php echo($this->get_id()); ?>");
-                var stopper = $jq("#video-stopper-<?php echo($this->get_id()); ?>");
-                var end = parseInt("<?php echo($settings['end']); ?>");
-                setInterval(function(){
-                    if(end && video.get(0).currentTime >= end){
-                        video.get(0).pause();
-                        stopper.show();
-                    }
-                }, 300);
-                </script>
+                    </div>
+
+                <?php endif; ?>
+
+
                 <?php
-            }
-
-            /**
-            * Render video widget as plain content.
-            *
-            * Override the default behavior, by printing the video URL insted of rendering it.
-            *
-            * @since 1.4.5
-            * @access public
-            */
-            public function render_plain_content() {
-                $settings = $this->get_settings_for_display();
-
-                if ( 'hosted' !== $settings['video_type'] ) {
-                    $url = $settings[ $settings['video_type'] . '_url' ];
-                } else {
-                    $url = $this->get_hosted_video_url();
+                if ( ! $settings['lightbox'] ) {
+                    echo $video_html; // XSS ok.
                 }
 
-                echo esc_url( $url );
-            }
+                if ( $this->has_image_overlay() ) {
+                    $this->add_render_attribute( 'image-overlay', 'class', 'elementor-custom-embed-image-overlay' );
 
-            /**
-            * Get embed params.
-            *
-            * Retrieve video widget embed parameters.
-            *
-            * @since 1.5.0
-            * @access public
-            *
-            * @return array Video embed parameters.
-            */
-            public function get_embed_params() {
-                $settings = $this->get_settings_for_display();
+                    if ( $settings['lightbox'] ) {
+                        $lightbox_url = $video_url;
 
-                $params = [];
+                        $lightbox_options = [
+                            'type' => 'video',
+                            'videoType' => 'hosted',
+                            'url' => $lightbox_url,
+                            'modalOptions' => [
+                                'id' => 'elementor-lightbox-' . $this->get_id(),
+                                'entranceAnimation' => $settings['lightbox_content_animation'],
+                                'entranceAnimation_tablet' => $settings['lightbox_content_animation_tablet'],
+                                'entranceAnimation_mobile' => $settings['lightbox_content_animation_mobile'],
+                                'videoAspectRatio' => $settings['aspect_ratio'],
+                            ],
+                        ];
 
-                if ( $settings['autoplay'] && ! $this->has_image_overlay() ) {
-                    $params['autoplay'] = '1';
-                }
+                        $lightbox_options['videoParams'] = $this->get_hosted_params();
 
-                $params_dictionary = [];
+                        $this->add_render_attribute( 'image-overlay', [
+                            'data-elementor-open-lightbox' => 'yes',
+                            'data-elementor-lightbox' => wp_json_encode( $lightbox_options ),
+                            ] );
+
+                            if ( Plugin::$instance->editor->is_edit_mode() ) {
+                                $this->add_render_attribute( 'image-overlay', [
+                                    'class' => 'elementor-clickable',
+                                    ] );
+                                }
+                            } else {
+                                $this->add_render_attribute( 'image-overlay', 'style', 'background-image: url(' . \Elementor\Group_Control_Image_Size::get_attachment_image_src( $settings['image_overlay']['id'], 'image_overlay', $settings ) . ');' );
+                            }
+                            ?>
+                            <div <?php echo $this->get_render_attribute_string( 'image-overlay' ); ?>>
+                                <?php if ( $settings['lightbox'] ) : ?>
+                                    <?php echo \Elementor\Group_Control_Image_Size::get_attachment_image_html( $settings, 'image_overlay' ); ?>
+                                <?php endif; ?>
 
 
-                foreach ( $params_dictionary as $key => $param_name ) {
-                    $setting_name = $param_name;
 
-                    if ( is_string( $key ) ) {
-                        $setting_name = $key;
-                    }
+                                <?php if ( 'yes' === $settings['show_play_icon'] ) : ?>
+                                    <div class="elementor-custom-embed-play" role="button">
+                                        <i class="eicon-play" aria-hidden="true"></i>
+                                        <span class="elementor-screen-only"><?php echo __( 'Play Video', 'elementor-super-cat' ); ?></span>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <script>
+                    var $jq = jQuery.noConflict();
+                    var video = $jq("#video-<?php echo($this->get_id()); ?>");
+                    var stopper = $jq("#video-stopper-<?php echo($this->get_id()); ?>");
+                    var end = parseInt("<?php echo($settings['end']); ?>");
+                    var interval_<?php echo($this->get_id()); ?> = setInterval(function(){
+                        if(end && video.get(0).currentTime >= end){
+                            if(document.webkitExitFullscreen){document.webkitExitFullscreen()}
+                            if(document.mozCancelFullscreen){document.mozCancelFullscreen()}
+                            if(document.exitFullscreen){document.exitFullscreen()}
+                            if (document.exitPictureInPicture){document.exitPictureInPicture()}
+                            video.get(0).pause();
+                            <?php
+                            //window.elementorProFrontend.modules.linkActions.runAction("#elementor-action%3Aaction%3Dpopup%3Aopen%20settings%3DeyJpZCI6IjI2MSIsInRvZ2dsZSI6ZmFsc2V9");
+                            if($settings['auto_open'] == "yes"){
+                                if(substr($settings["auto_link"]["url"], 0, 17) == "#elementor-action"){
+                                    echo('window.elementorProFrontend.modules.linkActions.runAction("'.$settings["auto_link"]["url"].'");');
+                                }else{
+                                    echo('window.location = "'.$settings["auto_link"]["url"].'";');
+                                }
+                            }
+                            if($settings['overlay_block'] == "yes"){
+                                echo('$jq("#video-stopper-' . $this->get_id() . '").show();');
+                            }
 
-                    $setting_value = $settings[ $setting_name ] ? '1' : '0';
-
-                    $params[ $param_name ] = $setting_value;
-                }
-
-                return $params;
-            }
-
-            /**
-            * Whether the video widget has an overlay image or not.
-            *
-            * Used to determine whether an overlay image was set for the video.
-            *
-            * @since 1.0.0
-            * @access protected
-            *
-            * @return bool Whether an image overlay was set for the video.
-            */
-            protected function has_image_overlay() {
-                $settings = $this->get_settings_for_display();
-
-                return ! empty( $settings['image_overlay']['url'] ) && 'yes' === $settings['show_image_overlay'];
-            }
-
-            /**
-            * @since 2.1.0
-            * @access private
-            */
-            private function get_embed_options() {
-                $settings = $this->get_settings_for_display();
-
-                $embed_options = [];
-
-                return $embed_options;
-            }
-
-            /**
-            * @since 2.1.0
-            * @access private
-            */
-            private function get_hosted_params() {
-                $settings = $this->get_settings_for_display();
-
-                $video_params = [];
-
-                foreach ( [ 'autoplay', 'loop', 'controls' ] as $option_name ) {
-                    if ( $settings[ $option_name ] ) {
-                        $video_params[ $option_name ] = '';
-                    }
-                }
-
-                if ( $settings['mute'] ) {
-                    $video_params['muted'] = 'muted';
-                }
-
-                if ( ! $settings['download_button'] ) {
-                    $video_params['controlsList'] = 'nodownload';
-                }
-
-                if ( $settings['poster']['url'] ) {
-                    $video_params['poster'] = $settings['poster']['url'];
-                }
-
-                return $video_params;
-            }
-
-            /**
-            * @param bool $from_media
-            *
-            * @return string
-            * @since 2.1.0
-            * @access private
-            */
-            private function get_hosted_video_url() {
-                $settings = $this->get_settings_for_display();
-
-                if ( ! empty( $settings['insert_url'] ) ) {
-                    $video_url = $settings['external_url']['url'];
-                } else {
-                    $video_url = $settings['hosted_url']['url'];
-                }
-
-                if ( empty( $video_url ) ) {
-                    return '';
-                }
-
-                if ( $settings['start'] || $settings['end'] ) {
-                    $video_url .= '#t=';
-                }
-
-                if ( $settings['start'] ) {
-                    $video_url .= $settings['start'];
-                }
-
-                if ( $settings['end'] ) {
-                    $video_url .= ',' . $settings['end'];
-                }
-
-                return $video_url;
-            }
-
-            /**
-            *
-            * @since 2.1.0
-            * @access private
-            */
-            private function render_hosted_video() {
-                $video_url = $this->get_hosted_video_url();
-                if ( empty( $video_url ) ) {
-                    return;
-                }
-
-                $video_params = $this->get_hosted_params();
-                ?>
-                <video class="elementor-video" id="video-<?php echo($this->get_id()); ?>" src="<?php echo esc_url( $video_url ); ?>" <?php echo \Elementor\Utils::render_html_attributes( $video_params ); ?>></video>
-                <?php
-            }
-
-            /**
-            * Render button text.
-            *
-            * Render button widget text.
-            *
-            * @since 1.5.0
-            * @access protected
-            */
-            protected function render_text() {
-                $settings = $this->get_settings_for_display();
-
-                $this->add_render_attribute( [
-                    'content-wrapper' => [
-                        'class' => 'elementor-button-content-wrapper',
-                    ],
-                    'icon-align' => [
-                        'class' => [
-                            'elementor-button-icon',
-                            'elementor-align-icon-' . $settings['icon_align'],
-                        ],
-                    ],
-                    'text' => [
-                        'class' => 'elementor-button-text',
-                    ],
-                    ] );
-
-                    $this->add_inline_editing_attributes( 'text', 'none' );
-                    ?>
-                    <span <?php echo $this->get_render_attribute_string( 'content-wrapper' ); ?>>
-                        <?php if ( ! empty( $settings['icon'] ) ) : ?>
-                            <span <?php echo $this->get_render_attribute_string( 'icon-align' ); ?>>
-                                <i class="<?php echo esc_attr( $settings['icon'] ); ?>" aria-hidden="true"></i>
-                            </span>
-                        <?php endif; ?>
-                        <span <?php echo $this->get_render_attribute_string( 'text' ); ?>><?php echo $settings['text']; ?></span>
-                    </span>
+                            ?>
+                            clearInterval(interval_<?php echo($this->get_id()); ?>);
+                        }
+                    }, 300);
+                    </script>
                     <?php
                 }
 
-            }
+                /**
+                * Render video widget as plain content.
+                *
+                * Override the default behavior, by printing the video URL insted of rendering it.
+                *
+                * @since 1.4.5
+                * @access public
+                */
+                public function render_plain_content() {
+                    $settings = $this->get_settings_for_display();
+
+                    if ( 'hosted' !== $settings['video_type'] ) {
+                        $url = $settings[ $settings['video_type'] . '_url' ];
+                    } else {
+                        $url = $this->get_hosted_video_url();
+                    }
+
+                    echo esc_url( $url );
+                }
+
+                /**
+                * Get embed params.
+                *
+                * Retrieve video widget embed parameters.
+                *
+                * @since 1.5.0
+                * @access public
+                *
+                * @return array Video embed parameters.
+                */
+                public function get_embed_params() {
+                    $settings = $this->get_settings_for_display();
+
+                    $params = [];
+
+                    if ( $settings['autoplay'] && ! $this->has_image_overlay() ) {
+                        $params['autoplay'] = '1';
+                    }
+
+                    $params_dictionary = [];
+
+
+                    foreach ( $params_dictionary as $key => $param_name ) {
+                        $setting_name = $param_name;
+
+                        if ( is_string( $key ) ) {
+                            $setting_name = $key;
+                        }
+
+                        $setting_value = $settings[ $setting_name ] ? '1' : '0';
+
+                        $params[ $param_name ] = $setting_value;
+                    }
+
+                    return $params;
+                }
+
+                /**
+                * Whether the video widget has an overlay image or not.
+                *
+                * Used to determine whether an overlay image was set for the video.
+                *
+                * @since 1.0.0
+                * @access protected
+                *
+                * @return bool Whether an image overlay was set for the video.
+                */
+                protected function has_image_overlay() {
+                    $settings = $this->get_settings_for_display();
+
+                    return ! empty( $settings['image_overlay']['url'] ) && 'yes' === $settings['show_image_overlay'];
+                }
+
+                /**
+                * @since 2.1.0
+                * @access private
+                */
+                private function get_embed_options() {
+                    $settings = $this->get_settings_for_display();
+
+                    $embed_options = [];
+
+                    return $embed_options;
+                }
+
+                /**
+                * @since 2.1.0
+                * @access private
+                */
+                private function get_hosted_params() {
+                    $settings = $this->get_settings_for_display();
+
+                    $video_params = [];
+
+                    foreach ( [ 'autoplay', 'loop', 'controls' ] as $option_name ) {
+                        if ( $settings[ $option_name ] ) {
+                            $video_params[ $option_name ] = '';
+                        }
+                    }
+
+                    if ( $settings['mute'] ) {
+                        $video_params['muted'] = 'muted';
+                    }
+
+                    if ( ! $settings['download_button'] ) {
+                        $video_params['controlsList'] = 'nodownload';
+                    }
+
+                    if ( $settings['poster']['url'] ) {
+                        $video_params['poster'] = $settings['poster']['url'];
+                    }
+
+                    return $video_params;
+                }
+
+                /**
+                * @param bool $from_media
+                *
+                * @return string
+                * @since 2.1.0
+                * @access private
+                */
+                private function get_hosted_video_url() {
+                    $settings = $this->get_settings_for_display();
+
+                    if ( ! empty( $settings['insert_url'] ) ) {
+                        $video_url = $settings['external_url']['url'];
+                    } else {
+                        $video_url = $settings['hosted_url']['url'];
+                    }
+
+                    if ( empty( $video_url ) ) {
+                        return '';
+                    }
+
+                    if ( $settings['start'] || $settings['end'] ) {
+                        $video_url .= '#t=';
+                    }
+
+                    if ( $settings['start'] ) {
+                        $video_url .= $settings['start'];
+                    }
+
+                    if ( $settings['end'] ) {
+                        $video_url .= ',' . $settings['end'];
+                    }
+
+                    return $video_url;
+                }
+
+                /**
+                *
+                * @since 2.1.0
+                * @access private
+                */
+                private function render_hosted_video() {
+                    $video_url = $this->get_hosted_video_url();
+                    if ( empty( $video_url ) ) {
+                        return;
+                    }
+
+                    $video_params = $this->get_hosted_params();
+                    ?>
+                    <video class="elementor-video" id="video-<?php echo($this->get_id()); ?>" src="<?php echo esc_url( $video_url ); ?>" <?php echo \Elementor\Utils::render_html_attributes( $video_params ); ?> disablePictureInPicture></video>
+                    <?php
+                }
+
+                /**
+                * Render button text.
+                *
+                * Render button widget text.
+                *
+                * @since 1.5.0
+                * @access protected
+                */
+                protected function render_text() {
+                    $settings = $this->get_settings_for_display();
+
+                    $this->add_render_attribute( [
+                        'content-wrapper' => [
+                            'class' => 'elementor-button-content-wrapper',
+                        ],
+                        'icon-align' => [
+                            'class' => [
+                                'elementor-button-icon',
+                                'elementor-align-icon-' . $settings['icon_align'],
+                            ],
+                        ],
+                        'text' => [
+                            'class' => 'elementor-button-text',
+                        ],
+                        ] );
+
+                        $this->add_inline_editing_attributes( 'text', 'none' );
+                        ?>
+                        <span <?php echo $this->get_render_attribute_string( 'content-wrapper' ); ?>>
+                            <?php if ( ! empty( $settings['icon'] ) ) : ?>
+                                <span <?php echo $this->get_render_attribute_string( 'icon-align' ); ?>>
+                                    <i class="<?php echo esc_attr( $settings['icon'] ); ?>" aria-hidden="true"></i>
+                                </span>
+                            <?php endif; ?>
+                            <span <?php echo $this->get_render_attribute_string( 'text' ); ?>><?php echo $settings['text']; ?></span>
+                        </span>
+                        <?php
+                    }
+
+                }
