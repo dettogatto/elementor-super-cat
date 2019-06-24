@@ -2,8 +2,8 @@
 /**
 * Plugin Name: Elementor SuperCat
 * Description: Elementor add-ons
-* Plugin URI:  https://github.com/NicolaCavallazzi/elementor-super-cat
-* Version:     0.5.3
+* Plugin URI:  https://github.com/dettogatto/elementor-super-cat
+* Version:     1.0
 * Author:      Nicola Cavallazzi
 * Author URI:  https://cosmo.cat/
 * Text Domain: elementor-super-cat
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 require 'plugin-update-checker/plugin-update-checker.php';
 $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-	'https://github.com/NicolaCavallazzi/elementor-super-cat/',
+	'https://github.com/dettogatto/elementor-super-cat/',
 	__FILE__,
 	'unique-plugin-or-theme-slug'
 );
