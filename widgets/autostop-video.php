@@ -1275,6 +1275,7 @@ class Autostop_Video extends \Elementor\Widget_Base {
                     var end = parseInt("<?php echo($settings['end']); ?>");
                     var interval_<?php echo($this->get_id()); ?> = setInterval(function(){
                         if(end && video.get(0).currentTime >= end){
+                            if(video.get(0).webkitExitFullScreen){video.get(0).webkitExitFullScreen()}
                             if(document.webkitExitFullscreen){document.webkitExitFullscreen()}
                             if(document.mozCancelFullscreen){document.mozCancelFullscreen()}
                             if(document.exitFullscreen){document.exitFullscreen()}
