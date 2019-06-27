@@ -7,15 +7,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 * Elementor Post Filter
 *
 * Elementor widget for Post Filter.
-*
-* @since 0.2
 */
 class Post_Filter extends \Elementor\Widget_Base {
 
     /**
     * Retrieve the widget name.
-    *
-    * @since 0.2
     *
     * @access public
     *
@@ -28,8 +24,6 @@ class Post_Filter extends \Elementor\Widget_Base {
     /**
     * Retrieve the widget title.
     *
-    * @since 0.2
-    *
     * @access public
     *
     * @return string Widget title.
@@ -40,8 +34,6 @@ class Post_Filter extends \Elementor\Widget_Base {
 
     /**
     * Retrieve the widget icon.
-    *
-    * @since 0.2
     *
     * @access public
     *
@@ -59,8 +51,6 @@ class Post_Filter extends \Elementor\Widget_Base {
     * Note that currently Elementor supports only one category.
     * When multiple categories passed, Elementor uses the first one.
     *
-    * @since 0.2
-    *
     * @access public
     *
     * @return array Widget categories.
@@ -74,8 +64,6 @@ class Post_Filter extends \Elementor\Widget_Base {
     *
     * Used to set scripts dependencies required to run the widget.
     *
-    * @since 0.2
-    *
     * @access public
     *
     * @return array Widget scripts dependencies.
@@ -88,8 +76,6 @@ class Post_Filter extends \Elementor\Widget_Base {
     * Register the widget controls.
     *
     * Adds different input fields to allow the user to change and customize the widget settings.
-    *
-    * @since 0.2
     *
     * @access protected
     */
@@ -236,18 +222,12 @@ class Post_Filter extends \Elementor\Widget_Base {
     *
     * Written in PHP and used to generate the final HTML.
     *
-    * @since 0.2
-    *
     * @access protected
     */
     protected function render() {
         $settings = $this->get_settings_for_display();
-        $characters = 'abcdefghijklmnopqrstuvwxyz';
-        $charactersLength = strlen($characters);
-        $randomString = 'filter-' . $settings['taxonomy_name'] . "-";
-        for ($i = 0; $i < 10; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
+        $filtererId = 'filter-' . $settings['taxonomy_name'] . "-" . $this->get_id();
+
 
         $phpTax = $settings['taxonomy'];
         $jsTax = $settings['taxonomy'];
@@ -270,7 +250,7 @@ class Post_Filter extends \Elementor\Widget_Base {
             var tax = "<?php echo $jsTax; ?>";
             var allTxt = "<?php echo $settings['all_text']; ?>";
             var postId = "#<?php echo $settings['post_id']; ?>";
-            var theFiltererId = "#<?php echo $randomString; ?>";
+            var theFiltererId = "#<?php echo $filtererId; ?>";
 
             var found = <?php echo(json_encode($terms)); ?>;
             alert
@@ -318,7 +298,7 @@ class Post_Filter extends \Elementor\Widget_Base {
         });
         </script>
         <div>
-            <ul class="elementor-portfolio__filters cat-filter-for-<?php echo $settings['post_id']; ?>" id="<?php echo $randomString; ?>">
+            <ul class="elementor-portfolio__filters cat-filter-for-<?php echo $settings['post_id']; ?>" id="<?php echo $filtererId; ?>">
             </ul>
         </div>
 
@@ -331,14 +311,12 @@ class Post_Filter extends \Elementor\Widget_Base {
     *
     * Written as a Backbone JavaScript template and used to generate the live preview.
     *
-    * @since 0.2
-    *
     * @access protected
     */
     protected function _content_template() {
         ?>
         <div>
-            <ul class="elementor-portfolio__filters cat-filter-for-<?php echo $settings['post_id']; ?>" id="<?php echo $randomString; ?>">
+            <ul class="elementor-portfolio__filters cat-filter-for-<?php echo $settings['post_id']; ?>">
                 <#
                 var allTxt = settings.all_text;
                 var tax = settings.taxonomy;

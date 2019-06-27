@@ -43,6 +43,10 @@ The widget has 3 options:
 
 This widget is identical to a normal Elementor Button except you can place received GET and POST parameters in the link field
 
+## Video CTA
+
+This widget is similar to the built-in Elementor Video Widget, but it gives you the ability to show a Call to Action overlayed to the paused video and to open a Popup or a link at the chosen end-time of video.
+
 ---
 
 ### Plugin folder structure
@@ -50,10 +54,6 @@ This widget is identical to a normal Elementor Button except you can place recei
 * `assets` directory - Holds the assets (js & css) for the widgets
 * `plugin-update-checker` directory - Holds the updater
 * `widgets` directory - Holds Plugin widgets
-  * `/checkbox-filter.php` - Post Checkbox Filter Widget class
-  * `/form-poster.php` - Form Poster Widget class
-  * `/param-button.php` - Param Button Widget class
-  * `/post-filter.php` - Post Filter Bar Widget class
 * `index.php`	- Prevent direct access to directories
 * `elementor-super-cat.php`	- Main plugin file, used as a loader if plugin minimum requirements are met.
 * `plugin.php` - The actual Plugin file/Class.

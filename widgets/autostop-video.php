@@ -12,8 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 * Elementor video widget.
 *
 * Elementor widget that displays a video player.
-*
-* @since 1.0.0
 */
 class Autostop_Video extends \Elementor\Widget_Base {
 
@@ -22,7 +20,6 @@ class Autostop_Video extends \Elementor\Widget_Base {
     *
     * Retrieve video widget name.
     *
-    * @since 1.0.0
     * @access public
     *
     * @return string Widget name.
@@ -36,7 +33,6 @@ class Autostop_Video extends \Elementor\Widget_Base {
     *
     * Retrieve video widget title.
     *
-    * @since 1.0.0
     * @access public
     *
     * @return string Widget title.
@@ -50,7 +46,6 @@ class Autostop_Video extends \Elementor\Widget_Base {
     *
     * Retrieve video widget icon.
     *
-    * @since 1.0.0
     * @access public
     *
     * @return string Widget icon.
@@ -64,7 +59,6 @@ class Autostop_Video extends \Elementor\Widget_Base {
     *
     * Retrieve an array of button sizes for the button widget.
     *
-    * @since 1.0.0
     * @access public
     * @static
     *
@@ -87,7 +81,6 @@ class Autostop_Video extends \Elementor\Widget_Base {
     *
     * Used to determine where to display the widget in the editor.
     *
-    * @since 2.0.0
     * @access public
     *
     * @return array Widget categories.
@@ -101,7 +94,6 @@ class Autostop_Video extends \Elementor\Widget_Base {
     *
     * Retrieve the list of keywords the widget belongs to.
     *
-    * @since 2.1.0
     * @access public
     *
     * @return array Widget keywords.
@@ -115,7 +107,6 @@ class Autostop_Video extends \Elementor\Widget_Base {
     *
     * Adds different input fields to allow the user to change and customize the widget settings.
     *
-    * @since 1.0.0
     * @access protected
     */
     protected function _register_controls() {
@@ -1129,7 +1120,6 @@ class Autostop_Video extends \Elementor\Widget_Base {
     *
     * Written in PHP and used to generate the final HTML.
     *
-    * @since 1.0.0
     * @access protected
     */
     protected function render() {
@@ -1307,7 +1297,6 @@ class Autostop_Video extends \Elementor\Widget_Base {
                 *
                 * Override the default behavior, by printing the video URL insted of rendering it.
                 *
-                * @since 1.4.5
                 * @access public
                 */
                 public function render_plain_content() {
@@ -1327,7 +1316,6 @@ class Autostop_Video extends \Elementor\Widget_Base {
                 *
                 * Retrieve video widget embed parameters.
                 *
-                * @since 1.5.0
                 * @access public
                 *
                 * @return array Video embed parameters.
@@ -1364,7 +1352,6 @@ class Autostop_Video extends \Elementor\Widget_Base {
                 *
                 * Used to determine whether an overlay image was set for the video.
                 *
-                * @since 1.0.0
                 * @access protected
                 *
                 * @return bool Whether an image overlay was set for the video.
@@ -1376,7 +1363,6 @@ class Autostop_Video extends \Elementor\Widget_Base {
                 }
 
                 /**
-                * @since 2.1.0
                 * @access private
                 */
                 private function get_embed_options() {
@@ -1388,7 +1374,6 @@ class Autostop_Video extends \Elementor\Widget_Base {
                 }
 
                 /**
-                * @since 2.1.0
                 * @access private
                 */
                 private function get_hosted_params() {
@@ -1421,7 +1406,6 @@ class Autostop_Video extends \Elementor\Widget_Base {
                 * @param bool $from_media
                 *
                 * @return string
-                * @since 2.1.0
                 * @access private
                 */
                 private function get_hosted_video_url() {
@@ -1454,7 +1438,6 @@ class Autostop_Video extends \Elementor\Widget_Base {
 
                 /**
                 *
-                * @since 2.1.0
                 * @access private
                 */
                 private function render_hosted_video() {
@@ -1474,7 +1457,6 @@ class Autostop_Video extends \Elementor\Widget_Base {
                 *
                 * Render button widget text.
                 *
-                * @since 1.5.0
                 * @access protected
                 */
                 protected function render_text() {

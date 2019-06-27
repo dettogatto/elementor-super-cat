@@ -10,8 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Elementor widget that displays a button with the ability to control every
  * aspect of the button design.
- *
- * @since 1.0.0
  */
 class Param_Button extends \Elementor\Widget_Base {
 
@@ -20,7 +18,6 @@ class Param_Button extends \Elementor\Widget_Base {
 	 *
 	 * Retrieve button widget name.
 	 *
-	 * @since 1.0.0
 	 * @access public
 	 *
 	 * @return string Widget name.
@@ -34,7 +31,6 @@ class Param_Button extends \Elementor\Widget_Base {
 	 *
 	 * Retrieve button widget title.
 	 *
-	 * @since 1.0.0
 	 * @access public
 	 *
 	 * @return string Widget title.
@@ -48,7 +44,6 @@ class Param_Button extends \Elementor\Widget_Base {
 	 *
 	 * Retrieve button widget icon.
 	 *
-	 * @since 1.0.0
 	 * @access public
 	 *
 	 * @return string Widget icon.
@@ -64,7 +59,6 @@ class Param_Button extends \Elementor\Widget_Base {
 	 *
 	 * Used to determine where to display the widget in the editor.
 	 *
-	 * @since 2.0.0
 	 * @access public
 	 *
 	 * @return array Widget categories.
@@ -78,7 +72,6 @@ class Param_Button extends \Elementor\Widget_Base {
 	 *
 	 * Retrieve an array of button sizes for the button widget.
 	 *
-	 * @since 1.0.0
 	 * @access public
 	 * @static
 	 *
@@ -99,7 +92,6 @@ class Param_Button extends \Elementor\Widget_Base {
 	 *
 	 * Adds different input fields to allow the user to change and customize the widget settings.
 	 *
-	 * @since 1.0.0
 	 * @access protected
 	 */
 	protected function _register_controls() {
@@ -439,7 +431,6 @@ class Param_Button extends \Elementor\Widget_Base {
 	 *
 	 * Written in PHP and used to generate the final HTML.
 	 *
-	 * @since 1.0.0
 	 * @access protected
 	 */
 	protected function render() {
@@ -486,7 +477,6 @@ class Param_Button extends \Elementor\Widget_Base {
 	 *
 	 * Written as a Backbone JavaScript template and used to generate the live preview.
 	 *
-	 * @since 1.0.0
 	 * @access protected
 	 */
 	protected function _content_template() {
@@ -516,7 +506,6 @@ class Param_Button extends \Elementor\Widget_Base {
 	 *
 	 * Render button widget text.
 	 *
-	 * @since 1.5.0
 	 * @access protected
 	 */
 	protected function render_text() {

@@ -3,7 +3,7 @@
 * Plugin Name: Elementor SuperCat
 * Description: Elementor add-ons
 * Plugin URI:  https://github.com/dettogatto/elementor-super-cat
-* Version:     1.0.1
+* Version:     1.0.2
 * Author:      Nicola Cavallazzi
 * Author URI:  https://cosmo.cat/
 * Text Domain: elementor-super-cat
@@ -17,7 +17,7 @@ require 'plugin-update-checker/plugin-update-checker.php';
 $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 	'https://github.com/dettogatto/elementor-super-cat/',
 	__FILE__,
-	'unique-plugin-or-theme-slug'
+	'elementor-super-cat'
 );
 
 //Optional: If you're using a private repository, specify the access token like this:
@@ -36,7 +36,6 @@ $myUpdateChecker->setBranch('master');
 * You should only modify the constants to match your plugin's needs.
 *
 * Any custom code should go inside Plugin Class in the plugin.php file.
-* @since 0.1
 */
 final class Elementor_Super_Cat {
 
@@ -45,7 +44,7 @@ final class Elementor_Super_Cat {
     *
     * @var string The plugin version.
     */
-    const VERSION = '1.2.0';
+    const VERSION = '1.0.2';
 
     /**
     * Minimum Elementor Version

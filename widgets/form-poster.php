@@ -10,15 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 * Elementor Form Poster
 *
 * Elementor widget for Form Poster.
-*
-* @since 0.1
 */
 class Form_Poster extends Widget_Base {
 
     /**
     * Retrieve the widget name.
-    *
-    * @since 0.1
     *
     * @access public
     *
@@ -31,8 +27,6 @@ class Form_Poster extends Widget_Base {
     /**
     * Retrieve the widget title.
     *
-    * @since 0.1
-    *
     * @access public
     *
     * @return string Widget title.
@@ -43,8 +37,6 @@ class Form_Poster extends Widget_Base {
 
     /**
     * Retrieve the widget icon.
-    *
-    * @since 0.1
     *
     * @access public
     *
@@ -62,8 +54,6 @@ class Form_Poster extends Widget_Base {
     * Note that currently Elementor supports only one category.
     * When multiple categories passed, Elementor uses the first one.
     *
-    * @since 0.1
-    *
     * @access public
     *
     * @return array Widget categories.
@@ -77,8 +67,6 @@ class Form_Poster extends Widget_Base {
     *
     * Used to set scripts dependencies required to run the widget.
     *
-    * @since 0.1
-    *
     * @access public
     *
     * @return array Widget scripts dependencies.
@@ -91,8 +79,6 @@ class Form_Poster extends Widget_Base {
     * Register the widget controls.
     *
     * Adds different input fields to allow the user to change and customize the widget settings.
-    *
-    * @since 0.1
     *
     * @access protected
     */
@@ -149,8 +135,6 @@ class Form_Poster extends Widget_Base {
     *
     * Written in PHP and used to generate the final HTML.
     *
-    * @since 0.1
-    *
     * @access protected
     */
     protected function render() {
@@ -195,8 +179,6 @@ class Form_Poster extends Widget_Base {
         * Render the widget output in the editor.
         *
         * Written as a Backbone JavaScript template and used to generate the live preview.
-        *
-        * @since 0.1
         *
         * @access protected
         *
