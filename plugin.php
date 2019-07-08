@@ -103,7 +103,6 @@ class Plugin {
 	 * @access public
 	 */
 	public function __construct() {
-
 		// Register widget scripts
 		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'widget_scripts' ] );
 

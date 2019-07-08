@@ -3,7 +3,7 @@
 * Plugin Name: Elementor SuperCat
 * Description: Elementor add-ons
 * Plugin URI:  https://github.com/dettogatto/elementor-super-cat
-* Version:     1.0.2
+* Version:     2.0
 * Author:      Nicola Cavallazzi
 * Author URI:  https://cosmo.cat/
 * Text Domain: elementor-super-cat
@@ -15,10 +15,21 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 require 'plugin-update-checker/plugin-update-checker.php';
 $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-	'https://github.com/dettogatto/elementor-super-cat/',
-	__FILE__,
-	'elementor-super-cat'
+    'https://github.com/dettogatto/elementor-super-cat/',
+    __FILE__,
+    'elementor-super-cat'
 );
+
+// Include the admin menu
+require_once( __DIR__ . '/admin/loader.php' );
+$admin_esc = new Elementor_Super_Cat_Admin();
+foreach($admin_esc->tabs as $k => $v){
+    $file = __DIR__ . '/admin/public/' . $k .'.php';
+    if(file_exists($file)){
+        require_once($file);
+    }
+}
+
 
 //Optional: If you're using a private repository, specify the access token like this:
 //$myUpdateChecker->setAuthentication('your-token-here');

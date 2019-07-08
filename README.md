@@ -3,7 +3,7 @@
 
 Hi there!
 This plugin is meant to hack Elementor Pro and add functionality.
-Install it just as a regular plugin (download ZIP archieve and upload in WP > Plugins > Add New) and you will find new widgets in the Elementor editor, all the way down, in the category Super Cat.
+Install it just as a regular plugin (download ZIP archieve and upload in WP > Plugins > Add New) and you will find new widgets in the Elementor editor, all the way down, in the category Super Cat, and a new Settings page, called Super Cat.
 
 The widgets and their functionalities:
 
@@ -48,15 +48,6 @@ This widget is identical to a normal Elementor Button except you can place recei
 This widget is similar to the built-in Elementor Video Widget, but it gives you the ability to show a Call to Action overlayed to the paused video and to open a Popup or a link at the chosen end-time of video.
 
 ---
-
-### Plugin folder structure
-
-* `assets` directory - Holds the assets (js & css) for the widgets
-* `plugin-update-checker` directory - Holds the updater
-* `widgets` directory - Holds Plugin widgets
-* `index.php`	- Prevent direct access to directories
-* `elementor-super-cat.php`	- Main plugin file, used as a loader if plugin minimum requirements are met.
-* `plugin.php` - The actual Plugin file/Class.
 
 ### Donate
 
