@@ -11,7 +11,7 @@ class Super_Cat_Tab {
 
     public function content(){
         ?>
-        
+
 
         <style type="text/css">#bg-canvas {
             background-color: #333;
@@ -363,6 +363,11 @@ class Super_Cat_Tab {
                 </div>
             </div>
         </div>
+        <p>
+            Super Powers for Elementor.<br>
+            For Marketers by Marketers.<br>
+            Made with ❤ by <a href="https://mirai-bay.com" target="_blank">Mirai Bay</a>
+        </p>
     </center>
 
 
