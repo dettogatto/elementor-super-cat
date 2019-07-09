@@ -43,6 +43,7 @@ class Plugin {
 	 */
 	public function widget_scripts() {
 		wp_register_script( 'checkbox-filter-js', plugins_url( '/assets/js/checkbox-filter.js', __FILE__ ), [ 'jquery' ], false, true );
+		wp_register_script( 'dropdown-filter-js', plugins_url( '/assets/js/dropdown-filter.js', __FILE__ ), [ 'jquery' ], false, true );
 	}
 
     /**
@@ -73,6 +74,7 @@ class Plugin {
         require_once( __DIR__ . '/widgets/post-filter.php' );
         require_once( __DIR__ . '/widgets/param-button.php' );
         require_once( __DIR__ . '/widgets/checkbox-filter.php' );
+        require_once( __DIR__ . '/widgets/dropdown-filter.php' );
         require_once( __DIR__ . '/widgets/autostop-video.php' );
 	}
 
@@ -92,6 +94,7 @@ class Plugin {
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Post_Filter() );
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Param_Button() );
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Checkbox_Filter() );
+        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Dropdown_Filter() );
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Autostop_Video() );
 	}
 
