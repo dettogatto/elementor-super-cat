@@ -30,6 +30,10 @@ The widget has 3 options:
 
 You can also style this widget the same way you would do for a Filter Bar in the Portfolio widget.
 
+## Post Dropdown Filter
+
+A mobile friendly alternative to the Filter Bar
+
 ## Post Checkbox Filter
 
 This widget, used in combination with the Elementor Post widget, gives you live filtering with checkbox. Useful with multiple custom taxonomies to filter elements like in e-shops.

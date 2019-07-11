@@ -108,6 +108,19 @@ class Post_Filter extends \Elementor\Widget_Base {
         );
 
         $this->add_control(
+            'order_by',
+            [
+                'label' => __( 'Order By', 'elementor-super-cat' ),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => 'name',
+                'options' => [
+                    'name'  => __( 'Name', 'elementor-super-cat' ),
+                    'slug' => __( 'Slug', 'elementor-super-cat' ),
+                ],
+            ]
+        );
+
+        $this->add_control(
             'all_text',
             [
                 'label' => __( 'Text to show for <b>Show All</b>', 'elementor-super-cat' ),
@@ -225,6 +238,8 @@ class Post_Filter extends \Elementor\Widget_Base {
     * @access protected
     */
     protected function render() {
+        wp_enqueue_script('post-filter-js');
+
         $settings = $this->get_settings_for_display();
         $filtererId = 'filter-' . $settings['taxonomy_name'] . "-" . $this->get_id();
 
@@ -236,69 +251,39 @@ class Post_Filter extends \Elementor\Widget_Base {
         }
 
 
-        $terms = [];
-        foreach(get_terms( $phpTax, array( 'hide_empty' => true ) ) as $k => $v){
-            $terms[] = [$v->slug, $v->name];
+        $terms = get_terms( $phpTax, array( 'hide_empty' => true ) );
+
+        if($settings['order_by'] == "slug"){
+            usort($terms, function($a, $b){
+                return $a->slug <=> $b->slug;
+            });
+        }
+
+        $li = [];
+
+        $placeholder = '<li
+        class="super-cat-post-filter elementor-portfolio__filter elementor-active"
+        data-term=""
+        data-container="'.$filtererId.'"
+        data-posts="'.$settings['post_id'].'">
+        '. __($settings['all_text'], 'elementor-super-cat').'
+        </li>';
+        foreach ($terms as $k => $v) {
+            $li[] = '<li
+            class="super-cat-post-filter elementor-portfolio__filter"
+            data-term="'.$jsTax."-".$v->slug.'"
+            data-container="'.$filtererId.'"
+            data-posts="'.$settings['post_id'].'">
+            '.$v->name.'
+            </li>';
         }
 
         ?>
 
-        <script type='text/javascript'>
-        document.addEventListener("DOMContentLoaded", function(event){
-            var $jq = jQuery.noConflict();
-
-            var tax = "<?php echo $jsTax; ?>";
-            var allTxt = "<?php echo $settings['all_text']; ?>";
-            var postId = "#<?php echo $settings['post_id']; ?>";
-            var theFiltererId = "#<?php echo $filtererId; ?>";
-
-            var found = <?php echo(json_encode($terms)); ?>;
-            alert
-
-            newli = $jq("<li></li>");
-            newli.text(allTxt);
-            newli.attr("class", "elementor-portfolio__filter elementor-active");
-            newli.click(function(){
-                $jq(postId).find('article').hide();
-                $jq(postId).find('article').fadeIn(400);
-                $jq(".cat-filter-for-<?php echo $settings['post_id']; ?>").each(function(){
-                    $jq(this).find('li').removeClass("elementor-active");
-                    $jq(this).find('li').first().addClass("elementor-active");
-                });
-                history.replaceState(null, null, ' ');
-            });
-            $jq(theFiltererId).append(newli);
-
-            for(var i = 0; i < found.length; i++){
-                var newli = $jq("<li></li>");
-                newli.text(found[i][1]);
-                newli.attr("class", "elementor-portfolio__filter");
-                newli.attr("data-filter", tax + "-" + found[i][0]);
-                newli.click(function(){
-                    $jq(postId).find('article').hide();
-                    var theFilter = $jq(this).attr("data-filter");
-                    $jq(postId).find('article').each(function(){
-                        var classes = $jq(this).attr("class");
-                        if(classes.split(" ").includes(theFilter)){
-                            $jq(this).fadeIn(400);
-                        }
-                    });
-                    $jq(".cat-filter-for-<?php echo $settings['post_id']; ?>").find('li').removeClass("elementor-active");
-                    $jq(this).addClass("elementor-active");
-                    window.location.hash = "#"+$jq(this).attr("data-filter");
-                });
-                $jq(theFiltererId).append(newli);
-            }
-
-            if(window.location.hash){
-                let hhh = window.location.hash.replace("#", "");
-                $jq( 'li.elementor-portfolio__filter[data-filter='+hhh+']' ).trigger("click");
-            }
-
-        });
-        </script>
         <div>
             <ul class="elementor-portfolio__filters cat-filter-for-<?php echo $settings['post_id']; ?>" id="<?php echo $filtererId; ?>">
+                <?php echo $placeholder; ?>
+                <?php echo(implode($li)); ?>
             </ul>
         </div>
 

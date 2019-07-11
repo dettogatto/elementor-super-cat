@@ -123,9 +123,10 @@ class Dropdown_Filter extends \Elementor\Widget_Base {
         $this->add_control(
             'select_text',
             [
-                'label' => __( 'Select text', 'elementor-super-cat' ),
+                'label' => __( '<b>Show All</b> text', 'elementor-super-cat' ),
                 'type' => \Elementor\Controls_Manager::TEXT,
                 'placeholder' => __( 'Enter the default placeholder text', 'elementor-super-cat' ),
+                'default' => "all"
             ]
         );
         $this->end_controls_section();
@@ -177,7 +178,7 @@ class Dropdown_Filter extends \Elementor\Widget_Base {
 
         $placeholder = '<option
         class="cat-dropdown-filter"
-        data-term="all"
+        data-term=""
         data-container="'.$filtererId.'"
         data-posts="'.$settings['post_id'].'">
         '. __($select_text, 'elementor-super-cat').'
@@ -195,7 +196,7 @@ class Dropdown_Filter extends \Elementor\Widget_Base {
         ?>
 
 
-        <select class="cat-dropdown-list cat-filter-for-<?php echo $settings['post_id']; ?>" id="<?php echo $filtererId; ?>">
+        <select class="super-cat-dropdown-list cat-filter-for-<?php echo $settings['post_id']; ?>" id="<?php echo $filtererId; ?>">
             <?php echo $placeholder; ?>
             <?php echo(implode($li)); ?>
         </select>

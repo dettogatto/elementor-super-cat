@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function(event){
   var $jq = jQuery.noConflict();
-  $jq(".super-cat-dropdown-list").change(function(){
-    var item = $jq(this).find(':selected');
+  $jq(".super-cat-post-filter").click(function(event){
+    let item = $jq(event.target);
     let container = item.attr("data-container");
     let term = item.attr("data-term");
     let posts = item.attr("data-posts");
@@ -10,6 +10,16 @@ document.addEventListener("DOMContentLoaded", function(event){
     $jq("#"+posts).find('article').hide();
     // set all to inactive
     $jq(".super-cat-post-filter").removeClass("elementor-active");
+
+    // sync option in Dropdown Filters
+    $jq('.super-cat-dropdown-list').each(function(){
+      let toSelect = $jq(this).find('option[data-term="' + term + '"]');
+      if(toSelect.size() > 0){
+        toSelect.attr('selected','selected');
+      }else{
+        $jq(this).find('option[data-term=""]').attr('selected','selected');
+      }
+    });
 
     // Show / Hide all
     if (term == '') {
@@ -28,19 +38,11 @@ document.addEventListener("DOMContentLoaded", function(event){
         }
       });
     }
-
   });
 
   if(window.location.hash){
     let hhh = window.location.hash.replace("#", "");
-    var posts = "";
-    $jq('.super-cat-dropdown-list').each(function(){
-      let toSelect = $jq(this).find('option[data-term="' + hhh + '"]');
-      if(toSelect.size() > 0){
-        toSelect.attr('selected','selected');
-        $jq(this).trigger('change');
-      }
-    });
+    $jq( 'li.elementor-portfolio__filter[data-term='+hhh+']' ).trigger("click");
   }
 
 });

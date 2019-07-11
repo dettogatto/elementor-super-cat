@@ -42,8 +42,9 @@ class Plugin {
 	 * @access public
 	 */
 	public function widget_scripts() {
-		wp_register_script( 'checkbox-filter-js', plugins_url( '/assets/js/checkbox-filter.js', __FILE__ ), [ 'jquery' ], false, true );
-		wp_register_script( 'dropdown-filter-js', plugins_url( '/assets/js/dropdown-filter.js', __FILE__ ), [ 'jquery' ], false, true );
+        wp_register_script( 'post-filter-js', plugins_url( '/assets/js/post-filter.js', __FILE__ ), [ 'jquery' ], null, true );
+        wp_register_script( 'checkbox-filter-js', plugins_url( '/assets/js/checkbox-filter.js', __FILE__ ), [ 'jquery' ], null, true );
+		wp_register_script( 'dropdown-filter-js', plugins_url( '/assets/js/dropdown-filter.js', __FILE__ ), [ 'jquery' ], null, true );
 	}
 
     /**

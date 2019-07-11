@@ -3,7 +3,7 @@
 * Plugin Name: Elementor SuperCat
 * Description: Elementor add-ons
 * Plugin URI:  https://github.com/dettogatto/elementor-super-cat
-* Version:     2.1.0
+* Version:     2.1.1
 * Author:      Nicola Cavallazzi
 * Author URI:  https://cosmo.cat/
 * Text Domain: elementor-super-cat
@@ -55,7 +55,7 @@ final class Elementor_Super_Cat {
     *
     * @var string The plugin version.
     */
-    const VERSION = '1.0.2';
+    const VERSION = '2.1.1';
 
     /**
     * Minimum Elementor Version
