@@ -33,6 +33,17 @@ class Dropdown_Filter extends \Elementor\Widget_Base {
     }
 
     /**
+    * Retrieve the widget icon.
+    *
+    * @access public
+    *
+    * @return string Widget icon.
+    */
+    public function get_icon() {
+        return 'fa fa-caret-square-o-down';
+    }
+
+    /**
     * Retrieve the list of categories the widget belongs to.
     *
     * Used to determine where to display the widget in the editor.
@@ -111,74 +122,15 @@ class Dropdown_Filter extends \Elementor\Widget_Base {
 
         $this->add_control(
             'select_text',
-	    [
-		'label' => __( 'Select text', 'elementor-super-cat' ),
-		'type' => \Elementor\Controls_Manager::TEXT,
-		'placeholder' => __( 'Enter the default placeholder text', 'elementor-super-cat' ),
-	    ]
-	);
+            [
+                'label' => __( 'Select text', 'elementor-super-cat' ),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'placeholder' => __( 'Enter the default placeholder text', 'elementor-super-cat' ),
+            ]
+        );
         $this->end_controls_section();
 
-        $this->start_controls_section(
-            'section_style',
-            [
-                'label' => __( 'Style', 'elementor-super-cat' ),
-                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
-            ]
-        );
 
-        $this->add_control(
-            'color_filter',
-            [
-                'label' => __( 'Color', 'elementor-super-cat' ),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .cat-dropdown-filter' => 'color: {{VALUE}}',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'color_filter_active',
-            [
-                'label' => __( 'Active Color', 'elementor-super-cat' ),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .cat-dropdown-filter.elementor-active' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            'typography',
-            [
-                'name' => 'typography_filter',
-                'selector' => '{{WRAPPER}} .cat-dropdown-filter',
-            ]
-        );
-
-        $this->add_control(
-            'filter_item_spacing',
-            [
-                'label' => __( 'Space Between', 'elementor-super-cat' ),
-                'type' => \Elementor\Controls_Manager::SLIDER,
-                'default' => [
-                    'size' => 10,
-                ],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .cat-dropdown-filter:not(:last-child)' => 'margin-bottom: calc({{SIZE}}{{UNIT}}/2)',
-                ],
-            ]
-        );
-
-
-        $this->end_controls_section();
 
     }
 
@@ -207,7 +159,7 @@ class Dropdown_Filter extends \Elementor\Widget_Base {
 
         $settings = $this->get_settings_for_display();
         $filtererId = 'filter-' . $settings['taxonomy_name'] . "-" . $this->get_id();
-	$select_text = $settings['select_text'];
+        $select_text = $settings['select_text'];
         $phpTax = $settings['taxonomy'];
         $jsTax = $settings['taxonomy'];
         if($jsTax == "post_tag"){
@@ -224,12 +176,12 @@ class Dropdown_Filter extends \Elementor\Widget_Base {
         }
 
         $placeholder = '<option
-            class="cat-dropdown-filter"
-            data-term="all" 
-            data-container="'.$filtererId.'"
-            data-posts="'.$settings['post_id'].'">
-            '. __($select_text, 'elementor-super-cat').'
-            </option>';
+        class="cat-dropdown-filter"
+        data-term="all"
+        data-container="'.$filtererId.'"
+        data-posts="'.$settings['post_id'].'">
+        '. __($select_text, 'elementor-super-cat').'
+        </option>';
         foreach ($terms as $k => $v) {
             $li[] = '<option
             class="cat-dropdown-filter"
@@ -243,12 +195,10 @@ class Dropdown_Filter extends \Elementor\Widget_Base {
         ?>
 
 
-        <div><form>
-            <select class="cat-dropdown-list cat-filter-for-<?php echo $settings['post_id']; ?>" id="<?php echo $filtererId; ?>">
-		<?php echo $placeholder; ?>
-                <?php echo(implode($li)); ?>
-            </select>
-        </form></div>
+        <select class="cat-dropdown-list cat-filter-for-<?php echo $settings['post_id']; ?>" id="<?php echo $filtererId; ?>">
+            <?php echo $placeholder; ?>
+            <?php echo(implode($li)); ?>
+        </select>
 
         <?php
 
@@ -263,19 +213,16 @@ class Dropdown_Filter extends \Elementor\Widget_Base {
     */
     protected function _content_template() {
         ?>
-        <div><form>
-            <select class="cat-dropdown-list cat-filter-for-<?php echo $settings['post_id']; ?>">
-                <#
-                var allTxt = settings.all_text;
-                var tax = settings.taxonomy;
-		var select = settings.select_text;
-                print('<option class="cat-dropdown-filter elementor-active">+select+'</option>');
-		print('<option class="cat-dropdown-filter elementor-active">'+tax+' 1</option>');
-                print('<option class="cat-dropdown-filter">'+tax+' 2</option>');
-                print('<option class="cat-dropdown-filter">'+tax+' 3</option>');
-                #>
-            </select></form>
-        </div>
+        <select class="cat-dropdown-list cat-filter-for-<?php echo $settings['post_id']; ?>">
+            <#
+            var tax = settings.taxonomy;
+            var select = settings.select_text;
+            print('<option class="cat-dropdown-filter elementor-active">' + select + '</option>');
+            print('<option class="cat-dropdown-filter elementor-active">' + tax + ' 1</option>');
+            print('<option class="cat-dropdown-filter">' + tax + ' 2</option>');
+            print('<option class="cat-dropdown-filter">' + tax + ' 3</option>');
+            #>
+        </select>
         <?php
     }
 }

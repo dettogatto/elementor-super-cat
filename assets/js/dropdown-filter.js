@@ -35,12 +35,11 @@ document.addEventListener("DOMContentLoaded", function(event){
       // show some
       $jq("#"+posts).find('article').each(function(){
         var classes = $jq(this).attr("class").split(" ");
-        var toShow = true;
+        var toShow = false;
         for(var key in filters[posts]){
           if(filters[posts][key].length > 0){
-            let found = false;
-            if(!classes.includes(filters[posts][key][0])){
-              toShow = false;
+            if(classes.includes(filters[posts][key][0])){
+              toShow = true;
               break;
             }
           }

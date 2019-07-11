@@ -43,7 +43,7 @@ class Form_Poster extends Widget_Base {
     * @return string Widget icon.
     */
     public function get_icon() {
-        return 'eicon-coding';
+        return 'eicon-code';
     }
 
     /**
@@ -175,19 +175,4 @@ class Form_Poster extends Widget_Base {
 
         }
 
-        /**
-        * Render the widget output in the editor.
-        *
-        * Written as a Backbone JavaScript template and used to generate the live preview.
-        *
-        * @access protected
-        *
-        * protected function _content_template() {
-        *     ?>
-        *     <div style="background-color: #dee1e5; color: #b9bfc5; padding: 5px; font-size: 0.8em; text-align: center;">
-        *         The form #{{{ settings.formid }}} will be here and will post to {{{ settings.url }}}
-        *     </div>
-        *     <?php
-        * }
-        */
     }
