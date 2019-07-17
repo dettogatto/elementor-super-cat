@@ -10,7 +10,8 @@ class Elementor_Super_Cat_Admin {
 
     public $tabs = array(
         "welcome" => "Welcome",
-        "extra-webhooks" => "WebHooks"
+        "extra-webhooks" => "WebHooks",
+        "woocommerce-ac" => "WooComm - AC"
     );
     public $default_tab = "welcome";
     public $current_tab;
@@ -27,6 +28,7 @@ class Elementor_Super_Cat_Admin {
             require_once(__DIR__ . '/tabs/' . $this->current_tab .'.php');
             $this->tab_handler = new Super_Cat_Tab("elementor_super_cat");
             add_action( 'admin_menu', array( $this, 'settings_page' ) );
+            wp_enqueue_style( "elementor_super_cat", plugin_dir_url( __FILE__ ) . '../assets/css/admin.css', array(), time(), 'all' );
         }
     }
     public function settings_page() {
@@ -58,7 +60,6 @@ class Elementor_Super_Cat_Admin {
                 <?php
                 settings_fields("elementor_super_cat");
                 $this->tab_handler->content();
-                if($this->current_tab != "welcome"){submit_button();}
                 ?>
             </form>
         </div>

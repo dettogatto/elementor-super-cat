@@ -23,6 +23,7 @@ class Super_Cat_Tab {
             </p>'
         );
         do_settings_sections($this->plugin_name);
+        submit_button();
 
     }
 
