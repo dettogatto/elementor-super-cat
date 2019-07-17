@@ -29,15 +29,15 @@ class Elementor_Super_Cat_Woocomm_AC {
         $this->the_real_thing($order_id, "completed");
     }
     public function on_order_failed($order_id){
-        //$this->remove_order_from_ac($order_id);
+        $this->remove_order_from_ac($order_id);
         $this->the_real_thing($order_id, "failed");
     }
     public function on_order_cancelled($order_id){
-        //$this->remove_order_from_ac($order_id);
+        $this->remove_order_from_ac($order_id);
         $this->the_real_thing($order_id, "cancelled");
     }
     public function on_order_refunded($order_id){
-        //$this->remove_order_from_ac($order_id);
+        $this->remove_order_from_ac($order_id);
         $this->the_real_thing($order_id, "refunded");
     }
     public function on_order_processing($order_id){
