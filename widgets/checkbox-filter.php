@@ -120,6 +120,15 @@ class Checkbox_Filter extends \Elementor\Widget_Base {
             ]
         );
 
+        $this->add_control(
+            'hide_empty',
+            [
+                'label' => __( 'Hide empty', 'elementor' ),
+                'type' => \Elementor\Controls_Manager::SWITCHER,
+                'description' => __( 'If ON empty filters will be hidden.', 'elementor' ),
+            ]
+        );
+
 
         $this->end_controls_section();
 
@@ -299,6 +308,8 @@ class Checkbox_Filter extends \Elementor\Widget_Base {
 
         if ( ! empty( $settings['icon_on'] ) ) {
             $icon = '<i class="' . $settings['icon_on'] . ' cat-icon-on" aria-hidden="true"></i>';
+        }
+        if ( ! empty( $settings['icon_off'] ) ) {
             $icon .= '<i class="' . $settings['icon_off'] . ' cat-icon-off" aria-hidden="true"></i>';
         }
 
@@ -327,7 +338,7 @@ class Checkbox_Filter extends \Elementor\Widget_Base {
 
 
         <div>
-            <ul class="cat-checkbox-list cat-filter-for-<?php echo $settings['post_id']; ?>" id="<?php echo $filtererId; ?>">
+            <ul class="cat-checkbox-list cat-filter-for-<?php echo $settings['post_id']; ?>" id="<?php echo $filtererId; ?>" data-hide-empty="<?php echo($settings["hide_empty"]); ?>">
                 <?php echo(implode($li)); ?>
             </ul>
         </div>
@@ -353,6 +364,8 @@ class Checkbox_Filter extends \Elementor\Widget_Base {
                 var icon = '<span class="cat-checkbox-icon-container">';
                 if(settings.icon_on && settings.icon_on != ""){
                     icon += '<i class="' + settings.icon_on + ' cat-icon-on" aria-hidden="true"></i>';
+                }
+                if(settings.icon_off && settings.icon_off != ""){
                     icon += '<i class="' + settings.icon_off + ' cat-icon-off" aria-hidden="true"></i>';
                 }
                 icon += '</span>';

@@ -129,6 +129,15 @@ class Post_Filter extends \Elementor\Widget_Base {
             ]
         );
 
+        $this->add_control(
+            'hide_empty',
+            [
+                'label' => __( 'Hide empty', 'elementor' ),
+                'type' => \Elementor\Controls_Manager::SWITCHER,
+                'description' => __( 'If ON empty filters will be hidden.', 'elementor' ),
+            ]
+        );
+
 
         $this->end_controls_section();
 
@@ -281,7 +290,7 @@ class Post_Filter extends \Elementor\Widget_Base {
         ?>
 
         <div>
-            <ul class="elementor-portfolio__filters cat-filter-for-<?php echo $settings['post_id']; ?>" id="<?php echo $filtererId; ?>">
+            <ul class="elementor-portfolio__filters cat-filter-for-<?php echo $settings['post_id']; ?>" id="<?php echo $filtererId; ?>" data-hide-empty="<?php echo($settings["hide_empty"]); ?>">
                 <?php echo $placeholder; ?>
                 <?php echo(implode($li)); ?>
             </ul>

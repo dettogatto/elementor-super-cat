@@ -1,6 +1,18 @@
 document.addEventListener("DOMContentLoaded", function(event){
   var $jq = jQuery.noConflict();
   var filters = {};
+
+  $jq(".cat-checkbox-filter").each(function(){
+    let container = $jq("#" + $jq(this).attr("data-container"));
+    let posts = $jq(this).attr("data-posts");
+    let term = $jq(this).attr("data-term");
+    if(term != "" && container.attr("data-hide-empty") == "yes"){
+      if($jq("#"+posts).find('article.' + term).length < 1){
+        $jq(this).hide();
+      }
+    }
+  });
+  
   $jq(".cat-checkbox-filter").click(function(){
     let container = $jq(this).attr("data-container");
     let term = $jq(this).attr("data-term");

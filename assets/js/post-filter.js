@@ -1,8 +1,19 @@
 document.addEventListener("DOMContentLoaded", function(event){
   var $jq = jQuery.noConflict();
+
+  $jq(".super-cat-post-filter").each(function(){
+    let container = $jq("#" + $jq(this).attr("data-container"));
+    let posts = $jq(this).attr("data-posts");
+    let term = $jq(this).attr("data-term");
+    if(term != "" && container.attr("data-hide-empty") == "yes"){
+      if($jq("#"+posts).find('article.' + term).length < 1){
+        $jq(this).hide();
+      }
+    }
+  });
+
   $jq(".super-cat-post-filter").click(function(event){
     let item = $jq(event.target);
-    let container = item.attr("data-container");
     let term = item.attr("data-term");
     let posts = item.attr("data-posts");
 
@@ -31,12 +42,7 @@ document.addEventListener("DOMContentLoaded", function(event){
       // show some
       $jq('.super-cat-post-filter[data-term="' + term + '"]').addClass("elementor-active");
       window.location.hash = "#" + term;
-      $jq("#"+posts).find('article').each(function(){
-        var classes = $jq(this).attr("class").split(" ");
-        if(classes.includes(term)){
-          $jq(this).fadeIn(400);
-        }
-      });
+      $jq("#"+posts).find('article.' + term).fadeIn(400);
     }
   });
 
