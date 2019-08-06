@@ -13,16 +13,22 @@ class Elementor_Super_Cat_Woocomm_AC {
         $this->option_prefix = "elementor_super_cat_wooac_";
     }
 
+    private function should_load(){
+        return (class_exists('Activecampaign_For_Woocommerce') && defined( 'WC_PLUGIN_FILE' ));
+    }
+
     public function hooks(){
-        // Filter to bear with slow AC response times
-        add_filter( 'http_request_args', array( $this, 'bear_with_slow_ac' ), 10, 2 );
-        // Append actions to WooCommerce orders status change
-        // add_action( 'elementor_pro/forms/new_record', array( $this, 'manipulate_form_submission' ), 10, 2 );
-        add_action( 'woocommerce_order_status_completed', array( $this, 'on_order_completed' ), 10, 1 );
-        add_action( 'woocommerce_order_status_failed', array( $this, 'on_order_failed' ), 10, 1 );
-        add_action( 'woocommerce_order_status_cancelled', array( $this, 'on_order_cancelled' ), 10, 1 );
-        add_action( 'woocommerce_order_status_refunded', array( $this, 'on_order_refunded' ), 10, 1 );
-        add_action( 'woocommerce_order_status_processing', array( $this, 'on_order_processing' ), 10, 1 );
+        if(true){
+            // Filter to bear with slow AC response times
+            add_filter( 'http_request_args', array( $this, 'bear_with_slow_ac' ), 10, 2 );
+            // Append actions to WooCommerce orders status change
+            // add_action( 'elementor_pro/forms/new_record', array( $this, 'manipulate_form_submission' ), 10, 2 );
+            add_action( 'woocommerce_order_status_completed', array( $this, 'on_order_completed' ), 10, 1 );
+            add_action( 'woocommerce_order_status_failed', array( $this, 'on_order_failed' ), 10, 1 );
+            add_action( 'woocommerce_order_status_cancelled', array( $this, 'on_order_cancelled' ), 10, 1 );
+            add_action( 'woocommerce_order_status_refunded', array( $this, 'on_order_refunded' ), 10, 1 );
+            add_action( 'woocommerce_order_status_processing', array( $this, 'on_order_processing' ), 10, 1 );
+        }
     }
 
     public function on_order_completed($order_id){
@@ -88,8 +94,8 @@ class Elementor_Super_Cat_Woocomm_AC {
         // try to get the mail from WP user
         $order = wc_get_order( $order_id );
         $user = $order->get_user();
-        if(isset($user["data"]->user_email)){
-            return $user["data"]->user_email;
+        if(isset($user->data->user_email)){
+            return $user->data->user_email;
         }
 
 
