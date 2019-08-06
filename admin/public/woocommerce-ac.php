@@ -7,10 +7,13 @@ class Elementor_Super_Cat_Woocomm_AC {
     private $ac;
 
     public function __construct(){
-        require_once(__DIR__ . '/../helpers/activecampaign-api-v3.php');
-        $apidata = get_option("activecampaign_for_woocommerce_settings");
-        $this->ac = new ActiveCampaign_API_Gatto($apidata["api_url"], $apidata["api_key"]);
-        $this->option_prefix = "elementor_super_cat_wooac_";
+        if($this->should_load()){
+            require_once(__DIR__ . '/../helpers/activecampaign-api-v3.php');
+            $apidata = get_option("activecampaign_for_woocommerce_settings");
+            $this->ac = new ActiveCampaign_API_Gatto($apidata["api_url"], $apidata["api_key"]);
+            $this->option_prefix = "elementor_super_cat_wooac_";
+            $this->hooks();
+        }
     }
 
     private function should_load(){
@@ -18,7 +21,7 @@ class Elementor_Super_Cat_Woocomm_AC {
     }
 
     public function hooks(){
-        if(true){
+        if($this->should_load()){
             // Filter to bear with slow AC response times
             add_filter( 'http_request_args', array( $this, 'bear_with_slow_ac' ), 10, 2 );
             // Append actions to WooCommerce orders status change
@@ -121,4 +124,3 @@ class Elementor_Super_Cat_Woocomm_AC {
 
 }
 $elementor_webhooks = new Elementor_Super_Cat_Woocomm_AC();
-$elementor_webhooks->hooks();

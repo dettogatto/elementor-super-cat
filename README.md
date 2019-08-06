@@ -1,7 +1,7 @@
 # Elementor Super Cat
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=27Q6J6NGK6JJ2&source=url)
 
-**DISCLAIMER**: This is still a personal project, shared for love. It should not be used in production without prior testing.
+**DISCLAIMER**: This is still a personal project, shared by love. It should not be used in production without prior testing.
 
 Hi there!
 This plugin is meant to hack Elementor Pro and add functionality.
