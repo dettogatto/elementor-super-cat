@@ -22,7 +22,7 @@ class ActiveCampaign_API_Gatto {
                 "tag" => $tag_id
             )
         );
-
+        
         $response = wp_remote_post(
             $this->api_url."/api/3/contactTags/",
             array(
@@ -164,7 +164,7 @@ class ActiveCampaign_API_Gatto {
         $result = [];
         foreach($body->tags as $tag){
             //if($tag->tagType == "contact"){
-                $result[$tag->id] = $tag->tag;
+            $result[$tag->id] = $tag->tag;
             //}
         }
         asort($result);

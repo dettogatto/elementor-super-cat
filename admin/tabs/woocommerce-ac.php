@@ -18,7 +18,7 @@ class Super_Cat_Tab {
     }
 
     private function should_load(){
-        return (class_exists('Activecampaign_For_Woocommerce') && defined( 'WC_PLUGIN_FILE' ));
+        return (class_exists('Activecampaign_For_Woocommerce'));
     }
 
     public function content(){

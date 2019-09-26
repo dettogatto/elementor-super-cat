@@ -17,21 +17,19 @@ class Elementor_Super_Cat_Woocomm_AC {
     }
 
     private function should_load(){
-        return (class_exists('Activecampaign_For_Woocommerce') && defined( 'WC_PLUGIN_FILE' ));
+        return (class_exists('Activecampaign_For_Woocommerce'));
     }
 
     public function hooks(){
-        if($this->should_load()){
-            // Filter to bear with slow AC response times
-            add_filter( 'http_request_args', array( $this, 'bear_with_slow_ac' ), 10, 2 );
-            // Append actions to WooCommerce orders status change
-            // add_action( 'elementor_pro/forms/new_record', array( $this, 'manipulate_form_submission' ), 10, 2 );
-            add_action( 'woocommerce_order_status_completed', array( $this, 'on_order_completed' ), 10, 1 );
-            add_action( 'woocommerce_order_status_failed', array( $this, 'on_order_failed' ), 10, 1 );
-            add_action( 'woocommerce_order_status_cancelled', array( $this, 'on_order_cancelled' ), 10, 1 );
-            add_action( 'woocommerce_order_status_refunded', array( $this, 'on_order_refunded' ), 10, 1 );
-            add_action( 'woocommerce_order_status_processing', array( $this, 'on_order_processing' ), 10, 1 );
-        }
+        // Filter to bear with slow AC response times
+        add_filter( 'http_request_args', array( $this, 'bear_with_slow_ac' ), 10, 2 );
+        // Append actions to WooCommerce orders status change
+        // add_action( 'elementor_pro/forms/new_record', array( $this, 'manipulate_form_submission' ), 10, 2 );
+        add_action( 'woocommerce_order_status_completed', array( $this, 'on_order_completed' ), 10, 1 );
+        add_action( 'woocommerce_order_status_failed', array( $this, 'on_order_failed' ), 10, 1 );
+        add_action( 'woocommerce_order_status_cancelled', array( $this, 'on_order_cancelled' ), 10, 1 );
+        add_action( 'woocommerce_order_status_refunded', array( $this, 'on_order_refunded' ), 10, 1 );
+        add_action( 'woocommerce_order_status_processing', array( $this, 'on_order_processing' ), 10, 1 );
     }
 
     public function on_order_completed($order_id){
