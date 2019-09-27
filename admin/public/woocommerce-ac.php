@@ -165,7 +165,7 @@ class Elementor_Super_Cat_Woocomm_AC {
 
     public function get_contact_data_from_order($order_id){
         // try to get the mail from AC
-        $result = ["email" => "", "firstName" => "", "lastName" => ""];
+        $result = ["firstName" => "", "lastName" => "", "email" => ""];
         $order = $this->ac->get_ecom_order_by_ext($order_id);
         if($order){
             $result["email"] = $order->email;
@@ -173,13 +173,15 @@ class Elementor_Super_Cat_Woocomm_AC {
 
         // try to get the mail from WP user
         $order = wc_get_order( $order_id );
+        if($order){
+            $result["firstName"] = $order->get_billing_first_name();
+            $result["lastName"] = $order->get_billing_last_name();
+        }
         $user = $order->get_user();
         if(isset($user->data->user_email)){
             $result["email"] = $result["email"] ? $result["email"] : $user->data->user_email;
         }
-
         $result["email"] = $result["email"] ? $result["email"] : $order->get_billing_email();
-
         return $result;
     }
 
