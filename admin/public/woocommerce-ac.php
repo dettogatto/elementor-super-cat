@@ -7,17 +7,66 @@ class Elementor_Super_Cat_Woocomm_AC {
     private $ac;
 
     public function __construct(){
-        if($this->should_load()){
-            require_once(__DIR__ . '/../helpers/activecampaign-api-v3.php');
-            $apidata = get_option("activecampaign_for_woocommerce_settings");
-            $this->ac = new ActiveCampaign_API_Gatto($apidata["api_url"], $apidata["api_key"]);
-            $this->option_prefix = "elementor_super_cat_wooac_";
+        add_action( 'plugins_loaded', array($this, 'init') );
+    }
+    public function init(){
+        require_once(__DIR__ . '/../helpers/activecampaign-api-v3.php');
+        $this->option_prefix = "elementor_super_cat_wooac_";
+        $this->ac = $this->get_api_data();
+        if($this->ac){
             $this->hooks();
+        }
+        if($this->cf_ac_exists()){
+            add_action( 'admin_post_gatto_abandoned_to_ac', array($this, 'send_abandoned_to_ac') );
         }
     }
 
-    private function should_load(){
-        return (class_exists('Activecampaign_For_Woocommerce'));
+    function send_abandoned_to_ac() {
+        // Handle request then generate response using echo or leaving PHP and using HTML
+        $terms = ["first_name", "last_name", "email", "order_status", "checkout_url", "coupon_code", "product_names", "cart_total"];
+        $terms = array_flip($terms);
+        array_walk($terms, function(&$a, $b) {
+            $a = $_POST[$b];
+        });
+        $ac_terms = [
+            "firstName" => $terms["first_name"],
+            "lastName" => $terms["last_name"],
+            "email" => $terms["email"]
+        ];
+        $contact = $this->ac->sync_contact($ac_terms);
+
+        $this->set_the_tag($contact->id, "abandoned_wh");
+
+        $field_id = get_option($this->option_prefix . "custom_field_list");
+        if(intval($field_id) > -1){
+            $this->ac->update_contact_field($contact->id, $field_id, str_replace(', ', "\n", str_replace(' &', ',', $terms["product_names"])));
+        }
+
+        header('Content-Type: application/json');
+        echo(json_encode(array("status" => "success")));
+
+    }
+
+    private function get_api_data(){
+        $api_url = get_option($this->option_prefix . "api_url");
+        if(!$api_url && $this->ac4woo_exists() && $opt = get_option("activecampaign_for_woocommerce_settings")){
+            $api_url = $opt["api_url"];
+        }
+        $api_key = get_option($this->option_prefix . "api_key");
+        if(!$api_url && $this->ac4woo_exists() && $opt = get_option("activecampaign_for_woocommerce_settings")){
+            $api_url = $opt["api_key"];
+        }
+        return new ActiveCampaign_API_Gatto($api_url, $api_key);
+    }
+
+    private function ac4woo_exists(){
+        // Check if plugin Active Campaign for WooCommerce is active
+        return class_exists('Activecampaign_For_Woocommerce');
+    }
+
+    private function cf_ac_exists(){
+        // Check if plugin WooCommerce Cart Abandonment Recovery is active
+        return class_exists('CARTFLOWS_CA_Loader') || class_exists('CARTFLOWS_CA_Settings');
     }
 
     public function hooks(){
@@ -30,10 +79,14 @@ class Elementor_Super_Cat_Woocomm_AC {
         add_action( 'woocommerce_order_status_cancelled', array( $this, 'on_order_cancelled' ), 10, 1 );
         add_action( 'woocommerce_order_status_refunded', array( $this, 'on_order_refunded' ), 10, 1 );
         add_action( 'woocommerce_order_status_processing', array( $this, 'on_order_processing' ), 10, 1 );
+        add_action( 'woocommerce_order_status_on-hold', array( $this, 'on_order_on_hold' ), 10, 1 );
     }
 
     public function on_order_completed($order_id){
         $this->the_real_thing($order_id, "completed");
+    }
+    public function on_order_on_hold($order_id){
+        $this->the_real_thing($order_id, "on_hold");
     }
     public function on_order_failed($order_id){
         $this->remove_order_from_ac($order_id);
@@ -51,33 +104,40 @@ class Elementor_Super_Cat_Woocomm_AC {
         $this->the_real_thing($order_id, "processing");
     }
 
-    public function the_real_thing($order_id, $the_action){
-        $contact = $this->ac->get_contact_by_email($this->get_email_from_order($order_id));
-
+    public function set_the_tag($contact_id, $the_action){
         $all_actions = array(
             "completed",
+            "on_hold",
             "failed",
             "cancelled",
             "refunded",
-            "processing"
+            "processing",
+            "abandoned_wh"
         );
-
         foreach ($all_actions as $act) {
             $tag_id = get_option($this->option_prefix . "tag_on_" . $act);
             if(intval($tag_id) > -1){
                 if($the_action == $act){
-                    $this->ac->add_tag_to_contact($contact->id, $tag_id);
-                }else{
-                    $this->ac->remove_tag_from_contact($contact->id, $tag_id);
+                    $this->ac->add_tag_to_contact($contact_id, $tag_id);
+                }elseif(get_option($this->option_prefix . "tag_on_" . $act) != get_option($this->option_prefix . "tag_on_" . $the_action)){
+                    $this->ac->remove_tag_from_contact($contact_id, $tag_id);
                 }
             }
         }
-
-        $this->ac->update_contact_field($contact->id, get_option($this->option_prefix . "custom_field_list"), $this->get_order_items_string($order_id));
-
     }
 
+    public function the_real_thing($order_id, $the_action){
+        $contact = $this->ac->sync_contact($this->get_contact_data_from_order($order_id));
+        $this->set_the_tag($contact->id, $the_action);
+        $this->ac->update_contact_field($contact->id, get_option($this->option_prefix . "custom_field_list"), $this->get_order_items_string($order_id));
+    }
+
+
+
+
+
     public function remove_order_from_ac($order_id){
+        if( !$this->ac4woo_exists() || !get_option($this->option_prefix . "delete_order") ){ return false; }
         $order = $this->ac->get_ecom_order_by_ext($order_id);
         if(!$order){
             return false; // Bail early
@@ -101,6 +161,26 @@ class Elementor_Super_Cat_Woocomm_AC {
 
 
         return $order->get_billing_email();
+    }
+
+    public function get_contact_data_from_order($order_id){
+        // try to get the mail from AC
+        $result = ["email" => "", "firstName" => "", "lastName" => ""];
+        $order = $this->ac->get_ecom_order_by_ext($order_id);
+        if($order){
+            $result["email"] = $order->email;
+        }
+
+        // try to get the mail from WP user
+        $order = wc_get_order( $order_id );
+        $user = $order->get_user();
+        if(isset($user->data->user_email)){
+            $result["email"] = $result["email"] ? $result["email"] : $user->data->user_email;
+        }
+
+        $result["email"] = $result["email"] ? $result["email"] : $order->get_billing_email();
+
+        return $result;
     }
 
     public function get_order_items_string($order_id){

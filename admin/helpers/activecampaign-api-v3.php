@@ -22,7 +22,7 @@ class ActiveCampaign_API_Gatto {
                 "tag" => $tag_id
             )
         );
-        
+
         $response = wp_remote_post(
             $this->api_url."/api/3/contactTags/",
             array(
@@ -71,6 +71,23 @@ class ActiveCampaign_API_Gatto {
         return $body->contacts[0];
     }
 
+    public function sync_contact($data){
+        $body = array( "contact" => $data );
+        $request = wp_remote_post(
+            $this->api_url."/api/3/contact/sync",
+            array(
+                'headers' => $this->get_headers(true),
+                'method' => 'POST',
+                'body' => json_encode($body)
+            )
+        );
+        if( is_wp_error( $request ) ) {
+            return false; // Bail early
+        }
+        $body  = json_decode(wp_remote_retrieve_body($request));
+        return $body->contact;
+    }
+
     public function get_contact_tags($contact_id){
         $request = wp_remote_get(
             $this->api_url."/api/3/contacts/".$contact_id."/contactTags",
@@ -92,11 +109,15 @@ class ActiveCampaign_API_Gatto {
             return false; // Bail early
         }
         $body = json_decode(wp_remote_retrieve_body($request));
+
         return $body->fieldValues;
     }
 
     public function remove_tag_from_contact($contact_id, $tag_id){
         $tags = $this->get_contact_tags($contact_id);
+        if(!$tags){
+            return false;
+        }
         $c_tag_id;
         foreach ($tags as $tkey => $tval) {
             if(intval($tval->tag) == intval($tag_id)){
@@ -116,32 +137,25 @@ class ActiveCampaign_API_Gatto {
     }
 
     public function update_contact_field($contact_id, $field_id, $value){
-        $fields = $this->get_contact_fields($contact_id);
-        $c_field_id;
-        foreach ($fields as $tkey => $tval) {
-            if(intval($tval->field) == intval($field_id)){
-                $c_field_id = intval($tval->id);
-                break;
-            }
-        }
-
         $body = array(
             "fieldValue" => array(
-                "value" => $value
+                "value" => $value,
+                "contact" => $contact_id,
+                "field" => $field_id
             )
         );
 
-        if(isset($c_field_id)){
-            $response = wp_remote_post(
-                $this->api_url."/api/3/fieldValues/".$c_field_id,
-                array(
-                    'headers' => $this->get_headers(true),
-                    'method' => 'PUT',
-                    'body' => json_encode($body)
-                )
-            );
-        }
+
+        $response = wp_remote_post(
+            $this->api_url."/api/3/fieldValues/",
+            array(
+                'headers' => $this->get_headers(true),
+                'method' => 'POST',
+                'body' => json_encode($body)
+            )
+        );
     }
+
 
     public function get_all_tags() {
         if(isset($this->all_tags)){
