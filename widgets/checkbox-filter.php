@@ -355,26 +355,27 @@ class Checkbox_Filter extends \Elementor\Widget_Base {
     * @access protected
     */
     protected function _content_template() {
+
         ?>
         <div>
-            <ul class="cat-checkbox-list cat-filter-for-<?php echo $settings['post_id']; ?>">
-                <#
-                var allTxt = settings.all_text;
-                var tax = settings.taxonomy;
-                var icon = '<span class="cat-checkbox-icon-container">';
-                if(settings.icon_on && settings.icon_on != ""){
-                    icon += '<i class="' + settings.icon_on + ' cat-icon-on" aria-hidden="true"></i>';
-                }
-                if(settings.icon_off && settings.icon_off != ""){
-                    icon += '<i class="' + settings.icon_off + ' cat-icon-off" aria-hidden="true"></i>';
-                }
-                icon += '</span>';
+            <#
+            print('<ul class="cat-checkbox-list cat-filter-for-' + settings.post_id + '">');
+            var allTxt = settings.all_text;
+            var tax = settings.taxonomy;
+            var icon = '<span class="cat-checkbox-icon-container">';
+            if(settings.icon_on && settings.icon_on != ""){
+                icon += '<i class="' + settings.icon_on + ' cat-icon-on" aria-hidden="true"></i>';
+            }
+            if(settings.icon_off && settings.icon_off != ""){
+                icon += '<i class="' + settings.icon_off + ' cat-icon-off" aria-hidden="true"></i>';
+            }
+            icon += '</span>';
 
-                print('<li class="cat-checkbox-filter elementor-active">'+icon+tax+' 1</li>');
-                print('<li class="cat-checkbox-filter">'+icon+tax+' 2</li>');
-                print('<li class="cat-checkbox-filter">'+icon+tax+' 3</li>');
-                #>
-            </ul>
+            print('<li class="cat-checkbox-filter elementor-active">'+icon+tax+' 1</li>');
+            print('<li class="cat-checkbox-filter">'+icon+tax+' 2</li>');
+            print('<li class="cat-checkbox-filter">'+icon+tax+' 3</li>');
+            print('</ul>');
+            #>
         </div>
         <?php
     }

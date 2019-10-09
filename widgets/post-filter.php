@@ -310,14 +310,10 @@ class Post_Filter extends \Elementor\Widget_Base {
     protected function _content_template() {
         ?>
         <div>
-            <ul class="elementor-portfolio__filters cat-filter-for-<?php echo $settings['post_id']; ?>">
-                <#
-                var allTxt = settings.all_text;
-                var tax = settings.taxonomy;
-                print('<li class="elementor-portfolio__filter elementor-active">'+allTxt+'</li>');
-                print('<li class="elementor-portfolio__filter">'+tax+' 1</li>');
-                print('<li class="elementor-portfolio__filter">'+tax+' 2</li>');
-                #>
+            <ul class="elementor-portfolio__filters cat-filter-for-{{ settings.post_id }}">
+                <li class="elementor-portfolio__filter elementor-active">{{{ settings.all_text }}}</li>
+                <li class="elementor-portfolio__filter">{{{ settings.taxonomy }}} 1</li>
+                <li class="elementor-portfolio__filter">{{{ settings.taxonomy }}} 2</li>
             </ul>
         </div>
         <?php

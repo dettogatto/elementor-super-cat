@@ -214,15 +214,11 @@ class Dropdown_Filter extends \Elementor\Widget_Base {
     */
     protected function _content_template() {
         ?>
-        <select class="cat-dropdown-list cat-filter-for-<?php echo $settings['post_id']; ?>">
-            <#
-            var tax = settings.taxonomy;
-            var select = settings.select_text;
-            print('<option class="cat-dropdown-filter elementor-active">' + select + '</option>');
-            print('<option class="cat-dropdown-filter elementor-active">' + tax + ' 1</option>');
-            print('<option class="cat-dropdown-filter">' + tax + ' 2</option>');
-            print('<option class="cat-dropdown-filter">' + tax + ' 3</option>');
-            #>
+        <select class="cat-dropdown-list cat-filter-for-{{settings.post_id}}">
+            <option class="cat-dropdown-filter elementor-active">{{{settings.select_text}}}</option>
+            <option class="cat-dropdown-filter elementor-active">{{{settings.taxonomy}}} 1</option>
+            <option class="cat-dropdown-filter">{{{settings.taxonomy}}} 2</option>
+            <option class="cat-dropdown-filter">{{{settings.taxonomy}}} 3</option>
         </select>
         <?php
     }
