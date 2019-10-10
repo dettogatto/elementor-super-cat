@@ -28,9 +28,14 @@ class Elementor_Super_Cat_Admin {
             require_once(__DIR__ . '/tabs/' . $this->current_tab .'.php');
             $this->tab_handler = new Super_Cat_Tab("elementor_super_cat");
             add_action( 'admin_menu', array( $this, 'settings_page' ) );
-            wp_enqueue_style( "elementor_super_cat", plugin_dir_url( __FILE__ ) . '../assets/css/admin.css', array(), time(), 'all' );
+            add_action( 'admin_enqueue_scripts', array($this , 'enqueue_cat_admin_css') );
         }
     }
+
+    public function enqueue_cat_admin_css(){
+        wp_enqueue_style( "elementor_super_cat", plugin_dir_url( __FILE__ ) . '../assets/css/admin.css', array(), time(), 'all' );
+    }
+
     public function settings_page() {
         //Create the menu item and page
         $page_title = "Elementor Super Cat";
