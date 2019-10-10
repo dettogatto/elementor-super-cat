@@ -264,6 +264,7 @@ class Super_Cat_Tab {
     }
 
     public function section_abandoned_callback( $arguments ) {
+        echo('<p><strong>EXPERIMENTAL</strong>: This function does not seem to work right now, due to Wordpress limitations.</p>');
         echo('<p>Here you can set the data to send to ActiveCampaign upon cart abandonment.<br></p>');
     }
 
