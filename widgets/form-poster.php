@@ -160,19 +160,26 @@ class Form_Poster extends Widget_Base {
                 var matches = $jq(this).attr("name").match(/form_fields\[(.*?)\]/);
                 if (matches) {
                     var submatch = matches[1];
-                    <?php if($settings['replace_underscores'] == "yes"){ ?>
-                        submatch = submatch.replace(/\_[0-9]+/g, function(x){return "["+x.replace("_", "")+"]";});
-                        <?php } ?>
-                        $jq(this).attr("name", submatch);
-                    }else{
-                        $jq(this).remove();
-                    }
+                    <?php if($settings['replace_underscores'] == "yes"){ ?> submatch = submatch.replace(/\_[0-9]+/g, function(x){return "["+x.replace("_", "")+"]";}); <?php } ?>
+                    $jq(this).attr("name", submatch);
+                }else{
+                    $jq(this).remove();
+                }
+            });
+            $jq(superGattoID + " form").submit(function(){
+                $jq(this).find('input, textarea, select').each(function(){
+                    /* SET THE COOKIE */
+                    var name = "gatto_form_" + $jq(this).attr("name");
+                    var value = $jq(this).val();
+                    var expires = "";
+                    document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
                 });
             });
-            </script>
-            <div id="form-super-gatto-for-<?php echo $settings['formid']; ?>"></div>
-            <?php
-
-        }
+        });
+        </script>
+        <div id="form-super-gatto-for-<?php echo $settings['formid']; ?>"></div>
+        <?php
 
     }
+
+}
