@@ -55,6 +55,13 @@ This widget is similar to the built-in Elementor Video Widget, but it gives you 
 
 ---
 
+## Extra Functionalities
+
+* Gives you the ability to set extra webhooks for Elementor forms
+* Automatically stores all Elementor forms data in cookies called `gatto_form_#` on submit (where `#` is the form field ID)
+
+---
+
 ### Donate
 
 If you find this plugin useful consider offering this cat a cup of milk, so it can keep on hacking!

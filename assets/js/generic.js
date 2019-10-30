@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   var $jq = jQuery.noConflict();
 
-  $jq("form").click(function(){
+  $jq("form").submit(function(){
     $jq(this).find('input, textarea, select').each(function(){
       /* SET THE COOKIE */
       var name = $jq(this).attr("name");
