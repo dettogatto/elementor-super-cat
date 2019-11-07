@@ -258,7 +258,7 @@ class Super_Cat_Tab {
     }
 
     public function section_delete_disabled( $arguments ) {
-        $this->section_delete_callback();
+        $this->section_delete_callback( $arguments );
         echo('This functionality needs the plugin <strong>ActiveCampaign for WooCommerce</strong> to work.</p>');
 
     }
