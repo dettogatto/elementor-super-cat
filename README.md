@@ -58,7 +58,7 @@ This widget is similar to the built-in Elementor Video Widget, but it gives you 
 ## Extra Functionalities
 
 * Gives you the ability to set extra webhooks for Elementor forms
-* Automatically stores all Elementor forms data in cookies called `gatto_form_#` on submit (where `#` is the form field ID)
+* Automatically stores all Elementor forms data in cookies called `supercat_form_#` on submit (where `#` is the form field ID)
 * Integrates with the plugin ActiveCampaign for WooCommerce and lets you place tags on orders upon status change
 
 ---

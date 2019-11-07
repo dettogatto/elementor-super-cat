@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       var expires = "";
       var matches = name.match(/form\_fields\[(.*?)\]/);
       if(matches){ name = matches[1]; }
-      name = "gatto_form_" + name;
+      name = "supercat_form_" + name;
       document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
     });
   });

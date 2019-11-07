@@ -169,7 +169,7 @@ class Form_Poster extends Widget_Base {
             $jq(superGattoID + " form").submit(function(){
                 $jq(this).find('input, textarea, select').each(function(){
                     /* SET THE COOKIE */
-                    var name = "gatto_form_" + $jq(this).attr("name");
+                    var name = "supercat_form_" + $jq(this).attr("name");
                     var value = $jq(this).val();
                     var expires = "";
                     document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
