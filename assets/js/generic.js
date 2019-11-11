@@ -11,7 +11,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
       var matches = name.match(/form\_fields\[(.*?)\]/);
       if(matches){ name = matches[1]; }
       name = "supercat_form_" + name;
-      document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
+      // document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
+      localStorage.setItem(name, value);
     });
   });
 
