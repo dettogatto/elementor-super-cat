@@ -144,7 +144,6 @@ class Form_Poster extends Widget_Base {
 
         <script type='text/javascript'>
         document.addEventListener("DOMContentLoaded", function(event) {
-
             /* The ID assigned to the form widget via Elementor */
             var formID = "#<?php echo $settings['formid']; ?>";
             /* The URL to which you want to send the data */
@@ -165,16 +164,20 @@ class Form_Poster extends Widget_Base {
                 }else{
                     $jq(this).remove();
                 }
+                var cls=$jq(this).attr("class");
+                if ( cls && cls.match(/flatpickr/) ){
+                    $jq(this).flatpickr();
+                }
             });
-            $jq(superGattoID + " form").submit(function(){
-                $jq(this).find('input, textarea, select').each(function(){
-                    /* SET THE COOKIE */
-                    var name = "supercat_form_" + $jq(this).attr("name");
-                    var value = $jq(this).val();
-                    var expires = "";
-                    document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
-                });
-            });
+            // $jq(superGattoID + " form").submit(function(){
+            //     $jq(this).find('input, textarea, select').each(function(){
+            //         /* SET THE COOKIE */
+            //         var name = "supercat_form_" + $jq(this).attr("name");
+            //         var value = $jq(this).val();
+            //         var expires = "";
+            //         document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
+            //     });
+            // });
         });
         </script>
         <div id="form-super-gatto-for-<?php echo $settings['formid']; ?>"></div>
