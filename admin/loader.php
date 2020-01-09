@@ -11,7 +11,8 @@ class Elementor_Super_Cat_Admin {
     public $tabs = array(
         "welcome" => "Welcome",
         "extra-webhooks" => "WebHooks",
-        "woocommerce-ac" => "WooComm - AC"
+        "woocommerce-ac" => "WooComm - AC",
+        "sendinblue" => "Sendinblue"
     );
     public $default_tab = "welcome";
     public $current_tab;
