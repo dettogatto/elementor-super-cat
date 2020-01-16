@@ -836,101 +836,92 @@ class ZCRMOrganization
     
     /**
      * method to get the users of the organization
-     * @param Array $param_map key-value pairs containing parameters 
-     * @param Array $header_map key-value pairs containing headers 
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
-    public function getAllUsers($param_map=array(),$header_map=array())
+    public function getAllUsers()
     {
-        return OrganizationAPIHandler::getInstance()->getAllUsers($param_map,$header_map);
+        return OrganizationAPIHandler::getInstance()->getAllUsers();
     }
     
     /**
      * method to get the active users of the organization
-     * @param Array $param_map key-value pairs containing parameters 
-     * @param Array $header_map key-value pairs containing headers 
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
-    public function getAllActiveUsers($param_map=array(),$header_map=array())
+    public function getAllActiveUsers()
     {
-        return OrganizationAPIHandler::getInstance()->getAllActiveUsers($param_map,$header_map);
+        return OrganizationAPIHandler::getInstance()->getAllActiveUsers();
     }
     
     /**
      * method to get the deactived users of the organization
-     * @param Array $param_map key-value pairs containing parameters 
-     * @param Array $header_map key-value pairs containing headers 
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
-    public function getAllDeactiveUsers($param_map=array(),$header_map=array())
+    public function getAllDeactiveUsers()
     {
-        return OrganizationAPIHandler::getInstance()->getAllDeactiveUsers($param_map,$header_map);
+        return OrganizationAPIHandler::getInstance()->getAllDeactiveUsers();
     }
     
     /**
      * method to get the confirmed users of the organization
-     * @param Array $param_map key-value pairs containing parameters 
-     * @param Array $header_map key-value pairs containing headers 
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
-    public function getAllConfirmedUsers($param_map=array(),$header_map=array())
+    public function getAllConfirmedUsers()
     {
-        return OrganizationAPIHandler::getInstance()->getAllConfirmedUsers($param_map,$header_map);
+        return OrganizationAPIHandler::getInstance()->getAllConfirmedUsers();
     }
     
     /**
      * method to get the unconfirmed users of the organization
-     * @param Array $param_map key-value pairs containing parameters 
-     * @param Array $header_map key-value pairs containing headers 
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
-    public function getAllNotConfirmedUsers($param_map=array(),$header_map=array())
+    public function getAllNotConfirmedUsers()
     {
-        return OrganizationAPIHandler::getInstance()->getAllNotConfirmedUsers($param_map,$header_map);
+        return OrganizationAPIHandler::getInstance()->getAllNotConfirmedUsers();
     }
     
     /**
      * method to get the deleted users of the organization
-     * @param Array $param_map key-value pairs containing parameters 
-     * @param Array $header_map key-value pairs containing headers 
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
-    public function getAllDeletedUsers($param_map=array(),$header_map=array())
+    public function getAllDeletedUsers()
     {
-        return OrganizationAPIHandler::getInstance()->getAllDeletedUsers($param_map,$header_map);
+        return OrganizationAPIHandler::getInstance()->getAllDeletedUsers();
     }
     
     /**
      * method to get the active confirmed users of the organization
-     * @param Array $param_map key-value pairs containing parameters 
-     * @param Array $header_map key-value pairs containing headers 
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
-    public function getAllActiveConfirmedUsers($param_map=array(),$header_map=array())
+    public function getAllActiveConfirmedUsers()
     {
-        return OrganizationAPIHandler::getInstance()->getAllActiveConfirmedUsers($param_map,$header_map);
+        return OrganizationAPIHandler::getInstance()->getAllActiveConfirmedUsers();
     }
     
     /**
      * method to get the admin users of the organization
-     * @param Array $param_map key-value pairs containing parameters 
-     * @param Array $header_map key-value pairs containing headers 
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
-    public function getAllAdminUsers($param_map=array(),$header_map=array())
+    public function getAllAdminUsers()
     {
-        return OrganizationAPIHandler::getInstance()->getAllAdminUsers($param_map,$header_map);
+        return OrganizationAPIHandler::getInstance()->getAllAdminUsers();
     }
     
     /**
      * method to get the confirmed active admin users of the organization
-     * @param Array $param_map key-value pairs containing parameters 
-     * @param Array $header_map key-value pairs containing headers 
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
-    public function getAllActiveConfirmedAdmins($param_map=array(),$header_map=array())
+    public function getAllActiveConfirmedAdmins()
     {
-        return OrganizationAPIHandler::getInstance()->getAllActiveConfirmedAdmins($param_map,$header_map);
+        return OrganizationAPIHandler::getInstance()->getAllActiveConfirmedAdmins();
     }
     
     /**
@@ -1009,11 +1000,11 @@ class ZCRMOrganization
     /**
      * method to search user by criteria
      * @param string $criteria criteria to search with
-     * @param Array $param_map key-value pairs containing parameters 
+     * @param string $type type of users
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the api response
      */
-    public function searchUsersByCriteria($criteria,$param_map=array()){
-        return OrganizationAPIHandler::getInstance()->searchUsersByCriteria($criteria,$param_map);
+    public function searchUsersByCriteria($criteria,$type=null){
+        return OrganizationAPIHandler::getInstance()->searchUsersByCriteria($criteria, $type);
     }
     /**
      * method to delete the user of the organization
@@ -1098,8 +1089,8 @@ class ZCRMOrganization
         $instance = VariableAPIHandler::getInstance();
         return $instance->updateVariables($variable);
     }
-    public function getNotes($param_map=array(),$header_map=array()){
-        return OrganizationAPIHandler::getInstance()->getNotes($param_map,$header_map);
+    public function getNotes(){
+        return OrganizationAPIHandler::getInstance()->getNotes();
     }
     public function createNotes($noteInstances){
         return OrganizationAPIHandler::getInstance()->createNotes($noteInstances);

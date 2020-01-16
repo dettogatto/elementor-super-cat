@@ -15,8 +15,8 @@ add_action( 'elementor_pro/init', function (){
 add_action( 'wp_ajax_setup_zoho', function(){
   $grant = $_GET["code"];
   require_once( __DIR__ . '/../helpers/zoho-api.php' );
-  $zoho = new Zoho_Connection_By_Gatto();
-  if($zoho->get_tokens_from_grant($grant)){
+  $zoho = new Zoho_Api_By_Gatto();
+  if($rrr = $zoho->get_tokens_from_grant($grant)){
     echo("L'attivazione è andata a buon fine!<br><br>");
     echo('<a href="'.get_site_url().'/wp-admin/admin.php?page=elementor-super-cat&tab=zoho'.'">Torna alle impostazioni.</a>');
   }

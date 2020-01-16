@@ -76,7 +76,6 @@ class MassEntityAPIHandler extends APIHandler
             throw $e;
         }
     }
-    
     public function upsertRecords($records, $trigger,$lar_id,$duplicate_check_fields)
     {
         if (sizeof($records) > 100) {
@@ -211,34 +210,29 @@ class MassEntityAPIHandler extends APIHandler
         }
     }
     
-    public function getAllDeletedRecords($param_map,$header_map)
+    public function getAllDeletedRecords()
     {
-        return self::getDeletedRecords($param_map,$header_map,"all");
+        return self::getDeletedRecords("all");
     }
     
-    public function getRecycleBinRecords($param_map,$header_map)
+    public function getRecycleBinRecords()
     {
-        return self::getDeletedRecords($param_map,$header_map,"recycle");
+        return self::getDeletedRecords("recycle");
     }
     
-    public function getPermanentlyDeletedRecords($param_map,$header_map)
+    public function getPermanentlyDeletedRecords()
     {
-        return self::getDeletedRecords($param_map,$header_map,"permanent");
+        return self::getDeletedRecords("permanent");
     }
     
-    private function getDeletedRecords($param_map,$header_map,$type)
+    private function getDeletedRecords($type)
     {
         try {
             $this->urlPath = $this->module->getAPIName() . "/deleted";
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
-            foreach($param_map as $key=>$value){
-                if($value!=null)$this->addParam($key,$value);
-            }
-            foreach($header_map as $key=>$value){
-                if($value!=null)$this->addHeader($key,$value);
-            }
             $this->addHeader("Content-Type", "application/json");
             $this->addParam("type", $type);
+            
             $responseInstance = APIRequest::getInstance($this)->getBulkAPIResponse();
             $responseJSON = $responseInstance->getResponseJSON();
             $trashRecords = $responseJSON["data"];
@@ -276,18 +270,29 @@ class MassEntityAPIHandler extends APIHandler
         $trashRecordInstance->setDeletedTime($recordProperties['deleted_time']);
     }
     
-    public function getRecords($param_map,$header_map)
+    public function getRecords($cvId, $sortByField, $sortOrder, $page, $perPage, $customHeaders)
     {
         try {
             $this->urlPath = $this->module->getAPIName();
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
-            foreach ($param_map as $key => $value) {
-                if($value!==null)$this->addParam($key, $value);
-            }
-            foreach ($header_map as $key => $value) {
-                if($value!==null)$this->addHeader($key, $value);
-            }
             $this->addHeader("Content-Type", "application/json");
+            if ($customHeaders != null) {
+                foreach ($customHeaders as $key => $value) {
+                    $this->addHeader($key, $value);
+                }
+            }
+            if ($cvId != null) {
+                $this->addParam("cvid", $cvId );
+            }
+            if ($sortByField != null) {
+                $this->addParam("sort_by", $sortByField);
+            }
+            if ($sortOrder != null) {
+                $this->addParam("sort_order", $sortOrder);
+            }
+            $this->addParam("page", $page );
+            $this->addParam("per_page", $perPage );
+            
             $responseInstance = APIRequest::getInstance($this)->getBulkAPIResponse();
             $responseJSON = $responseInstance->getResponseJSON();
             $records = $responseJSON["data"];
@@ -307,22 +312,28 @@ class MassEntityAPIHandler extends APIHandler
         }
     }
     
-    public function searchRecords($param_map,$type,$search_value)
+    public function searchRecords($searchWord, $page, $perPage, $type)
     {
         try {
             $this->urlPath = $this->module->getAPIName() . "/search";
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
-            $exclusion_array = ["word","phone","email","criteria"];
-            foreach($exclusion_array as $exclusion){
-                if(array_key_exists($exclusion, $param_map)){
-                    unset($param_map[$exclusion]);
-                }
-            }
-            foreach ($param_map as $key => $value) {
-                if($value!==null)$this->addParam($key, $value);
-            }
-            $this->addParam($type, $search_value);
             $this->addHeader("Content-Type", "application/json");
+            switch ($type) {
+                case "word":
+                    $this->addParam("word", $searchWord);
+                    break;
+                case "phone":
+                    $this->addParam("phone", $searchWord);
+                    break;
+                case "email":
+                    $this->addParam("email", $searchWord);
+                    break;
+                case "criteria":
+                    $this->addParam("criteria", $searchWord);
+                    break;
+            }
+            $this->addParam("page", $page + 0);
+            $this->addParam("per_page", $perPage + 0);
             $responseInstance = APIRequest::getInstance($this)->getBulkAPIResponse();
             $responseJSON = $responseInstance->getResponseJSON();
             $records = $responseJSON["data"];

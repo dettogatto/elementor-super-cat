@@ -63,7 +63,7 @@ class ZCRMTag
      *
      * @var string
      */
-    private $moduleAPIName = null;
+    private $moduleApiName = null;
     
     /**
      * constructor to assign tag id and module api name to the tag
@@ -234,9 +234,9 @@ class ZCRMTag
      *
      * @return String module api name of the module to which tag belongs
      */
-    public function getModuleAPIName()
+    public function getModuleApiName()
     {
-        return $this->moduleAPIName;
+        return $this->moduleApiName;
     }
     
     /**
@@ -244,9 +244,9 @@ class ZCRMTag
      *
      * @param String $moduleApiName module api name of the module to which tag belongs
      */
-    public function setModuleAPIName($moduleAPIName)
+    public function setModuleApiName($moduleApiName)
     {
-        $this->moduleAPIName = $moduleAPIName;
+        $this->moduleApiName = $moduleApiName;
     }
     
     /**
@@ -257,7 +257,7 @@ class ZCRMTag
      */
     public function delete()
     {
-        if ($this->id == null || $this->id == "") {
+        if ($this->id == null || $this->id == 0) {
             throw new ZCRMException("Tag ID MUST NOT be null/empty for delete operation");
         }
         return TagAPIHandler::getInstance()->delete($this->id);
@@ -272,7 +272,7 @@ class ZCRMTag
      */
     public function merge($mergetag)
     {
-        if ($this->id == null || $this->id == "") {
+        if ($this->id == null || $this->id == 0) {
             throw new ZCRMException("Tag ID MUST NOT be null/empty for merge operation");
         }
         if ($mergetag->id == null || $mergetag->id == 0) {
@@ -289,10 +289,10 @@ class ZCRMTag
      */
     public function update()
     {
-        if ($this->id == null || $this->id == "") {
+        if ($this->id == null || $this->id == 0) {
             throw new ZCRMException("Tag ID MUST NOT be null/empty for update operation");
         }
-        if ($this->moduleAPIName == null || $this->moduleAPIName == "") {
+        if ($this->moduleApiName == null || $this->moduleApiName == "") {
             throw new ZCRMException("Module Api Name MUST NOT be null/empty for update operation");
         }
         if ($this->name == null || $this->name == "") {

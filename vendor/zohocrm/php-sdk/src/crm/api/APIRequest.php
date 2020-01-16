@@ -19,8 +19,6 @@ class APIRequest
 {
     
     private $url = null;
-
-    private $bulkurl = null;
     
     private $requestParams = array();
     
@@ -38,18 +36,10 @@ class APIRequest
     
     private function __construct($apiHandler)
     {
-        if(strpos($apiHandler->getUrlPath(), "content")!== false || strpos($apiHandler->getUrlPath(), "upload")!== false || strpos($apiHandler->getUrlPath(), 'bulk-write')!== false)
-        {
-            self::setUrl($apiHandler->getUrlPath());
-        }
-        else 
-        {
-            self::constructAPIUrl($apiHandler);
-            self::setUrl($this->url . $apiHandler->getUrlPath());
-            if (substr($apiHandler->getUrlPath(), 0, 4) !== "http")
-            {
-                self::setUrl("https://" . $this->url);
-            }
+        self::constructAPIUrl();
+        self::setUrl($this->url . $apiHandler->getUrlPath());
+        if (substr($apiHandler->getUrlPath(), 0, 4) !== "http") {
+            self::setUrl("https://" . $this->url);
         }
         self::setRequestParams($apiHandler->getRequestParams());
         self::setRequestHeaders($apiHandler->getRequestHeaders());
@@ -67,18 +57,11 @@ class APIRequest
     /**
      * Method to construct the API Url
      */
-    public function constructAPIUrl($apiHandler)
+    public function constructAPIUrl()
     {
         $hitSandbox = ZCRMConfigUtil::getConfigValue('sandbox');
         $baseUrl = strcasecmp($hitSandbox, "true") == 0 ? str_replace('www', 'sandbox', ZCRMConfigUtil::getAPIBaseUrl()) : ZCRMConfigUtil::getAPIBaseUrl();
-        if($apiHandler->isBulk())
-        {
-            $this->url = $baseUrl . "/crm/bulk/" . ZCRMConfigUtil::getAPIVersion() . "/";
-        }
-        else 
-        {
-            $this->url = $baseUrl . "/crm/" . ZCRMConfigUtil::getAPIVersion() . "/";
-        }
+        $this->url = $baseUrl . "/crm/" . ZCRMConfigUtil::getAPIVersion() . "/";
         $this->url = str_replace(PHP_EOL, '', $this->url);
     }
     
@@ -86,15 +69,7 @@ class APIRequest
     {
         try {
             $accessToken = (new ZCRMConfigUtil())->getAccessToken();
-            if(strpos($this->url, "content")!== false || strpos($this->url, "upload")!== false || strpos($this->url, "bulk-write")!== false)
-            {
-                $this->requestHeaders[APIConstants::AUTHORIZATION] = " ".APIConstants::OAUTH_HEADER_PREFIX . $accessToken;
-            }
-            else 
-            {
-                $this->requestHeaders[APIConstants::AUTHORIZATION] = APIConstants::OAUTH_HEADER_PREFIX . $accessToken;
-            }
-//             $this->requestHeaders[APIConstants::AUTHORIZATION] = APIConstants::OAUTH_HEADER_PREFIX . $accessToken;
+            $this->requestHeaders[APIConstants::AUTHORIZATION] = APIConstants::OAUTH_HEADER_PREFIX . $accessToken;
         } catch (ZCRMException $ex) {
             throw $ex;
         }
@@ -119,7 +94,7 @@ class APIRequest
             $response = $connector->fireRequest();
             $this->response = $response[0];
             $this->responseInfo = $response[1];
-            return new APIResponse($this->response, $this->responseInfo[APIConstants::HTTP_CODE]);
+            return new APIResponse($this->response, $this->responseInfo['http_code']);
         } catch (ZCRMException $e) {
             throw $e;
         }
@@ -145,7 +120,7 @@ class APIRequest
             $response = $connector->fireRequest();
             $this->response = $response[0];
             $this->responseInfo = $response[1];
-            return new BulkAPIResponse($this->response, $this->responseInfo[APIConstants::HTTP_CODE]);
+            return new BulkAPIResponse($this->response, $this->responseInfo['http_code']);
         } catch (ZCRMException $e) {
             throw $e;
         }
@@ -153,31 +128,11 @@ class APIRequest
     
     public function uploadFile($filePath)
     {
-        try
-        {
-            $mime = null;
-            $filename = basename($filePath);
-            if (function_exists('finfo_open'))
-            {
-                $finfo = finfo_open(FILEINFO_MIME_TYPE);
-                $mime = finfo_file($finfo, $filePath);
-                finfo_close($finfo);
-            }
-            elseif (function_exists('mime_content_type'))
-            {
-                $mime = mime_content_type($filePath);
-            }
-            else
-            {
-                $mime = "application/octet-stream";
-            }
-            if (function_exists('curl_file_create'))
-            { // php 5.6+
-                $cFile = curl_file_create($filePath, $mime, $filename);
-            }
-            else
-            { //
-                $cFile = '@' . realpath($filePath, $mime, $filename);
+        try {
+            if (function_exists('curl_file_create')) { // php 5.6+
+                $cFile = curl_file_create($filePath);
+            } else { //
+                $cFile = '@' . realpath($filePath);
             }
             $post = array(
                 'file' => $cFile
@@ -194,7 +149,7 @@ class APIRequest
             $response = $connector->fireRequest();
             $this->response = $response[0];
             $this->responseInfo = $response[1];
-            return new APIResponse($this->response, $this->responseInfo[APIConstants::HTTP_CODE]);
+            return new APIResponse($this->response, $this->responseInfo['http_code']);
         } catch (ZCRMException $e) {
             throw $e;
         }
@@ -217,7 +172,7 @@ class APIRequest
             $response = $connector->fireRequest();
             $this->response = $response[0];
             $this->responseInfo = $response[1];
-            return new APIResponse($this->response, $this->responseInfo[APIConstants::HTTP_CODE]);
+            return new APIResponse($this->response, $this->responseInfo['http_code']);
         } catch (ZCRMException $e) {
             throw $e;
         }
@@ -233,7 +188,7 @@ class APIRequest
             $connector->setRequestParamsMap($this->requestParams);
             $connector->setRequestType($this->requestMethod);
             $response = $connector->downloadFile();
-            return (new FileAPIResponse())->setFileContent($response[0], $response[1][APIConstants::HTTP_CODE]);
+            return (new FileAPIResponse())->setFileContent($response[0], $response[1]['http_code']);
         } catch (ZCRMException $e) {
             throw $e;
         }

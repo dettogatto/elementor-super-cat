@@ -2,8 +2,8 @@
 namespace zcrmsdk\oauth;
 
 
-use zcrmsdk\crm\utility\Logger;
 use zcrmsdk\oauth\exception\ZohoOAuthException;
+use zcrmsdk\oauth\utility\OAuthLogger;
 use zcrmsdk\oauth\utility\ZohoOAuthConstants;
 use zcrmsdk\oauth\utility\ZohoOAuthHTTPConnector;
 use zcrmsdk\oauth\utility\ZohoOAuthTokens;
@@ -19,7 +19,6 @@ class ZohoOAuthClient
     {
         $this->zohoOAuthParams = $params;
     }
-
     public static function getInstance($params)
     {
         self::$zohoOAuthClient = new ZohoOAuthClient($params);
@@ -37,13 +36,13 @@ class ZohoOAuthClient
         try {
             $tokens = $persistence->getOAuthTokens($userEmailId);
         } catch (ZohoOAuthException $ex) {
-            Logger::severe("Exception while retrieving tokens from persistence - " . $ex);
+            OAuthLogger::severe("Exception while retrieving tokens from persistence - " . $ex);
             throw $ex;
         }
         try {
             return $tokens->getAccessToken();
         } catch (ZohoOAuthException $ex) {
-            Logger::info("Access Token has expired. Hence refreshing.");
+            OAuthLogger::info("Access Token has expired. Hence refreshing.");
             $tokens = self::refreshAccessToken($tokens->getRefreshToken(), $userEmailId);
             return $tokens->getAccessToken();
         }
@@ -77,7 +76,6 @@ class ZohoOAuthClient
     {
         self::refreshAccessToken($refreshToken, $userEmailId);
     }
-    
     public function refreshAccessToken($refreshToken, $userEmailId)
     {
         
@@ -118,10 +116,8 @@ class ZohoOAuthClient
     {
         $oAuthTokens = new ZohoOAuthTokens();
         $expiresIn = $responseObj[ZohoOAuthConstants::EXPIRES_IN];
-        if(!array_key_exists(ZohoOAuthConstants::EXPIRES_IN_SEC,$responseObj)){
-            $expiresIn=$expiresIn*1000;
-        }
         $oAuthTokens->setExpiryTime($oAuthTokens->getCurrentTimeInMillis() + $expiresIn);
+        
         $accessToken = $responseObj[ZohoOAuthConstants::ACCESS_TOKEN];
         $oAuthTokens->setAccessToken($accessToken);
         if (array_key_exists(ZohoOAuthConstants::REFRESH_TOKEN, $responseObj)) {

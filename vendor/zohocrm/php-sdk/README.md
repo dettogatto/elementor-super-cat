@@ -5,7 +5,7 @@ PHP SDK for Zoho CRM APIs provides wrapper for Zoho CRM APIs. Hence invoking a Z
 Registering a Zoho Client
 -------------------------
 Since Zoho CRM APIs are authenticated with OAuth2 standards, you should register your client app with Zoho. To register your app:
-1) Visit this page [https://accounts.zoho.com/developerconsole](https://accounts.zoho.com/developerconsole).
+1) Visit this page [https://accounts.zoho.eu/developerconsole](https://accounts.zoho.eu/developerconsole).
 2) Click on `Add Client ID`.
 3) Enter Client Name, Client Domain and Redirect URI then click `Create`.
 4) Your Client app would have been created and displayed by now.
@@ -101,9 +101,9 @@ apiBaseUrl  - Url to be used when calling an API. It is used to denote the domai
 apiVersion  is "v2".
 
 accounts_url - Default value set as US domain. The value can be changed based on your domain(EU,CN).
-    accounts.zoho.com
     accounts.zoho.eu
-    accounts.zoho.com.cn
+    accounts.zoho.eu
+    accounts.zoho.eu.cn
 
 sandbox - To make API calls to sandbox account , please change the value of following key to true. By default the value is false.
 
@@ -131,15 +131,15 @@ We will be using the self-client option here to demonstrate the process.
 
 Generating self-authorized grant token
 --------------------------------------
-For self client apps, the self authorized grant token should be generated from the Zoho Developer Console (https://accounts.zoho.com/developerconsole)
+For self client apps, the self authorized grant token should be generated from the Zoho Developer Console (https://accounts.zoho.eu/developerconsole)
 
->1) Visit https://accounts.zoho.com/developerconsole
+>1) Visit https://accounts.zoho.eu/developerconsole
 2) Click Options → Self Client of the client for which you wish to authorize.
 3) Enter one or more(comma separated) valid Zoho CRM scopes, that you wish to authorize, in the “Scope” field and choose a time of expiry.
 4) Copy the grant token.
 5) Generate refresh_token from grant token by using below URL
 
->https://accounts.zoho.com/oauth/v2/token?code={grant_token}&redirect_uri={redirect_uri}&client_id={client_id}&client_secret={client_secret}&grant_type=authorization_code
+>https://accounts.zoho.eu/oauth/v2/token?code={grant_token}&redirect_uri={redirect_uri}&client_id={client_id}&client_secret={client_secret}&grant_type=authorization_code
 It's a POST request
 
 Copy the refresh_token for backup

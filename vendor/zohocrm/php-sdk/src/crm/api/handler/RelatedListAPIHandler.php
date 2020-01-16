@@ -39,19 +39,20 @@ class RelatedListAPIHandler extends APIHandler
         return new RelatedListAPIHandler($parentRecord, $relatedList);
     }
     
-    public function getRecords($param_map, $header_map)
+    public function getRecords($sortByField, $sortOrder, $page, $perPage)
     {
         try {
             $this->urlPath = $this->parentRecord->getModuleApiName() . "/" . $this->parentRecord->getEntityId() . "/" . $this->relatedList->getApiName();
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
-            foreach($param_map as $key=>$value){
-                if($value!=null)$this->addParam($key,$value);
-            }
-            foreach($header_map as $key=>$value){
-                if($value!=null)$this->addHeader($key,$value);
-            }
             $this->addHeader("Content-Type", "application/json");
-            
+            if ($sortByField != null) {
+                $this->addParam("sort_by", $sortByField);
+            }
+            if ($sortOrder != null) {
+                $this->addParam("sort_order", $sortOrder);
+            }
+            $this->addParam("page", $page);
+            $this->addParam("per_page", $perPage);
             
             $responseInstance = APIRequest::getInstance($this)->getBulkAPIResponse();
             $responseJSON = $responseInstance->getResponseJSON();
@@ -72,18 +73,21 @@ class RelatedListAPIHandler extends APIHandler
         }
     }
     
-    public function getNotes($param_map, $header_map)
+    public function getNotes($sortByField, $sortOrder, $page, $perPage)
     {
         try {
             $this->urlPath = $this->parentRecord->getModuleApiName() . "/" . $this->parentRecord->getEntityId() . "/" . $this->relatedList->getApiName();
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
-            foreach($param_map as $key=>$value){
-                if($value!=null)$this->addParam($key,$value);
-            }
-            foreach($header_map as $key=>$value){
-                if($value!=null)$this->addHeader($key,$value);
-            }
             $this->addHeader("Content-Type", "application/json");
+            $this->addParam("page", $page);
+            $this->addParam("per_page", $perPage);
+            if ($sortByField != null) {
+                $this->addParam("sort_by", $sortByField);
+            }
+            if ($sortOrder != null) {
+                $this->addParam("sort_order", $sortOrder);
+            }
+            
             $responseInstance = APIRequest::getInstance($this)->getBulkAPIResponse();
             $responseJSON = $responseInstance->getResponseJSON();
             $notes = $responseJSON["data"];
@@ -101,15 +105,15 @@ class RelatedListAPIHandler extends APIHandler
         }
     }
     
-    public function getAttachments($param_map)
+    public function getAttachments($page, $perPage)
     {
         try {
             $this->urlPath = $this->parentRecord->getModuleApiName() . "/" . $this->parentRecord->getEntityId() . "/" . $this->relatedList->getApiName();
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
-            foreach($param_map as $key=>$value){
-                if($value!=null)$this->addParam($key,$value);
-            }
             $this->addHeader("Content-Type", "application/json");
+            $this->addParam("page", $page);
+            $this->addParam("per_page", $perPage);
+            
             $responseInstance = APIRequest::getInstance($this)->getBulkAPIResponse();
             $responseJSON = $responseInstance->getResponseJSON();
             $attachments = $responseJSON["data"];
@@ -126,7 +130,6 @@ class RelatedListAPIHandler extends APIHandler
             throw $exception;
         }
     }
-    
     public function addNotes($noteInstances){
         if (sizeof($noteInstances) > 100) {
             throw new ZCRMException(APIConstants::API_MAX_NOTES_MSG, APIConstants::RESPONSECODE_BAD_REQUEST);
@@ -153,7 +156,6 @@ class RelatedListAPIHandler extends APIHandler
             throw $exception;
         }
     }
-    
     public function addNote($zcrmNote)
     {
         try {

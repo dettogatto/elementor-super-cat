@@ -155,15 +155,17 @@ class MetaDataAPIHandler extends APIHandler
         return $crmModuleInstance;
     }
     
+    
+    
     public function getRelatedListProperties($relatedListProperties)
     {
         $relatedListPropInstance = ZCRMRelatedListProperties::getInstance();
         $relatedListPropInstance->setSortBy(array_key_exists("sort_by", $relatedListProperties) ? $relatedListProperties['sort_by'] : null);
         $relatedListPropInstance->setSortOrder(array_key_exists("sort_order", $relatedListProperties) ? $relatedListProperties['sort_order'] : null);
         $relatedListPropInstance->setFields(array_key_exists("fields", $relatedListProperties) ? $relatedListProperties['fields'] : null);
+        
         return $relatedListPropInstance;
     }
-    
     public function constructCriteria($criteria,&$index)
     {
         $criteria_instance=ZCRMCustomViewCriteria::getInstance();
@@ -175,7 +177,7 @@ class MetaDataAPIHandler extends APIHandler
             $criteria_instance->setIndex($index);
             $criteria_instance->setPattern((string)$index);
             $index++;
-            $criteria_instance->setCriteria("(".$criteria['field'].":".$criteria['comparator'].":".(json_encode($criteria['value'])).")");
+            $criteria_instance->setCriteria("(".$criteria['field'].":".$criteria['comparator'].":".(string)$criteria['value'].")");
         }
         $group_criteria=array();
         if (isset($criteria['group']))
@@ -190,34 +192,13 @@ class MetaDataAPIHandler extends APIHandler
             $criteria_instance->setGroup($group_criteria);
         }
         
-        if(isset($criteria['group_operator']))
-        {
-            $criteriavalue = "(";
-            $pattern = "(";
+        if(isset($criteria['group_operator'])){
             $criteria_instance->setGroup_operator($criteria['group_operator']);
-            $count = sizeof($group_criteria);
-            $i = 0;
-            foreach ($group_criteria as $criteriaObj)
-            {
-                $i++;
-                $criteriavalue .= $criteriaObj->getCriteria();
-                $pattern .= $criteriaObj->getPattern();
-                if ($i < $count)
-                {
-                    $criteriavalue .= $criteria_instance->getGroup_operator();
-                    $pattern .= $criteria_instance->getGroup_operator();
-                }
-            }
-            $criteria_instance->setCriteria($criteriavalue . ")");
-            $criteria_instance->setPattern($pattern . ")");
-
-            // $criteria_instance->setGroup_operator($criteria['group_operator']);
-            // $criteria_instance->setCriteria("(".$group_criteria[0]->getCriteria().$criteria_instance->getGroup_operator().$group_criteria[1]->getCriteria().")");
-            // $criteria_instance->setPattern("(".$group_criteria[0]->getPattern().$criteria_instance->getGroup_operator().$group_criteria[1]->getPattern().")");
+            $criteria_instance->setCriteria("(".$group_criteria[0]->getCriteria().$criteria_instance->getGroup_operator().$group_criteria[1]->getCriteria().")");
+            $criteria_instance->setPattern("(".$group_criteria[0]->getPattern().$criteria_instance->getGroup_operator().$group_criteria[1]->getPattern().")");
         }
         return $criteria_instance;
     }
-    
     /**
      * Method to process the given custom view details and set them in ZCRMCustomView instance
      * Input:: custom view details as array
@@ -237,7 +218,7 @@ class MetaDataAPIHandler extends APIHandler
         $customViewInstance->setSortOrder(isset($customViewDetails['sort_order']) ? $customViewDetails['sort_order'] : null);
         if (isset($customViewDetails['criteria']) && $customViewDetails['criteria'] != null) {
             $index=1;
-            $criteriaInstance = self::constructCriteria($customViewDetails['criteria'], $index);
+            $criteriaInstance=self::constructCriteria($customViewDetails['criteria'],$index);
             $customViewInstance->setCriteria($criteriaInstance);
             $customViewInstance->setCriteriaPattern($criteriaInstance->getPattern());
             $customViewInstance->setCriteriaCondition($criteriaInstance->getCriteria());

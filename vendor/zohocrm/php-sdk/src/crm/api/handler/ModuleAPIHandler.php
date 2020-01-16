@@ -37,7 +37,8 @@ class ModuleAPIHandler extends APIHandler
     
     public function getModuleDetails()
     {
-        $this->module = MetaDataAPIHandler::getInstance()->getModule($this->module->getAPIName())->getData();
+        $this->module = MetaDataAPIHandler::getInstance()->getModule($this->module->getAPIName())
+        ->getData();
     }
     
     /**
@@ -168,14 +169,11 @@ class ModuleAPIHandler extends APIHandler
      * Method to get all the custom views of a module
      * Returns api response with array of ZCRMCustomView instances
      */
-    public function getAllCustomViews($param_map)
+    public function getAllCustomViews()
     {
         try {
             $this->urlPath = "settings/custom_views";
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
-            foreach($param_map as $key=>$value){
-                if($value!=null)$this->addParam($key,$value);
-            }
             $this->addHeader("Content-Type", "application/json");
             $this->addParam("module", $this->module->getAPIName());
             $responseInstance = APIRequest::getInstance($this)->getBulkAPIResponse();
@@ -294,6 +292,9 @@ class ModuleAPIHandler extends APIHandler
             throw $exception;
         }
     }
+    
+    
+    
     
     public function getLayouts($allLayoutDetails)
     {

@@ -10,7 +10,7 @@ class Super_Cat_Tab {
     $this->plugin_name = $plugin_name;
     $this->option_prefix = $plugin_name . "_zoho_";
     require_once(__DIR__ . '/../helpers/zoho-api.php');
-    $this->sendinblue = new Zoho_Api_By_Gatto();
+    $this->zoho = new Zoho_Api_By_Gatto();
     add_action( 'admin_init', array( $this, 'setup_init' ) );
 
   }
@@ -18,42 +18,42 @@ class Super_Cat_Tab {
   public function content(){
 
     ?>
+    <br><br>
+    <?php
+    if($this->zoho->check_connection()){
+      echo("<h3>Connessione a Zoho riuscita!</h3>");
+    } else {
+      ?>
+      <p>|<?php echo($this->option_prefix); ?>|<br>
+        Per collegarti alla API di Zoho vai a questo indirizzo: <a target="_blank" href="https://accounts.zoho.eu/developerconsole">https://accounts.zoho.eu/developerconsole</a>
         <br><br>
-        <?php
-        if($this->zoho->check_connection()){
-            echo("<h3>Connessione a Zoho riuscita!</h3>");
-        } else {
-            ?>
-            <p>
-                Per collegarti alla API di Zoho vai a questo indirizzo: <a target="_blank" href="https://accounts.zoho.eu/developerconsole">https://accounts.zoho.eu/developerconsole</a>
-                <br><br>
-                Registra un utente usando:<br>
-                <strong>Nome Client</strong>: a piacere<br>
-                <strong>Dominio client</strong>: <?php echo($this->get_host()); ?><br>
-                <strong>URI di reindirizzamento autorizzato</strong>: <?php echo($this->zoho->get_redirect_uri()); ?>
-            </p>
-            <p>
-                Poi inserisci
-            </p>
-        <?php } ?>
-        <form method="post" action="options.php">
-            <?php
-            settings_fields($this->plugin_name);
-            do_settings_sections($this->plugin_name);
-            submit_button();
-            ?>
-        </form>
-        <?php
-        if(!$this->zoho->check_connection() && get_option("elementor_zoho_client_id") && get_option("elementor_zoho_client_id") != ""){
-            $link = 'https://accounts.zoho.eu/oauth/v2/auth?scope=ZohoCRM.users.ALL,ZohoCRM.modules.ALL,ZohoCRM.org.ALL,ZohoCRM.bulk.ALL&client_id='.get_option("elementor_zoho_client_id").'&response_type=code&access_type=offline&redirect_uri='.$this->zoho->get_redirect_uri();
-            ?>
-            <p>
-                Clicca questo link per procedere con l'attivazione:<br>
-                <a href="<?php echo($link); ?>"><?php echo($link); ?></a>
-            </p>
-            <?php
-        }
-        $this->zoho->list_module_fields();
+        Registra un utente usando:<br>
+        <strong>Nome Client</strong>: a piacere<br>
+        <strong>Dominio client</strong>: <?php echo($this->get_host()); ?><br>
+        <strong>URI di reindirizzamento autorizzato</strong>: <?php echo($this->zoho->get_redirect_uri()); ?>
+      </p>
+      <p>
+        Poi inserisci
+      </p>
+    <?php } ?>
+    <form method="post" action="options.php">
+      <?php
+      settings_fields($this->plugin_name);
+      do_settings_sections($this->plugin_name);
+      submit_button();
+      ?>
+    </form>
+    <?php
+    if(!$this->zoho->check_connection() && get_option($this->option_prefix . "client_id") && get_option($this->option_prefix . "client_id") != ""){
+      $link = 'https://accounts.zoho.eu/oauth/v2/auth?scope=ZohoCRM.users.ALL,ZohoCRM.modules.ALL,ZohoCRM.org.ALL,ZohoCRM.bulk.ALL&client_id='.get_option($this->option_prefix . "client_id").'&response_type=code&access_type=offline&redirect_uri='.$this->zoho->get_redirect_uri();
+      ?>
+      <p>
+        Clicca questo link per procedere con l'attivazione:<br>
+        <a href="<?php echo($link); ?>"><?php echo($link); ?></a>
+      </p>
+      <?php
+    }
+    //$this->zoho->list_module_fields();
 
   }
 
@@ -100,6 +100,14 @@ class Super_Cat_Tab {
     if(isset($arguments["p"])){
       echo('<p>' . $arguments["p"] . '</p>');
     }
+  }
+
+  private function get_host(){
+    $url_parts = parse_url( get_site_url() );
+    if ( $url_parts && isset( $url_parts['host'] ) ) {
+      return $url_parts['host'];
+    }
+    return null;
   }
 
 }

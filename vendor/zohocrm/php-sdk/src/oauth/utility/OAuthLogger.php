@@ -1,20 +1,12 @@
 <?php
-namespace zcrmsdk\crm\utility;
+namespace zcrmsdk\oauth\utility;
 
-class Logger
+class OAuthLogger
 {
     
     public static function writeToFile($msg)
     {
-        set_include_path(ZCRMConfigUtil::getConfigValue('applicationLogFilePath'));
-        $path = get_include_path();
-        if (!ZCRMConfigUtil::getConfigValue('applicationLogFilePath')) {
-            $path=dirname(__FILE__) ."/../../..";
-        }
-        $filePointer = fopen($path . "/ZCRMClientLibrary.log", "a");
-        if (! $filePointer) {
-            return;
-        }
+        $filePointer = fopen(dirname(__FILE__) . "/OAuth.log", "a");
         fwrite($filePointer, sprintf("%s %s\n", date("Y-m-d H:i:s"), $msg));
         fclose($filePointer);
     }

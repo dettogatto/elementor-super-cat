@@ -61,17 +61,11 @@ class BulkAPIResponse extends CommonAPIResponse
                 $exception = new ZCRMException("No Content", $statusCode);
                 $exception->setExceptionCode("NO CONTENT");
                 throw $exception;
-            }
-            else if ($statusCode == APIConstants::RESPONSECODE_NOT_MODIFIED) {
-                $exception = new ZCRMException("Not Modified", $statusCode);
-                $exception->setExceptionCode("NOT MODIFIED");
-                throw $exception;
-            }
-            else {
+            } else {
                 $responseJSON = $this->getResponseJSON();
-                $exception = new ZCRMException($responseJSON[APIConstants::MESSAGE], $statusCode);
-                $exception->setExceptionCode($responseJSON[APIConstants::CODE]);
-                $exception->setExceptionDetails($responseJSON[APIConstants::DETAILS]);
+                $exception = new ZCRMException($responseJSON['message'], $statusCode);
+                $exception->setExceptionCode($responseJSON['code']);
+                $exception->setExceptionDetails($responseJSON['details']);
                 throw $exception;
             }
         }

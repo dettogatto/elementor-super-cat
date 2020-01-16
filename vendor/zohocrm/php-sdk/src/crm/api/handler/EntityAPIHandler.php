@@ -252,7 +252,7 @@ class EntityAPIHandler extends APIHandler
         }
     }
     
-    public function getZCRMRecordAsJSON()
+    function getZCRMRecordAsJSON()
     {
         $recordJSON = array();
         $apiNameVsValues = $this->record->getData();
@@ -447,18 +447,14 @@ class EntityAPIHandler extends APIHandler
                     $this->record->addTax($taxIns);
                 }
             }else if ("Tag" === $key && is_array($value)) {
-                $tags = array();
-                foreach ($value as $tag)
-                {
-                    $tagIns = ZCRMTag::getInstance($tag["id"], $tag["name"]);
+                $tags=array();
+                foreach ($value as $tag) {
+                    $tagIns = ZCRMTag::getInstance($tag["name"],$tag["id"]);
                     array_push($tags,$tagIns);
                 }
                 $this->record->setTags($tags);
-            }else if ("tags" === $key && is_array($value))
-            {
-                $this->record->setTagNames($value);
-            }
-            else if ("\$line_tax" === $key && is_array($value)) {
+            }else if ("\$line_tax" === $key && is_array($value)) {
+                
                 foreach ($value as $lineTax) {
                     $taxIns = ZCRMTax::getInstance($lineTax["name"]);
                     $taxIns->setPercentage($lineTax["percentage"]);

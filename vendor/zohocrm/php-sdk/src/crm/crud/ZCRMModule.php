@@ -977,12 +977,12 @@ class ZCRMModule
     
     /**
      * method to Return the custom views of the module.
-     * @param Array $param_map key-value pairs containing parameters 
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response.
      */
-    public function getAllCustomViews($param_map = array())
+    public function getAllCustomViews()
     {
-        return ModuleAPIHandler::getInstance($this)->getAllCustomViews($param_map);
+        return ModuleAPIHandler::getInstance($this)->getAllCustomViews();
     }
     
     /**
@@ -1073,62 +1073,69 @@ class ZCRMModule
     /**
      * method to get records of the custom view
      *
-     ** @param Array  $param_map key-value pair containing parameter names and the value
-     * @param Array  $header_map key-value pair containing header names and the value
+     * @param string $cvId custom view id
+     * @param String $sortByField sorts the related list records accoring to the field api name (no sorting by default)
+     * @param String $sortOrder sorts the related list records in ascending-"asc" or descending-"desc" order(no sorting by default
+     * @param number $startIndex start index of the record to be obtained (default is 1)
+     * @param number $endIndex end index of the record to be obtained (default is 200)
+     * @param string $headers DateTime(ISO8601 format) to display records which are modified after the given input datetime (String)
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response.
      */
-    public function getRecords($param_map=array(), $header_map=array())
+    public function getRecords($cvId = null, $sortByField = null, $sortOrder = null, $startIndex = 1, $endIndex = 200, $headers = null)
     {
-        return MassEntityAPIHandler::getInstance($this)->getRecords($param_map,$header_map);
+        return MassEntityAPIHandler::getInstance($this)->getRecords($cvId, $sortByField, $sortOrder, $startIndex, $endIndex, $headers);
     }
     
     /**
      * method to search records of the module by searchword
      *
      * @param string $searchWord word to be searched
-     * @param Array $param_map key-value pairs containing parameters 
+     * @param number $page to get the list of records from the respective pages. Default value for page is 1.
+     * @param number $perPage To get the list of records available per page. Default value for per page is 200.
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response.
      */
-    public function searchRecordsByWord($searchWord, $param_map=array())
+    public function searchRecords($searchWord, $page = 1, $perPage = 200)
     {
-        return MassEntityAPIHandler::getInstance($this)->searchRecords($param_map,"word",$searchWord);
+        return MassEntityAPIHandler::getInstance($this)->searchRecords($searchWord, $page, $perPage, "word");
     }
     
     /**
      * method to search records of the module by phone
      *
      * @param int $phone phone number to be searched
-     * @param Array $param_map key-value pairs containing parameters 
+     * @param number $page to get the list of records from the respective pages. Default value for page is 1.
+     * @param number $perPage To get the list of records available per page. Default value for per page is 200.
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response.
      */
-    public function searchRecordsByPhone($phone, $param_map=array())
+    public function searchRecordsByPhone($phone, $page = 1, $perPage = 200)
     {
-        return MassEntityAPIHandler::getInstance($this)->searchRecords($param_map,"phone",$phone);
+        return MassEntityAPIHandler::getInstance($this)->searchRecords($phone, $page, $perPage, "phone");
     }
     
     /**
      * method to search records of the module by email id
      *
      * @param string $email email id to be searched
-     * @param Array $param_map key-value pairs containing parameters 
+     * @param number $page to get the list of records from the respective pages. Default value for page is 1.
+     * @param number $perPage To get the list of records available per page. Default value for per page is 200.
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response.
      */
-    public function searchRecordsByEmail($email, $param_map=array())
+    public function searchRecordsByEmail($email, $page = 1, $perPage = 200)
     {
-        
-        return MassEntityAPIHandler::getInstance($this)->searchRecords($param_map,"email",$email);
+        return MassEntityAPIHandler::getInstance($this)->searchRecords($email, $page, $perPage, "email");
     }
     
     /**
      * method to search records of the module by criteria
      *
      * @param string $criteria criteria of search
-     * @param Array $param_map key-value pairs containing parameters 
+     * @param number $page To get the list of records from the respective pages. Default value for page is 1.
+     * @param number $perPage To get the list of records available per page. Default value for per page is 200.
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response.
      */
-    public function searchRecordsByCriteria($criteria, $param_map=array())
+    public function searchRecordsByCriteria($criteria, $page = 1, $perPage = 200)
     {
-        return MassEntityAPIHandler::getInstance($this)->searchRecords($param_map,"criteria",$criteria);
+        return MassEntityAPIHandler::getInstance($this)->searchRecords($criteria, $page, $perPage, "criteria");
     }
     
     /**
@@ -1196,41 +1203,37 @@ class ZCRMModule
     
     /**
      * method to get the deleted records of the module
-     * @param Array $param_map key-value pairs containing parameters 
-     * @param Array $header_map key-value pairs containing headers 
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response.
      */
-    public function getAllDeletedRecords($param_map=array(),$header_map=array())
+    public function getAllDeletedRecords()
     {
-        return MassEntityAPIHandler::getInstance($this)->getAllDeletedRecords($param_map,$header_map);
+        return MassEntityAPIHandler::getInstance($this)->getAllDeletedRecords();
     }
     
     /**
      * method to get the records in recyle bin of the module
-     * @param Array $param_map key-value pairs containing parameters 
-     * @param Array $header_map key-value pairs containing headers 
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response.
      */
-    public function getRecycleBinRecords($param_map=array(),$header_map=array())
+    public function getRecycleBinRecords()
     {
-        return MassEntityAPIHandler::getInstance($this)->getRecycleBinRecords($param_map,$header_map);
+        return MassEntityAPIHandler::getInstance($this)->getRecycleBinRecords();
     }
     
     /**
      * method to get the permanently deleted records of the module
-     * @param Array $param_map key-value pairs containing parameters 
-     * @param Array $header_map key-value pairs containing headers 
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response.
      */
-    public function getPermanentlyDeletedRecords($param_map=array(),$header_map=array())
+    public function getPermanentlyDeletedRecords()
     {
-        return MassEntityAPIHandler::getInstance($this)->getPermanentlyDeletedRecords($param_map,$header_map);
+        return MassEntityAPIHandler::getInstance($this)->getPermanentlyDeletedRecords();
     }
     
     /**
      * method to get the tags of the module
-     * @param Array $param_map key-value pairs containing parameters 
-     * @param Array $header_map key-value pairs containing headers 
+     *
      * @throws ZCRMException ifthe module api name is invalid
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response.
      */

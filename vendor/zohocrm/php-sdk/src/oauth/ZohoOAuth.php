@@ -26,12 +26,6 @@ class ZohoOAuth
             if (! array_key_exists(ZohoOAuthConstants::DATABASE_PASSWORD, self::$configProperties)) {
                 self::$configProperties[ZohoOAuthConstants::DATABASE_PASSWORD] = "";
             }
-            if (! array_key_exists(ZohoOAuthConstants::DATABASE_NAME, self::$configProperties)) {
-                self::$configProperties[ZohoOAuthConstants::DATABASE_NAME] = "zohooauth";
-            }
-            if (! array_key_exists(ZohoOAuthConstants::HOST_ADDRESS, self::$configProperties)) {
-                self::$configProperties[ZohoOAuthConstants::HOST_ADDRESS] = "localhost";
-            }
         }
         $oAuthParams = new ZohoOAuthParams();
         $oAuthParams->setAccessType(self::getConfigValue(ZohoOAuthConstants::ACCESS_TYPE));
@@ -53,8 +47,7 @@ class ZohoOAuth
             ZohoOAuthConstants::TOKEN_PERSISTENCE_PATH,
             ZohoOAuthConstants::DATABASE_PORT,
             ZohoOAuthConstants::DATABASE_PASSWORD,
-            ZohoOAuthConstants::DATABASE_USERNAME,
-            ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS_NAME
+            ZohoOAuthConstants::DATABASE_USERNAME
         );
         
         if (! array_key_exists(ZohoOAuthConstants::ACCESS_TYPE, $configuration) || $configuration[ZohoOAuthConstants::ACCESS_TYPE] == "") {
@@ -64,7 +57,7 @@ class ZohoOAuth
             self::$configProperties[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS] = "ZohoOAuthPersistenceHandler";
         }
         if (! array_key_exists(ZohoOAuthConstants::IAM_URL, $configuration) || $configuration[ZohoOAuthConstants::IAM_URL] == "") {
-            self::$configProperties[ZohoOAuthConstants::IAM_URL] = "https://accounts.zoho.com";
+            self::$configProperties[ZohoOAuthConstants::IAM_URL] = "https://accounts.zoho.eu";
         }
         
         foreach ($config_keys as $key) {
@@ -144,7 +137,7 @@ class ZohoOAuth
             }
             else{
                 require_once  realpath(self::$configProperties[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS]);
-                $str=self::$configProperties[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS_NAME];
+                $str=basename(self::$configProperties[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS],".php");
                 return new $str();
             }
         } catch (Exception $ex) {

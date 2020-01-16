@@ -139,30 +139,6 @@ class ZCRMRecord
     private $tags = array();
     
     /**
-     * list of all the tag names
-     * @var array
-     */
-    private $tagnames = array();
-
-    /**
-     * bulk write status of the record
-     * @var String
-     */
-    private $status = null;
-    
-    /**
-     * bulk write error message of the record
-     * @var String
-     */
-    private $error = null;
-    
-    /**
-     * csv record row number
-     * @var integer
-     */
-    private $rowNumber;
-    
-    /**
      * constructor to set the module name and record id
      *
      * @param String $module
@@ -173,7 +149,7 @@ class ZCRMRecord
         $this->moduleApiName = $module;
         $this->entityId = $entityId;
     }
-       
+    
     /**
      * Method to get the instance of the ZCRMRecord class
      *
@@ -505,80 +481,6 @@ class ZCRMRecord
     {
         $this->tags = $tags;
     }
-
-    /**
-     * Method to get the tags for the record
-     *
-     * @return array array of tag name of the record
-     */
-    public function getTagNames()
-    {
-        return $this->tagnames;
-    }
-    
-    /**
-     * Method to set the tags for the record
-     *
-     * @param array $tagnames array of tag name of the record
-     */
-    public function setTagNames($tagnames)
-    {
-        $this->tagnames = $tagnames;
-    }
-    
-    /**
-     * To set create record status
-     * @param status of the record
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-    
-    /**
-     * To get create record status
-     * @return String status of the record
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-    
-    /**
-     * To set record error message
-     * @param error message of the record
-     */
-    public function setErrorMessage($error)
-    {
-        $this->error = $error;
-    }
-    
-    /**
-     * To get record error message
-     * @return String record error message
-     */
-    public function getErrorMessage()
-    {
-        return $this->error;
-    }
-    
-    /**
-     * To set record row number
-     * @param rowNumber of the record
-     */
-    public function setRecordRowNumber($rowNumber)
-    {
-        $this->rowNumber = $rowNumber;
-    }
-    
-    /**
-     * To get record row number
-     * @return integer record row number
-     */
-    public function getRecordRowNumber()
-    {
-        return $this->rowNumber;
-    }
     
     /**
      * Method creates record
@@ -647,25 +549,29 @@ class ZCRMRecord
      * Method to get the RelatedList records
      *
      * @param String $relatedListAPIName Api name of the Related List
-     * @param Array $param_map key-value pairs containing parameters 
-     * @param Array $header_map key-value pairs containing headers 
+     * @param String $sortByField sorts the related list records accoring to the field api name (no sorting by default)
+     * @param String $sortOrder sorts the related list records in ascending-"asc" or descending-"desc" order(no sorting by default)
+     * @param number $page page To get the list of records from the respective pages. Default value for page is 1.
+     * @param number $perPage To get the list of records available per page. Default value for per page is 20.
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API Response
      */
-    public function getRelatedListRecords($relatedListAPIName, $param_map=array(),$header_map=array())
+    public function getRelatedListRecords($relatedListAPIName, $sortByField = null, $sortOrder = null, $page = 1, $perPage = 20)
     {
-        return ZCRMModuleRelation::getInstance($this, $relatedListAPIName)->getRecords($param_map,$header_map);
+        return ZCRMModuleRelation::getInstance($this, $relatedListAPIName)->getRecords($sortByField, $sortOrder, $page, $perPage);
     }
     
     /**
      * Method to get the notes
      *
-     * @param Array $param_map key-value pairs containing parameters 
-     * @param Array $header_map key-value pairs containing headers 
+     * @param String $sortByField sorts the notes according to the field api name (no sorting by default)
+     * @param String $sortOrder sorts the notes in ascending-"asc" or descending-"desc" order(no sorting by default)
+     * @param number $page page To get the list of notes from the respective pages. Default value for page is 1.
+     * @param number $perPage To get the list of notes available per page. Default value for per page is 20.
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response.
      */
-    public function getNotes($param_map=array(),$header_map=array())
+    public function getNotes($sortByField = null, $sortOrder = null, $page = 1, $perPage = 20)
     {
-        return ZCRMModuleRelation::getInstance($this, "Notes")->getNotes($param_map,$header_map);
+        return ZCRMModuleRelation::getInstance($this, "Notes")->getNotes($sortByField, $sortOrder, $page, $perPage);
     }
     
     /**
@@ -724,12 +630,14 @@ class ZCRMRecord
     
     /**
      * Method to get the attachments of the record
-     * @param Array $param_map key-value pairs containing parameters 
+     *
+     * @param number $page page To get the list of attachments from the respective pages. Default value for page is 1.
+     * @param number $perPage To get the list of attachments available per page. Default value for per page is 20.
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the BulkAPI response.
      */
-    public function getAttachments($param_map = array())
+    public function getAttachments($page = 1, $perPage = 20)
     {
-        return ZCRMModuleRelation::getInstance($this, "Attachments")->getAttachments($param_map );
+        return ZCRMModuleRelation::getInstance($this, "Attachments")->getAttachments($page, $perPage);
     }
     
     /**
@@ -838,7 +746,7 @@ class ZCRMRecord
      */
     public function addTags($tagNames)
     {
-        if ($this->entityId == null || $this->entityId == "") {
+        if ($this->entityId == null || $this->entityId == 0) {
             throw new ZCRMException("Record ID MUST NOT be null/empty for Add Tags to a Specific record operation");
         }
         if ($this->moduleApiName == null || $this->moduleApiName == "") {
@@ -859,7 +767,7 @@ class ZCRMRecord
      */
     public function removeTags($tagNames)
     {
-        if ($this->entityId == null || $this->entityId == "") {
+        if ($this->entityId == null || $this->entityId == 0) {
             throw new ZCRMException("Record ID MUST NOT be null/empty for Remove Tags from a Specific record operation");
         }
         if ($this->moduleApiName == null || $this->moduleApiName == "") {
