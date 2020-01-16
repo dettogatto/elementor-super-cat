@@ -12,7 +12,8 @@ class Elementor_Super_Cat_Admin {
         "welcome" => "Welcome",
         "extra-webhooks" => "WebHooks",
         "woocommerce-ac" => "WooComm - AC",
-        "sendinblue" => "Sendinblue"
+        "sendinblue" => "Sendinblue",
+        "zoho" => "Zoho"
     );
     public $default_tab = "welcome";
     public $current_tab;
