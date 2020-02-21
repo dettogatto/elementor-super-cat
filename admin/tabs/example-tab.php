@@ -10,7 +10,7 @@ class Super_Cat_Tab {
         $this->option_prefix = $plugin_name . "_";
         $this->plugin_name = $plugin_name;
         add_action( 'admin_init', array( $this, 'setup_init' ) );
-        
+
     }
 
     public function content(){
@@ -49,7 +49,7 @@ class Super_Cat_Tab {
     public function field_callback ( $arguments ) {
 
         $id = $arguments["id"];
-        echo '<input name="' . $id . '" id="' . $id . '" type="text" value="' .get_option($id). '" />';
+        echo '<input name="' . $id . '" id="' . $id . '" type="text" class="gatto-input" value="' .get_option($id). '" />';
 
     }
 

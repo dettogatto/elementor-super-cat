@@ -300,8 +300,8 @@ class Super_Cat_Tab {
             }
         }
 
-        echo('<input type="checkbox" name="' . $id . '" id="' . $id . '" value="1" '.$checked.' />');
-        echo('<input type="hidden" name="'.$this->option_prefix . "cf_webhook_backup".'" value="'.get_option($this->option_prefix . "cf_webhook_backup").'">');
+        echo('<input class="gatto-input" type="checkbox" name="' . $id . '" id="' . $id . '" value="1" '.$checked.' />');
+        echo('<input class="gatto-input" type="hidden" name="'.$this->option_prefix . "cf_webhook_backup".'" value="'.get_option($this->option_prefix . "cf_webhook_backup").'">');
         echo('&nbsp; &nbsp; &nbsp; Current webhook: <strong>'.(
             get_option( 'wcf_ca_zapier_cart_abandoned_webhook' ) == $this->gatto_webhook_url ? "SuperCat" : get_option( 'wcf_ca_zapier_cart_abandoned_webhook' )
             ).'</strong>');
@@ -310,7 +310,7 @@ class Super_Cat_Tab {
 
         public function api_url_callback ( $arguments ) {
             $id = $arguments["id"];
-            echo('<input type="text" name="' . $id . '" id="' . $id . '" value="'.$this->api_url.'" />');
+            echo('<input class="gatto-input" type="text" name="' . $id . '" id="' . $id . '" value="'.$this->api_url.'" />');
             if(isset($arguments["p"])){
                 echo('<p>'.$arguments["p"].'</p>');
             }
@@ -318,7 +318,7 @@ class Super_Cat_Tab {
 
         public function api_key_callback ( $arguments ) {
             $id = $arguments["id"];
-            echo('<input type="text" name="' . $id . '" id="' . $id . '" value="'.$this->api_key.'" />');
+            echo('<input class="gatto-input" type="text" name="' . $id . '" id="' . $id . '" value="'.$this->api_key.'" />');
             if(isset($arguments["p"])){
                 echo('<p>'.$arguments["p"].'</p>');
             }
@@ -328,14 +328,14 @@ class Super_Cat_Tab {
             $id = $arguments["id"];
             $curr_val = get_option($id);
             $checked = ($curr_val ? 'checked' : '' );
-            echo('<input type="checkbox" name="' . $id . '" id="' . $id . '" value="1" '.$checked.' />');
+            echo('<input class="gatto-input" type="checkbox" name="' . $id . '" id="' . $id . '" value="1" '.$checked.' />');
         }
 
         public function tag_callback ( $arguments ) {
             $id = $arguments["id"];
             $curr_val = get_option($id);
 
-            echo('<select name="' . $id . '" id="' . $id . '">');
+            echo('<select class="gatto-input" name="' . $id . '" id="' . $id . '">');
             echo('<option value="-1">&nbsp;</option>');
             foreach ($this->ac->get_all_tags() as $tid => $tag) {
                 $chk = "";
@@ -362,7 +362,7 @@ class Super_Cat_Tab {
             $id = $arguments["id"];
             $curr_val = get_option($id);
 
-            echo('<select name="' . $id . '" id="' . $id . '">');
+            echo('<select class="gatto-input" name="' . $id . '" id="' . $id . '">');
             echo('<option value="-1">&nbsp;</option>');
             foreach ($this->ac->get_fields("textarea") as $tid => $tag) {
                 $chk = "";
