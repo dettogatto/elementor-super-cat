@@ -1,3 +1,15 @@
 .gatto-input{
   width: 100%;
 }
+
+input[type="text"].gatto-input, input[type="number"].gatto-input, textarea.gatto-input{
+  font-family: Consolas,Monaco,monospace;
+}
+
+textarea.gatto-input{
+  height: 200px;
+}
+
+.b-section{
+  display: none;
+}

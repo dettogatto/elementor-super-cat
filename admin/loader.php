@@ -10,6 +10,7 @@ class Elementor_Super_Cat_Admin {
 
     public $tabs = array(
         "welcome" => "Welcome",
+        "headers-footers" => "H & F",
         "extra-webhooks" => "WebHooks",
         "woocommerce-ac" => "WooComm - AC"
     );

@@ -104,20 +104,20 @@ class Super_Cat_Tab {
 
         $howmany = get_option( $this->option_prefix . 'howmany' );
         $id = $args["id"];
-        echo '<input type="number" min="0" max="100" style="width: 100%;" name="' . $id . '" id="' . $id . '" value="' . $howmany . '" /> <p>How many Webhooks to add</p> ';
+        echo '<input class="gatto-input" type="number" min="0" max="100" style="width: 100%;" name="' . $id . '" id="' . $id . '" value="' . $howmany . '" /> <p>How many Webhooks to add</p> ';
         echo('<br><br><br>');
     }
 
     public function field_form_name_callback( $args ) {
         $id = $args["id"];
         $name = get_option( $id );
-        echo '<input style="width: 100%;" name="' . $id . '" id="' . $id . '" value="' . $name . '" />';
+        echo '<input class="gatto-input" style="width: 100%;" name="' . $id . '" id="' . $id . '" value="' . $name . '" />';
     }
 
     public function field_wh_url_callback( $args ) {
         $id = $args["id"];
         $url = get_option( $id );
-        echo '<input style="width: 100%;" name="' . $id . '" id="' . $id. '" value="' . $url . '" />';
+        echo '<input class="gatto-input" style="width: 100%;" name="' . $id . '" id="' . $id. '" value="' . $url . '" />';
         echo('<br><br><br>');
     }
 
