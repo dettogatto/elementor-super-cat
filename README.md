@@ -59,6 +59,7 @@ This widget is similar to the built-in Elementor Video Widget, but it gives you 
 
 * Gives you the ability to set extra webhooks for Elementor forms
 * Integrates with the plugin ActiveCampaign for WooCommerce and lets you place tags on orders upon status change
+* Lets you insert scripts in the head and in the footer, and AB test between two different ones
 
 ---
 
