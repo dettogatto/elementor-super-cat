@@ -324,9 +324,10 @@ class Checkbox_Filter extends \Elementor\Widget_Base {
         }
 
         foreach ($terms as $k => $v) {
+          	$slug = (preg_match("/\p{Hebrew}/u", urldecode($v->slug))?$v->term_id : $v->slug);
             $li[] = '<li
             class="cat-checkbox-filter"
-            data-term="'.$jsTax."-".$v->slug.'"
+            data-term="'.$jsTax."-".$slug.'"
             data-container="'.$filtererId.'"
             data-posts="'.$settings['post_id'].'">
             <span class="cat-checkbox-icon-container">'.$icon.'</span>

@@ -239,6 +239,7 @@ class Post_Filter extends \Elementor\Widget_Base {
     }
 
 
+
     /**
     * Render the widget output on the frontend.
     *
@@ -278,9 +279,11 @@ class Post_Filter extends \Elementor\Widget_Base {
         '. __($settings['all_text'], 'elementor-super-cat').'
         </li>';
         foreach ($terms as $k => $v) {
+
+          	$slug = (preg_match("/\p{Hebrew}/u", urldecode($v->slug))?$v->term_id : $v->slug);
             $li[] = '<li
             class="super-cat-post-filter elementor-portfolio__filter"
-            data-term="'.$jsTax."-".$v->slug.'"
+            data-term="'.$jsTax."-".$slug .'"
             data-container="'.$filtererId.'"
             data-posts="'.$settings['post_id'].'">
             '.$v->name.'
