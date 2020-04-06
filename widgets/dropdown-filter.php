@@ -184,9 +184,10 @@ class Dropdown_Filter extends \Elementor\Widget_Base {
         '. __($select_text, 'elementor-super-cat').'
         </option>';
         foreach ($terms as $k => $v) {
+          	$slug = (preg_match("/\p{Hebrew}/u", urldecode($v->slug))?$v->term_id : $v->slug);
             $li[] = '<option
             class="cat-dropdown-filter"
-            data-term="'.$jsTax."-".$v->slug.'"
+            data-term="'.$jsTax."-".$slug.'"
             data-container="'.$filtererId.'"
             data-posts="'.$settings['post_id'].'">
             '.$v->name.'
