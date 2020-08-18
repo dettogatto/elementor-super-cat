@@ -95,7 +95,7 @@ class Dropdown_Filter extends \Elementor\Widget_Base {
                 'type' => \Elementor\Controls_Manager::SELECT2,
                 'label_block' => true,
                 'options' => $this->get_taxonomies(),
-                'default' => $this->get_taxonomies()[0]
+                // 'default' => $this->get_taxonomies()[0]
             ]
         );
 
@@ -159,7 +159,7 @@ class Dropdown_Filter extends \Elementor\Widget_Base {
         wp_enqueue_script('dropdown-filter-js');
 
         $settings = $this->get_settings_for_display();
-        $filtererId = 'filter-' . $settings['taxonomy_name'] . "-" . $this->get_id();
+        $filtererId = 'filter-' . $settings['taxonomy'] . "-" . $this->get_id();
         $select_text = $settings['select_text'];
         $phpTax = $settings['taxonomy'];
         $jsTax = $settings['taxonomy'];
