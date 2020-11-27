@@ -116,7 +116,7 @@ class Plugin {
         // Register widgets
         add_action( 'elementor/widgets/widgets_registered', [ $this, 'register_widgets' ] );
 
-        wp_register_script( 'gatto-generic-js', plugins_url( '/assets/js/generic.js', __FILE__ ));
+        wp_register_script( 'gatto-generic-js', plugins_url( '/assets/js/generic.js', __FILE__ ), array('jquery'));
         wp_enqueue_script('gatto-generic-js');
     }
 }
