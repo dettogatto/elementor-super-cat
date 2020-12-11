@@ -35,39 +35,6 @@ class Plugin {
   }
 
   /**
-  * widget_scripts
-  *
-  * Load required plugin core files.
-  *
-  * @access public
-  */
-  public function widget_scripts() {
-    add_action("wp_enqueue_scripts", function(){
-      wp_register_script( 'post-filter-js', plugins_url( '/assets/js/post-filter.js', __FILE__ ), [ 'jquery' ], null, true );
-      wp_register_script( 'checkbox-filter-js', plugins_url( '/assets/js/checkbox-filter.js', __FILE__ ), [ 'jquery' ], null, true );
-      wp_register_script( 'dropdown-filter-js', plugins_url( '/assets/js/dropdown-filter.js', __FILE__ ), [ 'jquery' ], null, true );
-    });
-  }
-
-  /**
-  * widget_styles
-  *
-  * Load required plugin core files.
-  *
-  * @access public
-  */
-  public function widget_styles() {
-    add_action("wp_enqueue_scripts", function(){
-      wp_register_style( 'checkbox-filter-css', plugins_url( '/assets/css/checkbox-filter.css', __FILE__ ));
-      wp_register_style( 'autostop-video-css', plugins_url( '/assets/css/autostop-video.css', __FILE__ ));
-      if(\Elementor\Plugin::$instance->preview->is_preview_mode() || \Elementor\Plugin::$instance->editor->is_edit_mode()){
-        wp_enqueue_style('checkbox-filter-css');
-        wp_enqueue_style('autostop-video-css');
-      }
-    });
-  }
-
-  /**
   * Include Widgets files
   *
   * Load widgets files
@@ -111,12 +78,6 @@ class Plugin {
   * @access public
   */
   public function __construct() {
-    // Register widget scripts
-    add_action( 'elementor/frontend/after_register_scripts', [ $this, 'widget_scripts' ] );
-
-    // Register widget styles
-    add_action( 'elementor/frontend/after_register_styles', [ $this, 'widget_styles' ] );
-
     // Register widgets
     add_action( 'elementor/widgets/widgets_registered', [ $this, 'register_widgets' ] );
 
