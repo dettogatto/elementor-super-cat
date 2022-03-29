@@ -49,9 +49,6 @@ The widget has 3 options:
 
 This widget is identical to a normal Elementor Button except you can place received GET and POST parameters in the link field
 
-## Video CTA
-
-This widget is similar to the built-in Elementor Video Widget, but it gives you the ability to show a Call to Action overlayed to the paused video and to open a Popup or a link at the chosen end-time of video.
 
 ---
 

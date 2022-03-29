@@ -47,7 +47,6 @@ class Plugin {
     require_once( __DIR__ . '/widgets/param-button.php' );
     require_once( __DIR__ . '/widgets/checkbox-filter.php' );
     require_once( __DIR__ . '/widgets/dropdown-filter.php' );
-    require_once( __DIR__ . '/widgets/autostop-video.php' );
   }
 
   /**
@@ -67,7 +66,6 @@ class Plugin {
     \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Param_Button() );
     \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Checkbox_Filter() );
     \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Dropdown_Filter() );
-    \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Autostop_Video() );
   }
 
   /**

@@ -3,7 +3,7 @@
 * Plugin Name: Elementor SuperCat
 * Description: Elementor add-ons
 * Plugin URI:  https://github.com/dettogatto/elementor-super-cat
-* Version:     2.7.2
+* Version:     2.8
 * Author:      Nicola Cavallazzi
 * Author URI:  https://cosmo.cat/
 * Text Domain: elementor-super-cat
@@ -20,6 +20,12 @@ $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
   'elementor-super-cat'
 );
 
+//Optional: If you're using a private repository, specify the access token like this:
+//$myUpdateChecker->setAuthentication('your-token-here');
+
+//Optional: Set the branch that contains the stable release.
+$myUpdateChecker->setBranch('master');
+
 // Include the admin menu
 require_once( __DIR__ . '/admin/loader.php' );
 $admin_esc = new Elementor_Super_Cat_Admin();
@@ -30,12 +36,6 @@ foreach($admin_esc->tabs as $k => $v){
   }
 }
 
-
-//Optional: If you're using a private repository, specify the access token like this:
-//$myUpdateChecker->setAuthentication('your-token-here');
-
-//Optional: Set the branch that contains the stable release.
-$myUpdateChecker->setBranch('master');
 
 
 /**
@@ -55,7 +55,7 @@ final class Elementor_Super_Cat {
   *
   * @var string The plugin version.
   */
-  const VERSION = '2.7.1';
+  const VERSION = '2.8';
 
   /**
   * Minimum Elementor Version
