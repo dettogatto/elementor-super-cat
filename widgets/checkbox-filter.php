@@ -332,7 +332,12 @@ class Checkbox_Filter extends \Elementor\Widget_Base {
 
 
 
-    $terms = get_terms( $phpTax, array( 'hide_empty' => true ) );
+    if ($settings["hide_empty"] == 'yes') {
+      $terms = get_terms( $phpTax, array( 'hide_empty' => true ) );
+    }
+    else {
+      $terms = get_terms( $phpTax, array( 'hide_empty' => false ) );
+    }
 
     if($settings['order_by'] == "slug"){
       usort($terms, function($a, $b){
